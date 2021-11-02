@@ -694,11 +694,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\shawn.ngutu.SMART0\\OneDrive - Smart Applications International Limited\\C#\\Datastructures\\Datastructures\\Datastructures.csproj",
+      "projectUniqueName": "C:\\Users\\shawn.ngutu.SMART0\\OneDrive - Smart Applications International Limited\\C#\\CodingSolutions\\Datastructures\\Datastructures\\Datastructures.csproj",
       "projectName": "Datastructures",
-      "projectPath": "C:\\Users\\shawn.ngutu.SMART0\\OneDrive - Smart Applications International Limited\\C#\\Datastructures\\Datastructures\\Datastructures.csproj",
+      "projectPath": "C:\\Users\\shawn.ngutu.SMART0\\OneDrive - Smart Applications International Limited\\C#\\CodingSolutions\\Datastructures\\Datastructures\\Datastructures.csproj",
       "packagesPath": "C:\\Users\\shawn.ngutu.SMART0\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\shawn.ngutu.SMART0\\OneDrive - Smart Applications International Limited\\C#\\Datastructures\\Datastructures\\obj\\",
+      "outputPath": "C:\\Users\\shawn.ngutu.SMART0\\OneDrive - Smart Applications International Limited\\C#\\CodingSolutions\\Datastructures\\Datastructures\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

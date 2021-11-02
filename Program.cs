@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
+using static Datastructures.ListsNodeTrees;
 
 namespace Datastructures
 {
@@ -15,8 +17,8 @@ namespace Datastructures
             //  _Stack();
             //_LinkedList();
 
-            // int[] arr = { 1, -4, -3, 0, 9, -8, -2 };
 
+            // int[] arr = { 1, -4, -3, 0, 9, -8, -2 };
             //Console.WriteLine("Maximum Sub array product is: " + _maxSubarrayPrdct(arr));
 
             //call reverse array code
@@ -33,12 +35,182 @@ namespace Datastructures
             // Console.WriteLine("Can form a palidrome?: " + _canFormPalindrome("cooc") );
             // Console.WriteLine("palidrome: " + _getPalindrome("mdaam"));
             //Console.WriteLine("UrLified string: " + URLify_String("http://ninjax company ltd.com"));
+            // _GetKthElementofLinkedList(2); //put n position
 
-            _GetKthElementofLinkedList(2); //put n position
+            //rotate matrix
+            //matrix to compare to target rotated matrix
+            int[][] imgmat = new int[][] {
+                            new int[] { 1, 2, 3, 4, 5 },
+                            new int[] { 6, 7, 8, 9, 10 },
+                            new int[] { 11, 12, 13, 14, 15 },
+                            new int[] { 16, 17, 18, 19, 20 },
+                            new int[] { 21, 22, 23, 24, 25 } };
 
+            //target matrix to compare with
+            int[][] imgtarget = new int[][] {
+                            new int[] { 21, 16, 11, 6 ,1 },
+                            new int[] { 22, 17 ,12 ,7, 2},
+                            new int[] { 23, 18 ,13 ,8 ,3 },
+                            new int[] { 24 ,19 ,14 ,9, 4 },
+                            new int[] { 25 ,20 ,15, 10, 5} };
+
+            // _matrixRotate();
+            // _rotateImgDriver(imgmat);
+
+            // checkRotation(img, img2);
+
+            //graphs
+            // _GraphCanBeConnected();
+            //  BinarySearchTree();
+            //  LinkedListToBST();
+            _checkBSTHeightBalance();
 
             //below code should come at the bottom, make cmd not disappear
             Console.ReadLine();
+        }
+
+        static void _checkBSTHeightBalance()
+        {
+            //head: used as root
+            //_pushtoNode pushes to head, _pushtLnkNode pushes to lhead
+            NodesAndLinkedLists nList = new NodesAndLinkedLists();
+            /* create a sorted linked list
+            7->6->5->4->3->2->1 */
+            nList.pushLnkNode(7);
+            nList.pushLnkNode(6);
+            nList.pushLnkNode(5);
+            nList.pushLnkNode(4);
+            nList.pushLnkNode(3);
+            nList.pushLnkNode(2);
+            nList.pushLnkNode(1);
+
+            Console.WriteLine("Linked List ");
+            nList._printLnkList(nList.lhead);
+
+            /* Convert List to BST */
+            //convert LinkedList to BST first
+            Node root = nList.sortedListToBST();
+
+            Console.WriteLine("");
+            Console.WriteLine("Balanced Search Tree ");
+            nList.preOrderLnk(root);
+
+            //then check if the BST is balances or not
+            if (nList.isBalanced(root))
+            {
+                Console.WriteLine("Tree is balanced");
+            }
+            else
+            {
+                Console.WriteLine("Tree is not balanced");
+            }
+        }
+
+        static void LinkedListToBST() {
+            NodesAndLinkedLists nList = new NodesAndLinkedLists();
+            /* create a sorted 
+            7->6->5->4->3->2->1 */
+            nList.pushLnkNode(7);
+            nList.pushLnkNode(6);
+            nList.pushLnkNode(5);
+            nList.pushLnkNode(4);
+            nList.pushLnkNode(3);
+            nList.pushLnkNode(2);
+            nList.pushLnkNode(1);
+
+            Console.WriteLine("Linked List ");
+            nList._printLnkList(nList.lhead);
+
+            /* Convert List to BST */
+            Node root = nList.sortedListToBST();
+            Console.WriteLine("");
+            Console.WriteLine("Pre-Order Traversal of constructed BST ");
+            nList.preOrderLnk(root);
+        }
+
+        static void BinarySearchTree() {
+            //head::also known as root
+            NodesAndLinkedLists tree = new NodesAndLinkedLists();
+            int[] arr = new int[] { -10, -3, 0, 5, 9 };
+            int n = arr.Length;
+
+            //leetcode
+            // tree.head = tree.SortedArrayToBST(arr);
+
+            // tree.head = tree._sortedArrayToBST(arr, 0, n - 1);           
+
+            tree.head = tree.createMinimalBST(arr);
+
+            Console.WriteLine("Preorder traversal of constructed BST");           
+
+           tree.preOrder(tree.head);
+        }
+
+        static void _GraphCanBeConnected() {
+
+            // Create a graph and pass number of graph vertices
+            Graph g = new Graph(4); 
+            g.addEdge(0, 1);
+            g.addEdge(0, 2);
+            g.addEdge(1, 2);
+            g.addEdge(2, 0);
+            g.addEdge(2, 3);
+            g.addEdge(3, 3);
+            int u = 1;
+            int v = 3;
+            if (g._isReachable(u, v))
+                Console.WriteLine("There is a path from " + u + " to " + v);
+            else
+                Console.WriteLine("There is no path from " + u + " to " + v);
+            u = 3;
+            v = 1;
+            if (g._isReachable(u, v))
+                Console.WriteLine("There is a path from " + u + " to " + v);
+            else
+                Console.WriteLine("There is no path from " + u + " to " + v);
+        }
+    
+
+        static void _rotateImgDriver(int [][] matrix)
+        {
+            Console.WriteLine("_original image \n");
+            DisplayRotatedImage(matrix);
+            Console.WriteLine("_rotated image \n");
+            DisplayRotatedImage(RotateImage(matrix));
+        }
+
+        static void _canbeRotated() {
+
+
+        }
+
+        static bool checkRotation(int[][] matrix, int[][] target)
+        {
+            // max number of rotations is 4 --> 360 degrees
+            for (int i = 0; i < 4; i++)
+            {
+                if (Equals(matrix, target)) // Checking two matrices are equal or not.
+                    return true;
+                matrix = _rotateMatrix(matrix); ;
+            }
+            return false;
+        }
+
+        //function  to rotate a matrix 
+        public static int[][] _rotateMatrix(int[][] matrix)
+        {
+            int n = matrix.Length;
+            // create a new matrix called rotatedMat with the length of mat matrix to store the rotated matrix.
+            int[][] rotatedMat = new int[n][];
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < n; j++)
+                {
+                    // new row = prev column new column = n - 1 - prev row
+                    rotatedMat[j][n - 1 - i] = matrix[i][j];
+                }
+            }
+            return rotatedMat;
         }
 
         static string URLify_String(string strn) {
@@ -133,7 +305,7 @@ namespace Datastructures
 
             _stack.Pop(); //remove element at the top of stack
 
-            // printt elements after Pop()
+            // print elements after Pop()
             foreach (var elem in _stack)
             {
                 Console.WriteLine("after pop: " + elem);
@@ -142,8 +314,6 @@ namespace Datastructures
 
         public static void _LinkedList()
         {
-
-
             // create a linkedlist LinkedList class , of type string
             LinkedList<string> _list = new LinkedList<string>();
 
@@ -233,7 +403,8 @@ namespace Datastructures
 
             return max_so_now;
         }
-        // Utility functions to get minimum of two integers
+       
+        // functions to get minimum of two integers
         static int min(int x, int y)
         {
             return x < y ? x : y;
@@ -244,256 +415,7 @@ namespace Datastructures
         {
             return x > y ? x : y;
         }
-
-        //singly linkedlist: create the node
-        public class Node
-        {
-            public int data;
-            public Node next;
-            public Node(int d)
-            {
-                data = d;
-                next = null;
-            }
-        }
-
-        public class SingleLinkedList
-        {
-            internal Node head;
-
-            //insert data at the front of the list
-            internal void InsertFront(SingleLinkedList singlyList, int new_data)
-            {
-                Node new_node = new Node(new_data);
-                new_node.next = singlyList.head;
-                singlyList.head = new_node;
-            }
-
-            //insert last
-            internal void InsertLast(SingleLinkedList singlyList, int new_data)
-            {
-                Node new_node = new Node(new_data);
-                if (singlyList.head == null)
-                {
-                    singlyList.head = new_node;
-                    return;
-                }
-                Node lastNode = GetLastNode(singlyList);
-                lastNode.next = new_node;
-            }
-
-            internal Node GetLastNode(SingleLinkedList singlyList)
-            {
-                Node temp = singlyList.head;
-                while (temp.next != null)
-                {
-                    temp = temp.next;
-                }
-                return temp;
-            }
-            //delete node by key
-            internal void DeleteNodebyKey(SingleLinkedList singlyList, int key)
-            {
-                Node temp = singlyList.head;
-                Node prev = null;
-                if (temp != null && temp.data == key)
-                {
-                    singlyList.head = temp.next;
-                    return;
-                }
-                while (temp != null && temp.data != key)
-                {
-                    prev = temp;
-                    temp = temp.next;
-                }
-                if (temp == null)
-                {
-                    return;
-                }
-                prev.next = temp.next;
-            }
-
-            //remove duplicates from a sorted linked list
-            public void _removeDuplicates()
-            {
-                /*ref to head*/
-                Node current = head;
-
-                /* Pointer to store the next pointer of a node to be deleted*/
-                Node next_next;
-
-                /* do nothing if the list is empty */
-                if (head == null)
-                    return;
-
-                /* Traverse list till the last node */
-                while (current.next != null)
-                {
-
-                    /*compare current node with the next node */
-                    if (current.data == current.next.data)
-                    {
-                        next_next = current.next.next;
-                        current.next = null;
-                        current.next = next_next;
-                    }
-                    else // advance if no deletion
-                        current = current.next;
-                }
-            }
-            
-            /* insert a new Node at front of the list. */
-            public void _pushtoNode(int new_data)
-            {
-                /* Allocate the Node and Put in the data to the node*/
-                Node new_node = new Node(new_data);
-
-                /* Make next of new Node as head */
-                new_node.next = head;
-
-                /* Move the head to point to new Node */
-                head = new_node;
-            }
-
-            /* print linked list */
-            public void _printList()
-            {
-                Node temp = head;
-                while (temp != null)
-                {
-                    Console.Write(temp.data + " ");
-                    temp = temp.next;
-                }
-                Console.WriteLine();
-            }
-            
-            // remove duplicates from an unsorted linked list
-            public void removeDuplicateFromList(Node head)
-            {
-
-                // Hash to store already seen values
-                HashSet<int> hs = new HashSet<int>();
-
-                // Pick elements one by one
-                Node current = head;
-                Node prev = null;
-                while (current != null)
-                {
-                    int curval = current.data;
-
-                    // If current value is seen before
-                    if (hs.Contains(curval))
-                    {
-                        prev.next = current.next;
-                    }
-                    else
-                    {
-                        hs.Add(curval);
-                        prev = current;
-                    }
-                    current = current.next;
-                }
-            }
-
-            // print nodes in a given linked list
-            public void _printNode(Node head)
-            {
-                while (head != null)
-                {
-                    Console.Write(head.data + " ");
-                    head = head.next;
-                }
-            }
-
-            // find kth element
-            /* get the nth node from the last of a linked list */
-            public void _printKthFromLast(int n)
-            {
-                //Time Complexity: O(n) where n is the length of linked list. 
-
-                int len = 0;
-                Node temp = head;
-
-                // a) count the number of nodes in Linked List 
-                while (temp != null)
-                {
-                    temp = temp.next;
-                    len++;
-                }
-
-                // check if value of n is not more than length of the linked list 
-                if (len < n) { 
-                  Console.WriteLine("position "+ n +" not available in the list");
-                    return;
-                }
-
-                temp = head;
-
-                // b) get the (len-n+1)th node from the beginning 
-                for (int i = 1; i < len - n + 1; i++)
-                    temp = temp.next;
-
-                Console.WriteLine(temp.data);
-            }
-        }
-
-        static void _GetKthElementofLinkedList(int n) {
-            SingleLinkedList llist = new SingleLinkedList();
-            llist._pushtoNode(25);
-            llist._pushtoNode(40);
-            llist._pushtoNode(18);
-            llist._pushtoNode(32);
-
-            //print list
-            Console.WriteLine("Elements list:");
-            llist._printList();
-            Console.WriteLine("\n");
-            Console.WriteLine( "position "+n+" from last: " );          
-            llist._printKthFromLast(n);
-            ;
-
-        }
-
-        static void _LinkedListOps()
-        {
-
-            //Time Complexity: O(n) where n is the number of nodes in the given linked list.
-
-            SingleLinkedList _list = new SingleLinkedList();
-            _list._pushtoNode(30);
-            _list._pushtoNode(26);
-            _list._pushtoNode(26);
-            _list._pushtoNode(50);
-            _list._pushtoNode(40);
-            _list._pushtoNode(40);
-
-            Console.WriteLine("List before removing duplicates");
-            _list._printList();
-            Console.WriteLine(" \n");
-            _list._removeDuplicates();
-            Console.WriteLine("List after removing duplicates");
-            _list._printList();
-        }
-
-        static void _LinkedListWHashmap()
-        {
-
-            //Time Complexity: O(n) on average (assuming that hash table access time is O(1) on average).
-
-            SingleLinkedList _list = new SingleLinkedList();
-            Node _start = new Node(70);
-            _start.next = new Node(40);
-            _start.next.next = new Node(60);
-            _start.next.next.next = new Node(60);
-            _start.next.next.next.next = new Node(40);
-
-            Console.WriteLine("List before removing duplicates \n");
-            _list._printNode(_start);
-            Console.WriteLine(" \n");
-            _list.removeDuplicateFromList(_start);
-            Console.WriteLine("List after removing duplicates \n");
-            _list._printNode(_start);
-        }
+               
         
         /* reverse integer array arr[]  from  start to end*/
         static void _reverseArray(int[] arr, int start, int end) //takes arr[], start and end positions
@@ -845,6 +767,160 @@ namespace Datastructures
         }
 
 
+        // rotate a N x N matrix by 90 degrees in anti-clockwise direction
+        /*
+         *  Time Complexity: O(n*n), where n is side of array.  O(N2)
+            A single traversal of the matrix is needed.
+            Space Complexity: O(1). 
+            As a constant space is needed
+        */
+        static void _rotateMatrix(int N, int[,] mat)
+        {
+            // consider all squares one by one
+            for (int x = 0; x < N / 2; x++)
+            {
+                // consider elements in group of 4 incurrent square
+                for (int y = x; y < N - x - 1; y++)
+                {
+                    // store current cell in temp variable
+                    int temp = mat[x, y];
 
+                    // move values from right to top
+                    mat[x, y] = mat[y, N - 1 - x];
+
+                    // move values from bottom to right
+                    mat[y, N - 1 - x] = mat[N - 1 - x, N - 1 - y];
+
+                    // move values from left to bottom
+                    mat[N - 1 - x, N - 1 - y] = mat[N - 1 - y, x];
+
+                    // assign temp to left
+                    mat[N - 1 - y, x] = temp;
+                }
+            }
+        }
+
+        //rotate clockwise
+
+        static void _rotateMatrix_Clockwise(int N, int[,] mat)
+        {
+            // consider all squares one by one
+            for (int y = 0; y < N / 2; y++)
+            {
+                // consider elements in group of 4 incurrent square
+                for (int x = y; x < N - y - 1; x++)
+                {
+                    // store current cell in temp variable
+                    int temp = mat[y, x];
+
+                    // move values from left to top
+                    mat[y, x] = mat[x, N - 1 - y];
+
+                    // move values from bottom to left
+                    mat[x, N - 1 - y] = mat[N - 1 - y, N - 1 - x];
+
+                    // move values from right to bottom
+                    mat[N - 1 - y, N - 1 - x] = mat[N - 1 - x, y];
+
+                    // assign temp to left
+                    mat[N - 1 - x, y] = temp;
+                }
+            }
+        }
+
+        // print the rotated matrix
+        static void _printMatrix(int N,  int[,] mat)
+        {
+            for (int i = 0; i < N; i++)
+            {
+                for (int j = 0; j < N; j++)
+                    Console.Write(" " + mat[i, j]);
+                Console.WriteLine();
+            }
+            Console.WriteLine();
+        }
+        //rotate matrix driver code
+
+        static void _matrixRotate() {
+
+            int N = 4;
+
+            // Test Case 1
+            int[,] mat = {
+
+                { 1, 2, 3, 4 },
+                { 5, 6, 7, 8 },
+                { 9, 10, 11, 12 },
+                { 13, 14, 15, 16 }
+
+              };
+
+            // Tese Case 2
+            /* int mat[][] =
+            {
+                {1, 2, 3},
+                {4, 5, 6},
+                {7, 8, 9}
+            };
+            */            
+
+            //print original matrix
+            Console.WriteLine("original matrix: \n");
+            _printMatrix(N, mat);
+
+            //rotate anticlockwise
+            _rotateMatrix(N, mat);
+
+            //rotate clockwise
+           // _rotateMatrix_Clockwise(N, mat);
+
+            // Print rotated matrix
+            Console.WriteLine("rotated matrix: \n");
+            _printMatrix(N, mat);
+        }
+
+        /* Rotate Matrix: Given an image represented by an NxN matrix, where each pixel in the image is 4
+         bytes, write a method to rotate the image by 90 degrees. Can you do this in place? */
+
+        //rotate image sides : clockwise rotation
+        static int[][] RoatateImageSides(int start, int end, int[][] _img)
+        {
+            for (int i = start; i <= end - 1; i++)
+            {
+                int offset = i - start;
+                int temp = _img[start][i];
+                _img[start][i] = _img[end - offset][start];
+                _img[end - offset][start] = _img[end][end - offset];
+                _img[end][end - offset] = _img[i][end];
+                _img[i][end] = temp;
+            }
+            return _img;
+        }
+
+        //rotate image
+        static int[][] RotateImage(int[][] inputImage)
+        {
+            for (int i = 0; i < inputImage.Length / 2; i++)
+            {
+                inputImage = RoatateImageSides(i, inputImage.Length - i - 1, inputImage);
+            }
+            return inputImage;
+        }
+
+        static void DisplayRotatedImage(int[][] imgMatrix)
+        {
+            int length = imgMatrix[0].Length;
+            for (int i = 0; i < length; i++)
+            {
+                string a = "";
+                for (int j = 0; j < length; j++)
+                {
+                    a += imgMatrix[i][j] + " ";
+                }
+                Console.WriteLine(a);
+            }
+        }
+
+       
     }
 }
