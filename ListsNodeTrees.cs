@@ -306,10 +306,11 @@ namespace Datastructures
             }
 
             /* insert a node at the beginning of the Doubly Linked List */
-            public void pushLnkNode(int new_data)
+            public void pushLnkNode(object new_data) //int values
             {
                 /* allocate node */
-                LnKNode new_node = new LnKNode(new_data);
+
+                LnKNode new_node = new LnKNode(Convert.ToInt32(new_data));
 
                 /* since we are adding at the beginning,
                 prev is always NULL */
@@ -425,6 +426,23 @@ namespace Datastructures
                 height and right heights */
                 return 1 + Math.Max(height(node.prev), height(node.next));
             }
+
+            /*maximum depth of a tree -- the number of
+              nodes along the longest path from the root node down to the farthest leaf node.*/
+            public int maximumDepth(Node node)
+            {
+                //Time Complexity: O(n), n: number of nodes
+                if (node == null)
+                    return 0;
+                else
+                {
+                    /* calculate the depth of each subtree */
+                    int leftDepth = maximumDepth(node.prev);
+                    int rightDepth = maximumDepth(node.next);
+                   return  Math.Max(leftDepth, rightDepth) + 1;
+                }
+            }
+
 
         }
 
