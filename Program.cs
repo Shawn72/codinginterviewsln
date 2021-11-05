@@ -66,12 +66,30 @@ namespace Datastructures
             //  LinkedListToBST();
             // _checkBSTHeightBalance();
             // MaximumTreeDepth();
-            // minArrayOp();
+            //  minArrayOp();
+            // _minOpstomakeArrayEqual();
             // _UpdateBits();
-            ZeroMatrix();
+            //  ZeroMatrix();
+            // _printBinarytostring();
+            //_FlipBitOnce();
+            _NextSmallestorLargest();
 
             //below code should come at the bottom, make cmd not disappear
             Console.ReadLine();
+        }
+
+        static void _NextSmallestorLargest() {
+
+            int n = 6;
+            Console.WriteLine("next largest / smallest int: "+bt.getNext(n));
+
+        }
+
+        static void _FlipBitOnce() {
+            //length of the longest sequence
+            int flippedbits = bt.flipBit(1775);
+            Console.WriteLine("length of the longest sequence: " + flippedbits);
+
         }
 
         //zerofy matrix if one element in row or column is 0
@@ -96,6 +114,13 @@ namespace Datastructures
                     }
             
                 }
+        }
+
+        static void _printBinarytostring() {
+           // Console.WriteLine("binary: " + bt._printBinary(0.625));
+            Console.WriteLine("binary: " + bt.printBinaryPoint5(0.625));
+            
+
         }
 
         static void _UpdateBits (){
@@ -128,11 +153,20 @@ namespace Datastructures
         }
 
         static void minArrayOp() {
-            Arrays ar = new Arrays();
-            int[] arr = { 1, -4, -3, 0, 9, -8 };
+
+            // int[] arr = { 1, -4, -3, 0, 9, -8 };
+            int[] arr = { 1, 5, 7, 10 };
             int len = arr.Length;
-            int minOp = ar.LeetCodeMinOperations(len); ;
+            int minOp = arrys.LeetCodeMinOperations(len); ;
             Console.WriteLine("minimum operations: "+ minOp);
+        }
+
+        static void _minOpstomakeArrayEqual() {
+           // int[] arr = { 1, -4, -3, 0, 9, -8 };
+            int[] arr = { 1, 5, 7, 10 };
+
+            int minOps = arrys.minimumOpsCost(arr);
+            Console.WriteLine("minimum operations: " + minOps);
         }
 
         static void MaximumTreeDepth() {
@@ -158,10 +192,8 @@ namespace Datastructures
             /* Convert List to BST */
             //convert LinkedList to BST first
             Node root = nList.sortedListToBST();
-            Console.WriteLine("Maximum depth: "+ nList.maximumDepth(root));
-         
-
-
+            Console.WriteLine("Maximum depth: "+ nList.maximumDepth(root));    
+            
         }
 
         static void _checkBSTHeightBalance()

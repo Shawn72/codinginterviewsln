@@ -396,6 +396,45 @@ namespace Datastructures
             return str;
         }
 
+        // Minimum Increment / decrement to make array elements equal
+        // return minimum operations need to be make each element of array equal
+        public int minimumOpsCost(int[] arr)
+        {
+            int n = arr.Length; //length of the array
+
+            // Initialize cost to 0
+            int cost = 0;
+
+            // Sort the array first
+            Array.Sort(arr);
+
+            // get Middle element
+            int M = arr[n / 2];
+
+            // Find Cost
+            for (int i = 0; i < n; ++i)
+                cost += Math.Abs(arr[i] - M);
+
+            // If n, is even. Take minimum of the  Cost obtained by considering both middle elements
+            if (n % 2 == 0)
+            {
+                int tempCost = 0;
+
+                M = arr[(n / 2) - 1];
+
+                // Find cost again
+                for (int i = 0; i < n; ++i)
+                    tempCost += Math.Abs(arr[i] - M);
+
+                // Take minimum of two cost, compare two and take lowest min cost
+                cost = Math.Min(cost, tempCost);
+            }
+
+            // Return total cost
+            return cost;
+        }
+
+
 
     }
 }
