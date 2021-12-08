@@ -187,5 +187,92 @@ namespace Datastructures
             return n;
         }
 
+        //get prev smallest /largest
+        /*1. Compute c0 and cl. Note that cl is the number of trailing 0
+            immediately to the lef of the trailing ones.
+            2. Flip the rightmost non-trailing one to a zero. This will be at po
+            3. Clear all bits to the right of bit p.
+            4. Insert c1+ 1 ones immediately to the right of position p
+        */
+        public int getPrev(int n)
+        {
+            int temp = n;
+            int c0 = 0;
+            int C1 = 0;
+            while ( (temp & 1) == 1) {
+                C1++;
+                temp >>= 1;
+            }
+           
+             if (temp == 0) return -1;
+               
+                while (((temp & 1) == 0) && (temp != 0))
+                {
+                    c0++;
+                    temp >>= 1;
+                }
+             
+                int p = c0 + C1; // position of rightmost non-trailing one
+
+                n &= ((~0) << (p + 1)); // clears from bit p onwards
+               
+                int mask = (1 << (C1 + 1)) - 1; // Sequence of (c1+1) ones
+
+                n  |= mask << (c0 - 1);
+                
+                return n;
+            }
+
+        //Write a function to determine the number of bits you would need to flip to convert
+        // integer A to integer B.
+        /*
+         1. Calculate XOR of A and B.      
+             a_xor_b = A ^ B
+        2. Count the set bits in the above 
+            calculated XOR result.
+        countBitsSet(a_xor_b)
+        */
+        // Function that count set bits
+        public int countBitsSet(int n)
+        {
+            int count = 0;
+            while (n != 0)
+            {
+                count++;
+                n &= (n - 1);
+            }
+            return count;
+        }
+
+        // return count of flipped number
+        public int FlippedCount(int a, int b)
+        {
+            // Return count of set
+            // bits in a XOR b
+            int u = a ^ b;
+            return countBitsSet(a ^ b);
+        }
+
+        /*
+          Write a program to swap odd and even bits in an integer with as few instructions as
+            possible (e.g., bit O and bit 1 are swapped, bit 2 and bit 3 are swapped, and so on)
+            Every even position bit is swapped with adjacent bit on right side
+        */
+        public int swapBits(int x)
+        {
+            for (int i = 0; i < 32; i += 2)
+            {
+                int i_bit = (x >> i) & 1; // find i th bit..even
+                int i_1_bit
+                    = (x >> (i + 1)) & 1; // find i+1 th bit..odd
+
+                x = x - (i_bit << i) // remove i_bit
+                    - (i_1_bit << (i + 1)) // remove i+1 th bit
+                    + (i_bit  << (i + 1)) // put i_bit at i+1 location
+                    + (i_1_bit << i); // put i+1 bit at i location
+            }
+            return x;
+        }
+
     }
 }

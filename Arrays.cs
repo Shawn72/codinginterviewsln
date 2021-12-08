@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Datastructures
 {
     public class Arrays
     {
         /* print minimum  operation required to make all elements of an array equal */
-        public int  _printMinArrayOps(int[] arr)
+        public int _printMinArrayOps(int[] arr)
         {
             int arraySum, smallest,
             array_size = arr.Length;
@@ -23,7 +24,7 @@ namespace Datastructures
                 arraySum += arr[i];
             }
 
-            int minOperation = arraySum -array_size * smallest;
+            int minOperation = arraySum - array_size * smallest;
 
             /* Print min operation required */
             // Console.Write("Minimum Operation = " + minOperation);
@@ -264,7 +265,7 @@ namespace Datastructures
          * /
 
         /* function to check whether characters of a string can form a palindrome */
-        public  bool canFormPalindrome(string str)
+        public bool canFormPalindrome(string str)
         {
             //O(n) time using a count array.
             int NO_OF_CHARS = 256;
@@ -336,11 +337,11 @@ namespace Datastructures
         }
 
         //rearrange a string to form a palidrome
-    
+
         //URLify a string
         // Replaces spaces with %20  and returns new length of modified string.
         // It returns -1 if modified string cannot be stored in string array []
-       public char[] _URLifyString(char[] str)
+        public char[] _URLifyString(char[] str)
         {
             // Time Complexity: O(n), where n is the true length of the string.
             // Auxiliary Space: O(1), because  program is an in-place algorithm.
@@ -434,7 +435,154 @@ namespace Datastructures
             return cost;
         }
 
+        //HackerRank qn
+        /*
+            * Complete the 'arrayManipulation' function below.
+            *
+            * The function is expected to return a LONG_INTEGER.
+            * The function accepts following parameters:
+            *  1. INTEGER n
+            *  2. 2D_INTEGER_ARRAY queries
+        */
+        public long arrayManipulation(int n, int[][] queries)
+        {
+            long[] ctrl = new long[n + 1];
+            long a, b, k;
+            for (int i = 0; i < queries.Length; i++)
+            {
+                a = queries[i][0];
+                b = queries[i][1];
+                k = queries[i][2];
+
+                ctrl[a - 1] += k;
+                ctrl[b] -= k;
+            }
+
+            long max = long.MinValue;
+            long sum = 0;
+            for (int i = 0; i < ctrl.Length; i++)
+            {
+                sum += ctrl[i];
+                max = Math.Max(max, sum);
+            }
+            return max;
+        }
+       
+        //use blockcopy to convert to list
+        public List<int> UsingBlockCopy(int[,] array)
+        {
+            int[] tmp = new int[array.GetLength(0) * array.GetLength(1)];
+            Buffer.BlockCopy(array, 0, tmp, 0, tmp.Length * sizeof(int));
+            List<int> list = new List<int>(tmp);
+            return list;
+        }
+
+        //use blockcopy to convert to list
+        public List<int> UsingBlockCopy2D(int[][] array)
+        {
+            int[] tmp = new int[array.GetLength(0) * array.GetLength(1)];
+            Buffer.BlockCopy(array, 0, tmp, 0, tmp.Length * sizeof(int));
+            List<int> list = new List<int>(tmp);
+            return list;
+        }
 
 
+        //convert List to multidimension array
+        public int[][] _ListTo2DArray(List<List<int>> lst)
+        {
+            //2D array
+            int[][] Darrays = lst.Select(a => a.ToArray()).ToArray();
+            return Darrays;
+        }
+
+        public void NestedList()
+        {
+            List<List<int>> nestedlist = new List<List<int>>();
+            // create a sublist
+            List<int> sublist = new List<int>();
+            int[,] arr = { { 2, 3, 7 }, { 2, 3, 5 }, { 2, 3, 6 }, { 2, 4, 7 }, { 2, 4, 5 }, { 2, 4, 6 } };
+            sublist = UsingBlockCopy(arr);
+            nestedlist.Add(sublist);
+            Display(nestedlist);
+        }
+
+        public List<List<int>> NList(int[,] arr) {
+            List<List<int>> nestedlist = new List<List<int>>();
+            //take array and convert it to nested list
+            // create a sublist          
+            List<int> sublist = new List<int>();
+            sublist = UsingBlockCopy(arr);
+            nestedlist.Add(sublist);
+            return nestedlist;
+        }
+
+        public void Display(List<List<int>> list)
+        {
+            // Part 2: loop over and display everything in the List.
+            Console.WriteLine("Elements:");
+            foreach (var sublist in list)
+            {
+                foreach (var value in sublist)
+                {
+                    Console.Write(value);
+                    Console.Write(' ');
+                }
+                Console.WriteLine();
+            }
+            // Part 3: display element.
+            Console.WriteLine("Element at 0, 1:");
+            Console.WriteLine(list[0][1]);
+            // Part 4: display total count.
+            int count = 0;
+            foreach (var sublist in list)
+            {
+                count += sublist.Count;
+            }
+            Console.WriteLine("Count: "+ count);            
+        }
+
+        /*
+            * Complete the 'arrayManipulation' function below.
+            *
+            * The function is expected to return a LONG_INTEGER.
+            * The function accepts following parameters:
+            *  1. INTEGER n
+            *  2. 2D_INTEGER_ARRAY queries
+        */
+
+        public long arrayManipulation(int n, List<List<int>> queries)
+        {
+            //create int [][]2Darray to use,,..covert input parameter queries
+            int[][] qryList = _ListTo2DArray(queries);
+
+            long[] ctrl = new long[n + 1];
+            long a, b, k;
+            for (int i = 0; i < qryList.Length; i++)
+            {
+                a = qryList[i][0];
+                b = qryList[i][1];
+                k = qryList[i][2];
+
+                ctrl[a - 1] += k;
+                ctrl[b] -= k;
+            }
+
+            long max = long.MinValue;
+            long sum = 0;
+            for (int i = 0; i < ctrl.Length; i++)
+            {
+                sum += ctrl[i];
+                max = Math.Max(max, sum);
+            }
+            return max;
+
+        }
+
+
+
+
+
+        //end class: Arrays
     }
+
 }

@@ -72,16 +72,101 @@ namespace Datastructures
             //  ZeroMatrix();
             // _printBinarytostring();
             //_FlipBitOnce();
-            _NextSmallestorLargest();
+            // _NextSmallestorLargest();
+            // countFlippedBits();
+            // SwapOddEvenBits();
+            // CatsArrtoList();
+           // _ConvertListto2Darray();
+
+            TestArrayManipulation ();
 
             //below code should come at the bottom, make cmd not disappear
             Console.ReadLine();
         }
 
+        static void TestArrayManipulation() {
+
+            int n = 5;
+            int[][] queries = new int[3][];
+
+            int k = queries.Length;
+          //  queries[0] = new int[] { 1, 2, 100 };
+          //  queries[1] = new int[] { 2, 5, 100 };
+          //  queries[2] = new int[] { 3, 4, 100 };
+
+
+            int[,] arr = { { 1, 2, 100 }, { 2, 5, 100 }, { 3, 4, 100 } };
+
+            int j = arr.Length;
+
+            List<List<int>> nestedlst = arrys.NList(arr);
+            // arrys.NestedList();
+            // arrys.Display(nestedlst);
+            //convert nested list to int[][]
+            int[][] nDarray = arrys._ListTo2DArray(nestedlst);
+            int g = nDarray.Length;
+            long result = arrys.arrayManipulation(n, nDarray);
+            Console.WriteLine(result);
+         
+        }
+
+
+        static void _ConvertListto2Darray() {
+            // int[][] arr = {new int[] { 2, 3 }, new int[]{ 2, 3 }, new int[]{ 2, 3 } };
+            //convert to nested list
+            int[,] arr = { { 2, 3, 7 }, { 2, 3, 5 }, { 2, 3, 6 }, { 2, 4, 7 }, { 2, 4, 5 }, { 2, 4, 6 } };
+            List< List<int> > nestedlst = arrys.NList(arr);
+            // arrys.NestedList();
+            // arrys.Display(nestedlst);
+            //convert nested list to int[][]
+            int[][] nDarray = arrys._ListTo2DArray(nestedlst);
+            Console.WriteLine("2D Array: " + nDarray);
+        }
+
+        static void CatsArrtoList() {
+            int[,] arr = { { 2, 3, 7 }, { 2, 3, 5 }, { 2, 3, 6 }, { 2, 4, 7 }, { 2, 4, 5 }, { 2, 4, 6 } };
+            // Console.WriteLine("List: " + arrys.CastToList(arr));
+            Console.WriteLine("List: " + arrys.UsingBlockCopy(arr));
+        }
+
+
+        static void SwapOddEvenBits() {
+            int n = 23;
+            string b = _convertIntToBinary(n);
+            Console.WriteLine("original no. : "+n+": bits: " + b);
+            //swap odd/ even bits
+            int sw = bt.swapBits(n);
+            string b2 = _convertIntToBinary(sw);
+            Console.WriteLine("no. after bit swap : "+sw+": bits after swap: " + b2);
+
+        }
+
+        static string _convertIntToBinary(int m) {
+         
+            int remainder;
+            string binary = string.Empty;
+
+            //convert integer back to binary string
+            while (m > 0)
+            {
+                remainder = m % 2;
+                m /= 2;
+                binary = remainder.ToString() + binary;
+            }
+
+            return binary;
+        }
+
+        static void countFlippedBits() {
+            int a = 12, b = 18;
+            Console.WriteLine("bits to flip: " + bt.FlippedCount(a, b));
+        }
+
         static void _NextSmallestorLargest() {
 
-            int n = 6;
+            int n = 5;
             Console.WriteLine("next largest / smallest int: "+bt.getNext(n));
+            Console.WriteLine("prev largest / smallest int: " + bt.getPrev(n));
 
         }
 
