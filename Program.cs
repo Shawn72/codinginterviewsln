@@ -89,9 +89,8 @@ namespace Datastructures
             // var sum =  AddMe(5, 10);
             // Console.WriteLine("sum is: " + sum);
 
-       
-            int[] arr = new int[] { 1, 9, 6, 7, 5, 9 };
 
+            //int[] arr = new int[] { 1, 9, 6, 7, 5, 9 };
             // SortArray(arr);        
 
 
@@ -103,7 +102,9 @@ namespace Datastructures
             // string[] wrdarr = { "the", "dog", "got", "the" , "bone"};         
             //MyWordCounter(wrdarr);
 
-            Reshape("mungu   ni mwema ii" , 3);
+            //Reshape("mungu   ni mwema ii" , 3);
+
+            CallSealedClass();
 
             //below code should come at the bottom, make cmd not disappear
             Console.ReadLine();
@@ -724,7 +725,7 @@ namespace Datastructures
         //reshape, remove all spaces and lay it out
         static void Reshape(string str, int n)
         {        
-            //n = number of characters in each line
+            //n = number of characters in each line ( chunk size )
             str = str.Replace(" ", ""); //remove spaces first
             string txtResults = "";
 
@@ -790,6 +791,33 @@ namespace Datastructures
         //    void run(); // interface method (does not have a body)
         //}
 
+
+        //sealed class: is aclass that can not be inherited, and it's methods cant be override
+        //sealing a class takes away inheritance
+        //scenario, for db helper class with sensitive info u dont want inheritted
+
+        //eg.
+        sealed class SealedClassTest
+        {
+            public int Add(int x, int y)
+            {
+                return x + y;
+            }
+        }
+
+        static void CallSealedClass()
+        {
+            SealedClassTest sc = new SealedClassTest();
+            int total = sc.Add(4, 5);
+            Console.WriteLine("Sealed Total = " + total.ToString());
+        }
+
+        //class InheritSealed: SealedClassTest
+        //{
+        //    //this class throws the following error:
+        //    //: cannot derive from sealed type 'Program.SealedClassTest,
+        //    //...Unseal class to enable inheritance
+        //}  
 
 
 
