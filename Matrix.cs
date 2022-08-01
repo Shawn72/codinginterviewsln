@@ -90,7 +90,7 @@ namespace Datastructures
                 _img[start][i] = _img[end - offset][start];
                 _img[end - offset][start] = _img[end][end - offset];
                 _img[end][end - offset] = _img[i][end];
-                _img[i][end] = temp;
+                _img[i][end] = temp;                
             }
             return _img;
         }

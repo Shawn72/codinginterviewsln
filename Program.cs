@@ -14,6 +14,8 @@ namespace Datastructures
         public static BitsManipulation bt = new BitsManipulation();
         static void Main(string[] args)
         {
+          //  string s1 = "hello" + "i" + "am";
+          //  Console.WriteLine(s1);
 
             //  string k = " mbuvi      shawn ";
             //  Console.WriteLine("Reversed: "+ _ReverseWord(k));
@@ -76,12 +78,64 @@ namespace Datastructures
             // countFlippedBits();
             // SwapOddEvenBits();
             // CatsArrtoList();
-           // _ConvertListto2Darray();
+            // _ConvertListto2Darray();
 
-            TestArrayManipulation ();
+            //TestArrayManipulation ();
+
+            // int[] testArr = { 5, 6, 0, 4, 6, 0, 9, 0, 8, 10, 0, 0 };
+            // PushAllZerosToEnd(testArr);
+
+            // AddWOOperator(5, 10);
+            // var sum =  AddMe(5, 10);
+            // Console.WriteLine("sum is: " + sum);
+
+       
+            int[] arr = new int[] { 1, 9, 6, 7, 5, 9 };
+
+            // SortArray(arr);        
+
+
+            //print leetcode sorted array
+            // Console.WriteLine("my sorted array: " +ArrayPrintHelper(SortMeArray(arr)));
+
+            //AbstrctClsTest();
+
+            // string[] wrdarr = { "the", "dog", "got", "the" , "bone"};         
+            //MyWordCounter(wrdarr);
+
+            Reshape("mungu   ni mwema ii" , 3);
 
             //below code should come at the bottom, make cmd not disappear
             Console.ReadLine();
+        }
+
+
+        // use Partitioning the array: why i used it, is simple ,dont require too much writing, fast to implement
+        // use a 0 as a pivot, see non 0 element and swap it going left
+
+        //Complexity Analysis:
+        //Time Complexity: O(N)
+        //Auxiliary Space: O(1)
+        static void PushAllZerosToEnd(int [] arr)
+        {
+            int n = arr.Length; // array length
+            int j = 0; // our pivot element
+            for (int i = 0; i < n; i++) //traverse the array
+            {
+                if (arr[i] != 0)
+                {
+                    int temp = arr[j];
+                    arr[j] = arr[i];
+                    arr[i] = temp;
+                    j++;
+                }
+            }
+            for (int i = 0; i < n; i++) //for writing the output
+            {
+                Console.Write(arr[i]); //write all in  a single line, no use WriteLine
+                Console.Write(" ");
+            }
+
         }
 
         static void TestArrayManipulation() {
@@ -552,6 +606,192 @@ namespace Datastructures
             }
         }
 
-       
+
+        /// <summary>
+        /// using bitwise XOR (^)
+        /// time complexity: O (log b)
+        /// </summary>
+        public static void AddWOOperator(int a, int b)
+        {
+            // Iterate till there is no reminder to carry
+            while (b != 0)
+            {              
+                // set bits of a and b
+                int rem = a & b;
+
+                // Sum of bits of a and b where at least one of the bits is not set
+                a = a ^ b;
+
+                // rem is shifted by one bit so that adding it to a gives the required sum
+                b = rem << 1;
+            }
+            Console.WriteLine("-- sum of the integers--");
+            Console.WriteLine(a);
+        }
+
+        //add 2 numbers using recusion and bitwise
+        static int AddMe(int m, int n)
+        {
+            if (n == 0)
+                return m;
+            else
+                return AddMe(m ^ n, (m & n) << 1);
+        }
+
+        //sort array desc order
+
+        static void SortArray(int [] arr)
+        {           
+
+            // Sort array in ascending order by default.
+            Array.Sort(arr);
+
+            // Reverse array, if u want to get descending order
+            // Array.Reverse(arr);
+
+            // print all element of array
+            foreach (int value in arr)
+            {
+                Console.Write(value + " ");
+            }
+        }
+
+
+        /// <summary>
+        /// for leetcode solution
+        /// </summary>
+        static int[] SortMeArray(int[] nums)
+        {
+            //initialize results array with length of the array size given
+            int[] res = new int[nums.Length];   
+
+            for (int i = 0; i < nums.Length; i++)
+            {
+                res[i] = nums[i];
+            }
+            Array.Sort(res); //default sort //use it for asc
+            Array.Reverse(res); //for desc , specifically, use both
+            return res;
+        }
+
+        //array printer helper: call it whenever u want to output
+        static string ArrayPrintHelper(int[] arr)
+        {
+            string ars = "";
+            // print all element of array
+            foreach (int val in arr)
+            {                
+                ars += val + " ";
+            }
+            //return concatenated string
+            return ars;
+        }
+
+        //abstract class test
+        static void AbstrctClsTest()
+        {
+            var vehicle = new Vehicle()
+            {
+                Owner = "Bob",
+                YearofRegistration = "2021"
+            };
+
+            var newVehicle = new Vehicle();
+            newVehicle = vehicle;
+
+            newVehicle.Owner = "Mary"; //new owner is assigned, so Bob is overwritten
+            newVehicle.YearofRegistration = "2021";
+
+            Console.WriteLine("properties of vehicle, Owner:"+vehicle.Owner+" YoM: "+vehicle.YearofRegistration);
+        }
+
+        //string occurance
+        //return count of occurrences of str in str_arr[] 
+        static void MyWordCounter(string[] str_arr)
+        {          
+
+            var wordcounter = str_arr
+                .GroupBy(w => w)
+                .Select(g => new { Word = g.Key, Count = g.Count() })
+                .ToList();
+
+            foreach (var oneword in wordcounter)
+            {
+                Console.WriteLine("Word: '{0}' Occurence: {1} times ", oneword.Word, oneword.Count);
+            }
+        }   
+        
+        //reshape, remove all spaces and lay it out
+        static void Reshape(string str, int n)
+        {        
+            //n = number of characters in each line
+            str = str.Replace(" ", ""); //remove spaces first
+            string txtResults = "";
+
+            //split string into a n-lengthed list of strings
+            var aLine = Enumerable.Range(0, str.Length / n)
+                .Select(i => str.Substring(i * n, n)).ToList();
+
+            //check if there are any characters left after split, if so add the rest
+            if (str.Length > ((str.Length / n) * n))
+                aLine.Add(str.Substring((str.Length / n) * n));
+
+
+            Console.WriteLine("reformatted string: ");
+
+            //create return strings, with extras factored in           
+            foreach (string Line in aLine)
+                txtResults += Line  + Environment.NewLine;
+
+            Console.WriteLine(txtResults);                  
+        }
+
+        //split string in given chunks, truncate reminder
+        static IEnumerable<string> SplitTheString(string str, int chunkSize)
+        {
+            return Enumerable.Range(0, str.Length / chunkSize)
+                .Select(i => str.Substring(i * chunkSize, chunkSize));
+        }
+
+
+        // general questions
+        // 1. What is abstraction:  is the process of hiding certain details and
+        //    showing only essential information to the user.
+        //    can be implemented using abstract classes and interfaces
+
+        // 2. What is an abstract class: is a restricted class that cannot be used to create objects
+        // (to access it, it must be inherited from another class)
+
+        // 3. Abstract method: can only be used in an abstract class, and it does not have a body.
+        //The body is provided by the derived class (inherited from).
+        // eg .abstact class Animal(){ abstract void animalSound();...abstarct method }
+        // Animal myObj = new Animal(); // Will generate an error
+        // (Cannot create an instance of the abstract class or interface 'Animal')
+
+        //implementation of abstract class
+
+        // Derived class (inherit from Animal)
+        //e.g.  class Pig : Animal
+        // {
+        //     public override void animalSound() //override animalSound method and create a body now
+        //     {
+        //         // The body of animalSound() is provided here
+        //         Console.WriteLine("The pig says: wee wee");
+        //     }
+        // }
+
+        // 4. An interface is a completely "abstract class",
+        //which can only contain abstract methods and properties (with empty bodies):
+
+        // eg. interface
+        //interface Animal
+        //{
+        //    void animalSound(); // interface method (does not have a body)
+        //    void run(); // interface method (does not have a body)
+        //}
+
+
+
+
     }
 }
