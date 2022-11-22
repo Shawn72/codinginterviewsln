@@ -82,9 +82,12 @@ namespace Datastructures
 
             //TestArrayManipulation ();
 
+            ///push all 0s to end test
             // int[] testArr = { 5, 6, 0, 4, 6, 0, 9, 0, 8, 10, 0, 0 };
             // PushAllZerosToEnd(testArr);
 
+
+            ///add without operator test
             // AddWOOperator(5, 10);
             // var sum =  AddMe(5, 10);
             // Console.WriteLine("sum is: " + sum);
@@ -99,34 +102,57 @@ namespace Datastructures
 
             //AbstrctClsTest();
 
+            ///word counter test
             // string[] wrdarr = { "the", "dog", "got", "the" , "bone"};         
             //MyWordCounter(wrdarr);
 
+
+            ///string reshape test
             //Reshape("mungu   ni mwema ii" , 3);
 
             //CallSealedClass();
 
+            ///unique chars in a string test
             //Console.WriteLine("Is Unique: " +arrys.UniqueChar("mbuUvi") );
 
+            ///minimal largest sum test
             //int[] arr = { 2, 1, 5, 1, 2, 2, 2 };
             // Console.WriteLine("Minimal Large Sum: "+MinMaxDivisionSolution(3, 5, arr));
 
-
+            ///merge sort test
             //int[] nums = { 5, 2, 3, 1 };
             //var sortedNums = Merge_SortArray(nums);
             //_printMergeSort(sortedNums);
 
+
+            ///greedy algo test
             // int[] a = { 1, 3, 7, 9, 9 }; int[] b = { 5, 6, 8, 9, 10 };
             // Console.WriteLine("size of non-overlapping set: " + GreedyNonOverlappingSolution(a, b));
 
+
+            ///unique occurence using hashmaps test
             //int[] arr = { 1, 3, 4, 3, 5, 7 };
             // Console.WriteLine("Is the array unique: " + UniqueOccurrenceOfElement(arr));
 
+
+            ///quicksort test
             int[] arr = { 67, 12, 95, 56, 85, 1, 100, 23, 60, 9 };
             int n = arr.Length; //length of the array
             quickSort(arr, 0, n - 1);
-            Console.Write("Sorted array: ");
-            _printQuickSortedArray(arr);
+            Console.Write("Quick Sorted Array: ");
+            _printAnySortedArray(arr);
+
+            ///heapsort test
+            //var arr = new int[] { 73, 57, 49, 99, 133, 20, 1 };
+            //var expected_result = new int[] { 1, 20, 49, 57, 73, 99, 133 };
+            //var sortedArray = HeapSortArray(arr, arr.Length);
+            //_printAnySortedArray(sortedArray);
+
+            ///binary search test
+            Console.Write("Binary Search a Quick Sorted Array, ");
+            var bSearch = BinarySearch(arr, 85);
+            Console.WriteLine("Binary Search Results, is at index: " + bSearch);
+
 
 
             //below code should come at the bottom, make cmd not disappear
@@ -146,11 +172,16 @@ namespace Datastructures
             int j = 0; // our pivot element
             for (int i = 0; i < n; i++) //traverse the array
             {
-                if (arr[i] != 0)
+                if (arr[i] != 0) //if current root element index is not equal to 0
                 {
-                    int temp = arr[j];
-                    arr[j] = arr[i];
-                    arr[i] = temp;
+                    //int temp = arr[j];
+                    //arr[j] = arr[i];
+                    //arr[i] = temp;
+
+                    //call swap
+                    swapElements(arr, i, j);
+
+                    //increament current index
                     j++;
                 }
             }
@@ -1017,8 +1048,9 @@ namespace Datastructures
         //Quick Sort: use highest element of the array as the pivot, uses divide and conquer strategy
         //quick sort is faster than merge sort
         //is unstable, recursive, very fast
-        //complexity: O(n log n)
-        // A utility function to swap two elements
+        //complexity: O(n log n): rem halving, each time n increases by amount k, time or space increases by k/2 
+        
+        // A utility function to swap two elements, can be reused all over the project
         static void swapElements(int[] arr, int i, int j)
         {
             int temp = arr[i];  //temp storage first
@@ -1038,6 +1070,8 @@ namespace Datastructures
 
             // Index of smaller element and indicates the right position of pivot found so far
             int i = (low - 1);
+
+            //int j: current index
 
             for (int j = low; j <= high - 1; j++)
             {
@@ -1072,7 +1106,7 @@ namespace Datastructures
         }
 
         // print sorted array
-        static void _printQuickSortedArray(int[] arr)
+        static void _printAnySortedArray(int[] arr)
         {
             for (int i = 0; i < arr.Length; i++)
                 Console.Write(arr[i] + " ");
@@ -1185,10 +1219,119 @@ namespace Datastructures
         // = strikeout constants: O + O(n2)
         // pick largest: O(n2)
 
-        // why microsoft? - work culture: Growth Mindset- align my dreams / vision to fit in Microsoft's culture,
+
+        //Heap Sort
+        // 1). The heapify phase: In this phase, we transform the input array into a max heap – a binary tree
+        // in which the value of each node is greater than or equal to the value of its children nodes.
+        // 2). The sort phase: In this phase, the max heap is repeatedly removed until only one element remains.
+        //This is done by swapping the root node with the last element in the heap, and then ensuring that
+        //the new root node satisfies the max heap property.
+        //This process is repeated until only one element remains in the heap.
+
+        /// <summary>
+        /// The heap sort algorithm encounters its best-case time complexity when it encounters identical elements.
+        /// Therefore. when we have N number of elements:
+        /// Removing every node from the heap takes constant time O(1).
+        /// Since all elements are equal, we don’t need to keep building the max heap, 
+        /// hence the algorithm takes N * O(1) time or O(N).
+        /// However, since this scenario is rare, we can conclude that the best-case time complexity
+        /// of the heap sort algorithm is O(N log N),..which is also the worst case
+
+        static void Heapify(int[] arr, int arr_size, int index)
+        {
+            //Max Heap Implementation 
+
+            var largestIndex = index; //index of the maximum elementt of the array arr[]
+            var leftChild = 2 * index + 1;
+            var rightChild = 2 * index + 2;
+
+            //check if leftchild is > the current root element, if true, swap their positions
+            if (leftChild < arr_size && arr[leftChild] > arr[largestIndex])
+            {
+                largestIndex = leftChild;
+            }
+
+            //check if rightchild is > the current root element, if true, swap their positions
+            if (rightChild < arr_size && arr[rightChild] > arr[largestIndex])
+            {
+                largestIndex = rightChild;
+            }            
+
+            if (largestIndex != index)
+            { 
+                //call swapElements for swapping
+                swapElements(arr, index, largestIndex);
+
+                Heapify(arr, arr_size, largestIndex);//recursively call Heapify until we build max heap
+            }
+        }
+
+        //leatcode implementation
+        //using max heap
+        public static int[] HeapSortArray(int[] arr, int arr_size)
+        {
+            if (arr_size <= 1)
+                return arr;
+
+            for (int i = arr_size / 2 - 1; i >= 0; i--) //half the size of array
+            {
+                //build max heap array
+                Heapify(arr, arr_size, i); //i: index of current root element
+            }
+
+            for (int i = arr_size - 1; i >= 0; i--)
+            {             
+                // call swap
+                swapElements(arr, 0, i); //swap first index (0) with the last index (i)
+
+                Heapify(arr, i, 0);//build max heap array
+            }
+
+            //return sorted array
+            return arr;
+        }
+
+        ///Binary Search
+        ///Given an array of integers nums which is sorted in ascending order:
+        ///assumption(array is already sorted in asc order)
+        ///and an integer target, write a function to search target in arr. 
+        ///If target exists, then return its index. Otherwise, return -1.
+        ///You must write an algorithm with O(log n) runtime complexity.
+        ///
+        //returns index of the target search parameter
+        static int BinarySearch(int[] arr, int search) {
+
+            int lowIndex = 0;
+            int highIndex = arr.Length - 1;
+            int midIndex;
+
+            while(lowIndex <= highIndex)
+            {
+                midIndex = (lowIndex + highIndex) / 2;
+
+                if (arr[midIndex] < search)
+                {
+                    lowIndex = midIndex + 1;
+                }
+                else if (arr[midIndex] > search)
+                {
+                    highIndex = midIndex - 1;
+                }
+                else return midIndex;
+            }
+            return -1; //for error
+        }
+
+
+
+
+        // why Microsoft? - base answers work culture:
+        // 1 ). Growth Mindset- align my dreams / vision to fit in Microsoft's culture,
         // coz I'd like to grow careerwise ( Career Growth ) - boost my skills and experience through working
         // with world class team of developers, learn from each other, help make me better than how I am now.       
         // personal growth help take care of myself and others dependent on me.
+        // 2 ). Diverse & Inclusive. I am open to learning and adopting to changes accordingly, take feedback from others and work
+        // on them to become better, add quality in my work. 
 
 
 
