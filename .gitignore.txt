@@ -7,8 +7,8 @@
 *.userosscache
 *.sln.docstates
 
-Datastructures/obj/
-Datastructures/bin/
+Datastructures/obj/*
+Datastructures/bin/*
 
 # Build results
 [Dd]ebug/
