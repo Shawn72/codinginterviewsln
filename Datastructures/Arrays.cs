@@ -294,7 +294,8 @@ namespace Datastructures
         }
 
         //check palidrome using list
-        /* For a string to be palindrome all the characters should occur an EVEN number of times if the string is of even length
+        /* For a string to be palindrome all the characters should occur an EVEN number of times
+         * if the string is of even length
          *  and AT MOST one character can occur an odd number of times if the string length is odd. 
          * 
          * 
@@ -577,6 +578,60 @@ namespace Datastructures
             return max;
 
         }
+
+        //implementation of HashSets, Hashmaps to determine uniquneness of array elements
+        //check if a str if it contains unique chars
+        public bool UniqueChar(string str)
+        {
+            //mind about Lower or Upper cases, U is not u, returns True
+            //assume is ASCII - 128 bit character max , 7bit = 1 char
+            //assume char set is fixed to 128
+            //ASCII - 128
+            //Extended ASCII - 256 
+            //unicode: wide range of lengths, 8bit, 16bit, 32bits = 1 char
+            //ascii requires less space, unicode req more space :: tradeoff made
+
+            //time complexity: O(n), n = length of str
+            //space complexity: O(1)
+
+            if (str.Length > 128) return false;// greater than ascii max char set;
+
+            //create a boolean array set of 128 length
+
+            bool[]chrset = new bool[128];
+
+            //loop through all the characters in that str
+
+            for (int i = 0; i < str.Length; i++) {
+                
+                //convert str to char array
+                char[]k = str.ToCharArray();
+
+                //get value of char at index i
+                int valueAti = k[i]; //get ASCII code value for that character
+
+                //check, if the char was already found return false, not unique
+                if (chrset[valueAti])
+                {
+                    return false;
+                }
+                chrset[valueAti] = true;
+            }
+            //always return true
+            return true;
+        }
+
+        ///Big O Notations Notes
+        /// 1. O(1) : Constant Time Complexity - number of Ops not dependent on size of the input data, eg addition, subtration,assignment
+        /// 2. O(n) : Linear Time Complexity - no. of Ops increase linearly depending on size of the input 
+        /// eg. for-loops, foreach, while loops
+        /// 3. O(n2) : Quadratic Time Complexity - perform linear time ops for each value input eg.nested for-loops
+        /// 4. O(logn) : Logarithimic Complexity - has a base of 2, e.g, binary search trees, sorting,
+        /// add items to heaps, happens in recursive algos
+ 
+        
+
+
 
 
 

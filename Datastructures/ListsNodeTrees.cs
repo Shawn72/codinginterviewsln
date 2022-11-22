@@ -11,11 +11,10 @@ namespace Datastructures
         {
             public int data;
             public Node next, prev; //can rep left, right
-            public Node(int d)
+            public Node(int d) //takes in integer data
             {
                 data = d;
-                prev = null;
-                next = null;
+                prev = next = null;
             }
         }
 
@@ -166,6 +165,7 @@ namespace Datastructures
                     }
                     else
                     {
+                        //add the value to the HashSet,...or hashmap
                         hs.Add(curval);
                         prev = current;
                     }
@@ -218,6 +218,7 @@ namespace Datastructures
             /* construct a Balanced Binary Search Tree from a sorted array */
             public virtual Node _sortedArrayToBST(int[] arr, int start, int end)
             {
+                //pass array, start index, end index
 
                 /* Base Case */
                 if (start > end) return null;
@@ -225,7 +226,7 @@ namespace Datastructures
 
                 /* Get the middle element and make it root */
                 int mid = (start + end) / 2;
-                Node node = new Node(arr[mid]);
+                Node node = new Node(arr[mid]); //initialize the node
 
                 /* Recursively construct the left subtree and make it left child of root */
                 node.prev = _sortedArrayToBST(arr, start, mid - 1); //prev::rep left node             
@@ -263,12 +264,10 @@ namespace Datastructures
                 int[] leftArr = new int[mid];
                 int[] rightArr = new int[n - mid];
                 Array.Copy(nums, start, leftArr, 0, mid);
-                // Array.Copy(nums, mid + 1, rightArr, mid, n - mid);
                 rightArr = nums.Skip(leftArr.Length).ToArray();
 
                 /* Recursively construct the left subtree and make it left child of root */
                 node.prev = _sortedArrayToBST(nums, start, mid - 1); //prev::rep left node
-                                                                     //  node.prev = _sortedArrayToBST(leftArr, start, mid - 1); //prev::rep left node
 
                 /* Recursively construct the right subtree and make it right child of root */
                 node.next = _sortedArrayToBST(nums, mid + 1, end); //next rep right node
@@ -460,8 +459,6 @@ namespace Datastructures
             Console.WriteLine("\n");
             Console.WriteLine("position " + n + " from last: ");
             llist._printKthFromLast(n);
-
-
         }
 
         static void _LinkedListOps()

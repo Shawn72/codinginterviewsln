@@ -108,9 +108,10 @@ namespace Datastructures
         //from a 0 to a 1. Write code to find the length of the longest sequence of 1 s you could create
         public int flipBit(int a)
         {
-            //Time complexity:  O ( b) time and O ( 1) auxillary memory, where b is the length of the sequence in bits.// maxLen + 1 bits
+            //Time complexity:  O ( b) time and O ( 1) auxillary memory,
+            //where b is the length of the sequence in bits.// maxLen + 1 bits
 
-            /* If all bits are l, binary representation of 'a' has all 1s */
+            /* If all bits are 1, binary representation of 'a' has all 1s */
             if (~a == 0)
             return 8 * sizeof(int);           
 
@@ -188,8 +189,8 @@ namespace Datastructures
         }
 
         //get prev smallest /largest
-        /*1. Compute c0 and cl. Note that cl is the number of trailing 0
-            immediately to the lef of the trailing ones.
+        /*1. Compute c0 and c1. Note that cl is the number of trailing 0
+            immediately to the left of the trailing ones.
             2. Flip the rightmost non-trailing one to a zero. This will be at po
             3. Clear all bits to the right of bit p.
             4. Insert c1+ 1 ones immediately to the right of position p
@@ -263,8 +264,7 @@ namespace Datastructures
             for (int i = 0; i < 32; i += 2)
             {
                 int i_bit = (x >> i) & 1; // find i th bit..even
-                int i_1_bit
-                    = (x >> (i + 1)) & 1; // find i+1 th bit..odd
+                int i_1_bit   = (x >> (i + 1)) & 1; // find i+1 th bit..odd
 
                 x = x - (i_bit << i) // remove i_bit
                     - (i_1_bit << (i + 1)) // remove i+1 th bit

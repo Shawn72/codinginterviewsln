@@ -14,8 +14,8 @@ namespace Datastructures
         public static BitsManipulation bt = new BitsManipulation();
         static void Main(string[] args)
         {
-          //  string s1 = "hello" + "i" + "am";
-          //  Console.WriteLine(s1);
+            //  string s1 = "hello" + "i" + "am";
+            //  Console.WriteLine(s1);
 
             //  string k = " mbuvi      shawn ";
             //  Console.WriteLine("Reversed: "+ _ReverseWord(k));
@@ -104,7 +104,30 @@ namespace Datastructures
 
             //Reshape("mungu   ni mwema ii" , 3);
 
-            CallSealedClass();
+            //CallSealedClass();
+
+            //Console.WriteLine("Is Unique: " +arrys.UniqueChar("mbuUvi") );
+
+            //int[] arr = { 2, 1, 5, 1, 2, 2, 2 };
+            // Console.WriteLine("Minimal Large Sum: "+MinMaxDivisionSolution(3, 5, arr));
+
+
+            //int[] nums = { 5, 2, 3, 1 };
+            //var sortedNums = Merge_SortArray(nums);
+            //_printMergeSort(sortedNums);
+
+            // int[] a = { 1, 3, 7, 9, 9 }; int[] b = { 5, 6, 8, 9, 10 };
+            // Console.WriteLine("size of non-overlapping set: " + GreedyNonOverlappingSolution(a, b));
+
+            //int[] arr = { 1, 3, 4, 3, 5, 7 };
+            // Console.WriteLine("Is the array unique: " + UniqueOccurrenceOfElement(arr));
+
+            int[] arr = { 67, 12, 95, 56, 85, 1, 100, 23, 60, 9 };
+            int n = arr.Length; //length of the array
+            quickSort(arr, 0, n - 1);
+            Console.Write("Sorted array: ");
+            _printQuickSortedArray(arr);
+
 
             //below code should come at the bottom, make cmd not disappear
             Console.ReadLine();
@@ -280,16 +303,14 @@ namespace Datastructures
             int remainder;
             string binary = string.Empty;
 
-            //convert interger back to binary string
+            //convert integer back to binary string
             while (decimalNumber > 0)
             {
                 remainder = decimalNumber % 2;
                 decimalNumber /= 2;
                 binary = remainder.ToString() + binary;
             }
-
-            Console.WriteLine("after bit manipulation: " + binary);
-       
+            Console.WriteLine("after bit manipulation: " + binary);       
         }
 
         static void minArrayOp() {
@@ -618,10 +639,10 @@ namespace Datastructures
             while (b != 0)
             {              
                 // set bits of a and b
-                int rem = a & b;
+                int rem = a & b; 
 
                 // Sum of bits of a and b where at least one of the bits is not set
-                a = a ^ b;
+                a = a ^ b; //add wothout carrying
 
                 // rem is shifted by one bit so that adding it to a gives the required sum
                 b = rem << 1;
@@ -635,8 +656,9 @@ namespace Datastructures
         {
             if (n == 0)
                 return m;
-            else
-                return AddMe(m ^ n, (m & n) << 1);
+            else //call the function recursively
+                return AddMe(m ^ n, (m & n) << 1); //( (m^n)-add without carry,
+                                                   //(m & n) << 1 - carry, but no add ) 
         }
 
         //sort array desc order
@@ -694,7 +716,7 @@ namespace Datastructures
             var vehicle = new Vehicle()
             {
                 Owner = "Bob",
-                YearofRegistration = "2021"
+                YearofRegistration = "2020"
             };
 
             var newVehicle = new Vehicle();
@@ -706,7 +728,7 @@ namespace Datastructures
             Console.WriteLine("properties of vehicle, Owner:"+vehicle.Owner+" YoM: "+vehicle.YearofRegistration);
         }
 
-        //string occurance
+        //string occurances
         //return count of occurrences of str in str_arr[] 
         static void MyWordCounter(string[] str_arr)
         {          
@@ -792,7 +814,7 @@ namespace Datastructures
         //}
 
 
-        //sealed class: is aclass that can not be inherited, and it's methods cant be override
+        //sealed class: is a class that can not be inherited, and it's methods cant be overriden
         //sealing a class takes away inheritance
         //scenario, for db helper class with sensitive info u dont want inheritted
 
@@ -818,6 +840,355 @@ namespace Datastructures
         //    //: cannot derive from sealed type 'Program.SealedClassTest,
         //    //...Unseal class to enable inheritance
         //}  
+
+        //Binary Serach Algorith: MinMaxDivision
+        ///MinMaxDivision(Divide array A into K blocks and minimize the largest sum of any block.)
+        ///You are given integers K, M and a non-empty zero-indexed array A consisting of N
+        ///integers.Every element of the array is not greater than M.       
+        ///You should divide this array into K blocks of consecutive elements.The size of the block is any
+        ///integer between 0 and N. Every element of the array should belong to some block.
+        ///The sum of the block from X to Y equals A[X] + A[X + 1] + ... + A[Y]. 
+        ///The sum of empty block equals 0.The large sum is the maximal sum of any block.
+        ///For example, you are given integers K = 3, M = 5 and array A such that: A[0] = 2,  A[1] = 1,
+        /// A[2] = 5,  A[3] = 1,  A[4] = 2,   A[5] = 2,    A[6] = 2
+        /// 
+        /// * The array can be divided, for example, into the following blocks:
+        /// * [2, 1, 5, 1, 2, 2, 2], [], [] with a large sum of 15;
+        /// * [2], [1, 5, 1, 2], [2, 2] with a large sum of 9;
+        /// * [2, 1, 5], [], [1, 2, 2, 2] with a large sum of 8;
+        /// * [2, 1], [5, 1], [2, 2, 2] with a large sum of 6.
+        /// * The goal is to minimize the large sum.In the above example, 6 is the minimal large sum.
+        /// * Write a function:
+        /// * class Solution { public int solution(int K, int M, int[] A); }
+        /// * that, given integers K, M and a non-empty zero-indexed array A consisting of N integers, returns the minimal large sum.
+        /// * For example, given K = 3, M = 5 and array A such that:
+        /// *   A[0] = 2
+        /// *   A[1] = 1
+        /// *   A[2] = 5
+        /// *   A[3] = 1
+        /// *   A[4] = 2
+        /// *   A[5] = 2
+        /// *   A[6] = 2 
+        /// 
+        /// * the function should return 6, as explained above.
+        /// * Assume that:
+        /// * N and K are integers within the range[1..100, 000];
+        /// * M is an integer within the range[0..10, 000];
+        /// * each element of array A is an integer within the range[0..M].
+        /// * Complexity:
+        /// * expected worst-case time complexity is O(N* log(N+M));
+        /// * expected worst-case space complexity is O(1), beyond input storage(not counting the storage required for input arguments).
+        /// Codility Solution below
+        /// 
+
+        public static int MinMaxDivisionSolution(int K, int M, int[] A)
+        {
+            //initialize largest element in array, sum and result
+            int largest = 0; int sum = 0; int result = 0;
+
+            for (int i = 0; i < A.Length; i++)
+            {
+                //get the sum, and the largest array element
+                sum += A[i];
+                largest = Math.Max(largest, A[i]);
+            }
+            //res is the sum
+            result = sum;
+
+            while (largest <= sum)
+            {
+                //get mid index element
+                int mid = (largest + sum) / 2;
+
+                if (IsDivideSolvable(mid, K - 1, A))
+                {
+                    sum = mid - 1;
+                    result = mid;
+                }
+                else
+                {
+                    largest = mid + 1;
+                }
+            }
+            return result;
+        }
+
+        public static bool IsDivideSolvable(int mid, int k, int[] a)
+        {
+            int sum = 0;
+            for (int i = 0; i < a.Length; i++)
+            {
+                sum += a[i];
+                if (sum > mid)
+                {
+                    sum = a[i];
+                    k--;
+                }
+                if (k < 0)
+                {
+                    return false;
+                }
+            }
+            return true;
+
+        }
+
+        ///Sorting Algorithms
+        ///
+        //1 . Merge Sort: is based on divide and conquer paradigm, divide array into 2 halves, sort each and merge results back to one Big array: 
+        //Time Complexity: O(nlogn )
+        ///Given an array of integers nums, sort the array in ascending order and return it.
+        ///You must solve the problem without using any built-in functions in O(nlog(n)) time complexity
+        ///and with the smallest space complexity possible.
+        ///Example 1:
+        ///Input: nums = [5,2,3,1]
+        ///Output: [1,2,3,5]
+        ///Explanation: After sorting the array,
+        ///the positions of some numbers are not changed(for example, 2 and 3),
+        ///while the positions of other numbers are changed(for example, 1 and 5).
+        ///
+        //leetcode solution
+
+        //create array merge() helper
+        public static void mergeArray(int low, int mid, int high, int[]arr)
+        {
+            int[] merge_helper = new int[high - low + 1];
+
+            for (int k = low; k <= high; k++)
+            {
+                merge_helper[k - low] = arr[k];
+            }
+
+            int i = low, j = mid + 1;
+            int idx = low; //initialize index to var low 
+
+            while (i <= mid && j <= high)
+            {
+                if (merge_helper[i - low] < merge_helper[j - low])
+                {
+                    arr[idx++] = merge_helper[i++ - low];
+                }
+                else
+                {
+                    arr[idx++] = merge_helper[j++ - low];
+                }
+            }
+
+            while (i <= mid)
+            {
+                arr[idx++] = merge_helper[i++ - low];
+            }
+        }
+        public static void mergeSort(int low, int high, int[]nums)
+        {
+            //low: starting index, high: ending index, nums: array to be sorted
+
+            if (low >= high) return;
+
+            int mid = low + (high - low) / 2;
+
+            mergeSort(low, mid, nums); //left node
+
+            mergeSort(mid + 1, high, nums); //right node
+
+            mergeArray(low, mid, high, nums); //merge both
+        }
+
+        //leetcode main function to call
+        public static int[] Merge_SortArray(int[] nums)
+        {           
+            mergeSort(0, nums.Length - 1, nums);
+            return nums;
+        }
+
+        public static void _printMergeSort(int[] arr)
+        {
+            //print out
+            var m = @"";
+            Console.WriteLine("Print Merged Sort: ");
+            foreach (var l in arr)
+            {
+               m += l.ToString()+",";               
+            }
+            //remove the last comma
+            Console.Write(m.Substring(0, m.Length - 1));
+        }
+
+        //Quick Sort: use highest element of the array as the pivot, uses divide and conquer strategy
+        //quick sort is faster than merge sort
+        //is unstable, recursive, very fast
+        //complexity: O(n log n)
+        // A utility function to swap two elements
+        static void swapElements(int[] arr, int i, int j)
+        {
+            int temp = arr[i];  //temp storage first
+            arr[i] = arr[j];  //swap
+            arr[j] = temp; //assign temp val to index j
+        }
+
+        /* This function takes last element as pivot, places
+         the pivot element at its correct position in sorted
+         array, and places all smaller (smaller than pivot)
+         to left of pivot and all greater elements to right
+         of pivot */
+        static int arr_partitioner(int[] arr, int low, int high)
+        {
+            // take highest index of larger element as pivot
+            int pivot = arr[high];
+
+            // Index of smaller element and indicates the right position of pivot found so far
+            int i = (low - 1);
+
+            for (int j = low; j <= high - 1; j++)
+            {
+                // If current element is smaller than the pivot
+                if (arr[j] < pivot)
+                {
+                    // Increment index of smaller element
+                    i++;
+                    swapElements(arr, i, j);//swap element at index i with element at index j
+                }
+            }
+            swapElements(arr, i + 1, high);
+            return (i + 1);
+        }
+
+        /* The main function that implements QuickSort
+                arr[] --> Array to be sorted,
+                low --> Starting index,
+                high --> Ending index    */
+        static void quickSort(int[] arr, int startingindex, int endingindex)
+        {
+            if (startingindex < endingindex)
+            {
+                // pi is partitioning index, arr[p]
+                // is now at right place
+                int pi = arr_partitioner(arr, startingindex, endingindex);
+
+                // Separately sort elements before partition and after partition
+                quickSort(arr, startingindex, pi - 1);
+                quickSort(arr, pi + 1, endingindex);
+            }
+        }
+
+        // print sorted array
+        static void _printQuickSortedArray(int[] arr)
+        {
+            for (int i = 0; i < arr.Length; i++)
+                Console.Write(arr[i] + " ");
+            Console.WriteLine();
+        }
+
+        //greedy algorithms tests
+        /**
+         * Located on a line are N segments, numbered from 0 to N − 1, whose positions are given in zero-indexed arrays A and B. 
+         * For each I (0 ≤ I < N) the position of segment I is from A[I] to B[I] (inclusive).
+         * The segments are sorted by their ends, which means that B[K] ≤ B[K + 1] for K 
+         * such that 0 ≤ K < N − 1.
+         * Two segments I and J, such that I ≠ J, are overlapping if they share at least one common point.
+         * In other words, A[I] ≤ A[J] ≤ B[I] or A[J] ≤ A[I] ≤ B[J].
+         * We say that the set of segments is non-overlapping if it contains no two overlapping segments. 
+         * The goal is to find the size of a non-overlapping set containing the maximal number of segments.
+         * For example, consider arrays A, B such that:
+         *     A[0] = 1    B[0] = 5
+         *     A[1] = 3    B[1] = 6
+         *     A[2] = 7    B[2] = 8
+         *     A[3] = 9    B[3] = 9
+         *     A[4] = 9    B[4] = 10
+         * The segments are shown in the figure below.
+         * The size of a non-overlapping set containing a maximal number of segments is 3. For example, 
+         * possible sets are {0, 2, 3}, {0, 2, 4}, {1, 2, 3} or {1, 2, 4}. There is no non-overlapping 
+         * set with four segments.
+         * Write a function:
+         * class Solution { public int solution(int[] A, int[] B); }
+         * that, given two zero-indexed arrays A and B consisting of N integers, returns the size of a
+         * non-overlapping set containing a maximal number of segments.
+         * For example, given arrays A, B shown above, the function should return 3, as explained above.
+         * Assume that:
+         * N is an integer within the range [0..30,000];
+         * each element of arrays A, B is an integer within the range [0..1,000,000,000];
+         * A[I] ≤ B[I], for each I (0 ≤ I < N);
+         * B[K] ≤ B[K + 1], for each K (0 ≤ K < N − 1).
+         * Complexity:
+         * expected worst-case time complexity is O(N);
+         * expected worst-case space complexity is O(N), beyond input storage 
+         * (not counting the storage required for input arguments).
+         * Elements of input arrays can be modified.
+         */
+
+        public static int GreedyNonOverlappingSolution(int[] A, int[] B)
+        {
+            int N = A.Length;
+            if (N <= 1)
+            {
+                return N;
+            }
+
+            int count = 1;
+            int prev_end = B[0];
+
+            int curr_end;
+            for (curr_end = 1; curr_end < N; curr_end++)
+            {
+                if (A[curr_end] > prev_end)
+                {
+                    count++;
+                    prev_end = B[curr_end];
+                }
+            }
+
+            return count;
+        }
+
+        ///hashmaps, hashsets, dictionaries
+        public static bool UniqueOccurrenceOfElement(int[] arr)
+        {
+            if (arr == null || arr.Length == 0)
+                return true;
+
+            var lenOfArr = arr.Length;
+
+            //initialize a dictionary to hold on the key pair values
+            var dic = new Dictionary<int, int>();
+
+            for (int i = 0; i < lenOfArr; i++)
+            {
+                var ValueAtindexI = arr[i];
+
+                if (dic.ContainsKey(ValueAtindexI) ==false) //if the key is not in the dictionary, just add it
+                {
+                    dic.Add(i, ValueAtindexI); //use indexes as the keys to hold the values
+                }
+            }
+
+            //initialize hashset for checking duplicates
+            var hashSet = new HashSet<int>();
+
+            foreach (var pair in dic)
+            {
+                //check if the hashset has duplicates
+                if (hashSet.Contains(pair.Value))
+                {
+                    //not unique
+                    return false;
+                }
+                //if key pair value dont exist in hashset, add it and return true
+                hashSet.Add(pair.Value);
+            }
+            //unique
+            return true;
+        }
+
+        // assignments = 1 Op hence O(1)
+        // complexity: O(1)+O(1)+O(1)+O(n*n)+O(1)+O(n*n)
+        // = O(4)+O(2n2)
+        // = strikeout constants: O + O(n2)
+        // pick largest: O(n2)
+
+        // why microsoft? - work culture: Growth Mindset- align my dreams / vision to fit in Microsoft's culture,
+        // coz I'd like to grow careerwise ( Career Growth ) - boost my skills and experience through working
+        // with world class team of developers, learn from each other, help make me better than how I am now.       
+        // personal growth help take care of myself and others dependent on me.
 
 
 
