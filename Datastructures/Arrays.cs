@@ -131,9 +131,11 @@ namespace Datastructures
         {
             //Time complexity: O(n)
             int temp;
+            //we can also use arr.Length - 1 to get end position of the array
 
             while (start < end)
             {
+                //just swapping
                 temp = arr[start];
                 arr[start] = arr[end];
                 arr[end] = temp;

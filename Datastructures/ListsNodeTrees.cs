@@ -6,7 +6,7 @@ namespace Datastructures
 {
     public class ListsNodeTrees
     {
-        // node, Binary tree node, general node
+        // node class to use with Binary trees,  linked list, doubly linked list : general node class
         public class Node
         {
             public int data;
@@ -16,27 +16,11 @@ namespace Datastructures
                 data = d;
                 prev = next = null;
             }
-        }
-
-        /*  linkedlist Node */
-        public class LnKNode
-        {
-            public int data;
-            public LnKNode next, prev;
-
-            public LnKNode(int d)
-            {
-                data = d;
-                next = prev = null;
-            }
-        }
-
+        }  
 
         public class NodesAndLinkedLists
         {
-            public Node head;
-
-            public LnKNode lhead;
+            public Node head, lhead; //lhead: linked list head
 
             //insert data at the front of the list
             internal void InsertFront(NodesAndLinkedLists singlyList, int new_data)
@@ -147,7 +131,6 @@ namespace Datastructures
             // remove duplicates from an unsorted linked list
             public void removeDuplicateFromList(Node head)
             {
-
                 // Hash to store already seen values
                 HashSet<int> hs = new HashSet<int>();
 
@@ -185,9 +168,10 @@ namespace Datastructures
 
             // find kth element
             /* get the nth node from the last of a linked list */
+            //Time Complexity: O(n) where n is the length of linked list. 
             public void _printKthFromLast(int n)
             {
-                //Time Complexity: O(n) where n is the length of linked list. 
+                // find n-th position from last             
 
                 int len = 0;
                 Node temp = head;
@@ -292,10 +276,10 @@ namespace Datastructures
             }
 
             /* A utility function that returns count of nodes in a given Linked List */
-            int countLnkNodes(LnKNode head)
+            int countLnkNodes(Node head)
             {
                 int count = 0;
-                LnKNode temp = head;
+                Node temp = head;
                 while (temp != null)
                 {
                     temp = temp.next;
@@ -309,7 +293,7 @@ namespace Datastructures
             {
                 /* allocate node */
 
-                LnKNode new_node = new LnKNode(Convert.ToInt32(new_data));
+                Node new_node = new Node(Convert.ToInt32(new_data));
 
                 /* since we are adding at the beginning,
                 prev is always NULL */
@@ -327,7 +311,7 @@ namespace Datastructures
             }
 
             /* print nodes in a given linked list */
-            public void _printLnkList(LnKNode node)
+            public void _printLnkList(Node node)
             {
                 while (node != null)
                 {
@@ -442,26 +426,29 @@ namespace Datastructures
                 }
             }
 
+            //get value of Kth element implementation
+            public void _GetKthElementofLinkedList(int n)
+            {
+                NodesAndLinkedLists llist = new NodesAndLinkedLists();
+                llist._pushtoNode(25);
+                llist._pushtoNode(40);
+                llist._pushtoNode(18);
+                llist._pushtoNode(32);
+
+                //print list
+                Console.WriteLine("Elements list:");
+                llist._printList();
+                Console.WriteLine("\n");
+                Console.WriteLine("position " + n + " from last: ");
+                llist._printKthFromLast(n);
+            }
+
 
         }
 
-        static void _GetKthElementofLinkedList(int n)
-        {
-            NodesAndLinkedLists llist = new NodesAndLinkedLists();
-            llist._pushtoNode(25);
-            llist._pushtoNode(40);
-            llist._pushtoNode(18);
-            llist._pushtoNode(32);
+       
 
-            //print list
-            Console.WriteLine("Elements list:");
-            llist._printList();
-            Console.WriteLine("\n");
-            Console.WriteLine("position " + n + " from last: ");
-            llist._printKthFromLast(n);
-        }
-
-        static void _LinkedListOps()
+        public static void _LinkedListOps()
         {
 
             //Time Complexity: O(n) where n is the number of nodes in the given linked list.

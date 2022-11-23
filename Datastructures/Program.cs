@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
 using static Datastructures.ListsNodeTrees;
 
@@ -12,6 +13,7 @@ namespace Datastructures
         public static Arrays arrys = new Arrays();
         public static Matrix mtrx = new Matrix();
         public static BitsManipulation bt = new BitsManipulation();
+        public static NodesAndLinkedLists lstNode = new NodesAndLinkedLists();
         static void Main(string[] args)
         {
             //  string s1 = "hello" + "i" + "am";
@@ -40,7 +42,7 @@ namespace Datastructures
             // Console.WriteLine("Can form a palidrome?: " + _canFormPalindrome("cooc") );
             // Console.WriteLine("palidrome: " + _getPalindrome("mdaam"));
             //Console.WriteLine("UrLified string: " + URLify_String("http://ninjax company ltd.com"));
-            // _GetKthElementofLinkedList(2); //put n position
+            lstNode._GetKthElementofLinkedList(3); //put n position
 
             //rotate matrix
             //matrix to compare to target rotated matrix
@@ -136,11 +138,11 @@ namespace Datastructures
 
 
             ///quicksort test
-            int[] arr = { 67, 12, 95, 56, 85, 1, 100, 23, 60, 9 };
-            int n = arr.Length; //length of the array
-            quickSort(arr, 0, n - 1);
-            Console.Write("Quick Sorted Array: ");
-            _printAnySortedArray(arr);
+            //int[] arr = { 67, 12, 95, 56, 85, 1, 100, 23, 60, 9 };
+            //int n = arr.Length; //length of the array
+            //quickSort(arr, 0, n - 1);
+            //Console.Write("Quick Sorted Array: ");
+            //_printAnySortedArray(arr);
 
             ///heapsort test
             //var arr = new int[] { 73, 57, 49, 99, 133, 20, 1 };
@@ -149,11 +151,19 @@ namespace Datastructures
             //_printAnySortedArray(sortedArray);
 
             ///binary search test
-            Console.Write("Binary Search a Quick Sorted Array, ");
-            var bSearch = BinarySearch(arr, 85);
-            Console.WriteLine("Binary Search Results, is at index: " + bSearch);
+            //Console.Write("Binary Search a Quick Sorted Array, ");
+            //var bSearch = BinarySearch(arr, 85);
+            //Console.WriteLine("Binary Search Results, is at index: " + bSearch);
 
+            ///reverse string without libraries
+            //Console.WriteLine("Reverse my String is: "+_ReverseStrWoLib("mbuvi"));
 
+            ///remove dups from array
+            //int[] nums = { 1, 1, 1, 2, 2, 3};
+           // var rDps = removeDuplicatesFromArray(nums);
+           // var rDps = _RemoveDupsII(nums);
+           // Console.WriteLine("Length of new array after removing dups: " + rDps);
+          
 
             //below code should come at the bottom, make cmd not disappear
             Console.ReadLine();
@@ -967,7 +977,8 @@ namespace Datastructures
         ///Sorting Algorithms
         ///
         //1 . Merge Sort: is based on divide and conquer paradigm, divide array into 2 halves, sort each and merge results back to one Big array: 
-        //Time Complexity: O(nlogn )
+        //Time Complexity: O(n log n ) -best, average and worst cases
+        //it's more stable
         ///Given an array of integers nums, sort the array in ascending order and return it.
         ///You must solve the problem without using any built-in functions in O(nlog(n)) time complexity
         ///and with the smallest space complexity possible.
@@ -985,7 +996,7 @@ namespace Datastructures
         {
             int[] merge_helper = new int[high - low + 1];
 
-            for (int k = low; k <= high; k++)
+            for (int k = low; k <= high; k++) //k: current index
             {
                 merge_helper[k - low] = arr[k];
             }
@@ -1048,8 +1059,8 @@ namespace Datastructures
         //Quick Sort: use highest element of the array as the pivot, uses divide and conquer strategy
         //quick sort is faster than merge sort
         //is unstable, recursive, very fast
-        //complexity: O(n log n): rem halving, each time n increases by amount k, time or space increases by k/2 
-        
+        //complexity avearage and best case: O(n log n): rem halving, each time n increases by amount k, time or space increases by k/2 
+        //worst case: O(n2)
         // A utility function to swap two elements, can be reused all over the project
         static void swapElements(int[] arr, int i, int j)
         {
@@ -1088,15 +1099,14 @@ namespace Datastructures
         }
 
         /* The main function that implements QuickSort
-                arr[] --> Array to be sorted,
-                low --> Starting index,
-                high --> Ending index    */
+           arr[] --> Array to be sorted,
+           low --> Starting index,
+           high --> Ending index    */
         static void quickSort(int[] arr, int startingindex, int endingindex)
         {
             if (startingindex < endingindex)
             {
-                // pi is partitioning index, arr[p]
-                // is now at right place
+                // pi is partitioning index, arr[p] , is now at right place
                 int pi = arr_partitioner(arr, startingindex, endingindex);
 
                 // Separately sort elements before partition and after partition
@@ -1227,8 +1237,7 @@ namespace Datastructures
         //This is done by swapping the root node with the last element in the heap, and then ensuring that
         //the new root node satisfies the max heap property.
         //This process is repeated until only one element remains in the heap.
-
-        /// <summary>
+       
         /// The heap sort algorithm encounters its best-case time complexity when it encounters identical elements.
         /// Therefore. when we have N number of elements:
         /// Removing every node from the heap takes constant time O(1).
@@ -1275,7 +1284,7 @@ namespace Datastructures
 
             for (int i = arr_size / 2 - 1; i >= 0; i--) //half the size of array
             {
-                //build max heap array
+                // build max heap array
                 Heapify(arr, arr_size, i); //i: index of current root element
             }
 
@@ -1292,12 +1301,12 @@ namespace Datastructures
         }
 
         ///Binary Search
-        ///Given an array of integers nums which is sorted in ascending order:
+        ///Given an array of integers arr which is sorted in ascending order:
         ///assumption(array is already sorted in asc order)
-        ///and an integer target, write a function to search target in arr. 
+        ///and an integer target/search, write a function to search target in arr. 
         ///If target exists, then return its index. Otherwise, return -1.
         ///You must write an algorithm with O(log n) runtime complexity.
-        ///
+        
         //returns index of the target search parameter
         static int BinarySearch(int[] arr, int search) {
 
@@ -1322,6 +1331,89 @@ namespace Datastructures
             return -1; //for error
         }
 
+        ///Reverse a string using any Library
+        public static string _ReverseStrWoLib( string str )
+        {
+            int len = str.Length;
+            char [] chars = str.ToCharArray(); //convert string to char array
+            StringBuilder sb = new StringBuilder(len);
+            for (int i = len - 1; i >= 0; i--) //starting position => the last index , len-1
+            {
+                sb.Append(chars[i]);
+            }
+            return sb.ToString();
+        }
+        
+        ///We can use this property of the sorted array containing duplicates
+        ///to solve this question using the following steps —
+        //1. Check if the current and the next element are equal.
+        //2. If they are, we will skip the next element and will
+        //continue the procedure as long as we encounter the duplicates.
+        //3. If the elements are not duplicate, we will place the next (different)
+        //element next to the current element.
+        ///Time Complexity : We are scanning the array once, hence the time complexity will be O(n).
+        ///Space Complexity:  Since we are forbidden to use the external data structure, the space complexity will be O(1).
+       
+        public static int removeDuplicatesFromArray(int[] nums)
+        {
+            //initialize length of the new updated array after removing dups
+            int newLen = 0;            
+
+            // Loop all the elements in the array
+            for (int i = 0; i < nums.Length; i++)
+            {
+                //i: index of the current element, i+1: index of next element
+                // If the current element is equal to the next element AND i < last index (n-1), we skip
+                if (i < nums.Length - 1 && nums[i] == nums[i + 1])
+                {
+                    continue; //for skipping
+                }
+
+                // We will update the new array in place
+                nums[newLen] = nums[i];
+                newLen++;
+            }
+            return newLen;
+        }
+
+        ///In this problem Remove Duplicates from Sorted Array II 
+        ///problem solution we have Given an integer array nums
+        ///sorted in non-decreasing order, 
+        ///remove some duplicates in-place 
+        ///such that each unique element appears at most twice.
+        ///The relative order of the elements should be kept the same
+        ///
+        static int _RemoveDupsII(int[] nums)
+        {
+            int len = nums.Length;
+
+            if (len == 0) return 0;
+            
+            int x = 1, newLen = 0; //x: kind of a flag, newLen: new array length
+
+            for (int i = 0; i < len - 1; i++)
+            {
+                if (nums[i] == nums[i + 1] && x == 1)
+                {
+                    x++; //increment the flag
+                    nums[newLen++] = nums[i]; //next will be current
+                }
+                else if (nums[i] != nums[i + 1])
+                {
+                    x = 1; //set flag to 1
+                    nums[newLen++] = nums[i];
+                }
+            }
+
+            nums[newLen++] = nums[len - 1];
+            //for test::
+            Console.Write("new array is: "); 
+            _printAnySortedArray(nums);
+
+            return newLen;
+        }
+
+
 
 
 
@@ -1332,6 +1424,33 @@ namespace Datastructures
         // personal growth help take care of myself and others dependent on me.
         // 2 ). Diverse & Inclusive. I am open to learning and adopting to changes accordingly, take feedback from others and work
         // on them to become better, add quality in my work. 
+
+        ///dynamic memory allocation in C/C++: done using malloc(), calloc(), free(), realloc()
+        /// "malloc()": dynamically allocate a single large block of memory with the specified size.
+        ///eg. p = (cast-type*)malloc(bytesize):: p = (int*) malloc(100 * sizeof(int));
+        ///If space is insufficient, allocation fails and returns a NULL pointer.
+        ///
+        ///"calloc()" - “contiguous allocation” method in C is used to dynamically allocate the
+        ///specified number of blocks of memory of specified type. 
+        ///it is very much similar to malloc() but has two different points and these are:
+        ///a. It initializes each block with a default value ‘0’.
+        ///b. It has two parameters or arguments as compare to malloc().
+        ///eg. ptr = (cast-type*)calloc(n, element-size);
+        ///:: ptr = (float*) calloc(25, sizeof(float));
+        ///This statement allocates contiguous space in memory for 25 elements each with the size of the float.
+
+        ///“free()” method in C is used to dynamically de-allocate the memory. 
+        ///The memory allocated using functions malloc() and calloc() 
+        ///is not de-allocated on their own. Hence the free() method is used, 
+        ///whenever the dynamic memory allocation takes place. 
+        ///It helps to reduce wastage of memory by freeing it.
+        ///eg: free(ptr)::ptr allocated before, above
+        ///
+        ///“realloc()” or “re-allocation” method in C is used to dynamically
+        ///change the memory allocation of a previously allocated memory. 
+        ///In other words, if the memory previously allocated with the help of 
+        ///malloc or calloc is insufficient, realloc can be used to dynamically re-allocate memory. 
+        ///eg ptr = realloc(ptr, newSize);
 
 
 
