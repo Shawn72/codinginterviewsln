@@ -8,8 +8,8 @@
 *.sln.docstates
 
 # Build results
-/Datastructures/obj/
-/Datastructures/bin/
+Datastructures/obj
+Datastructures/bin
 Debug/
 Release/
 *.obj
