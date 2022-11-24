@@ -73,9 +73,12 @@ namespace Datastructures
                     }
                 }
             }
-
             // If BFS is complete without visited d
             return false;
         }
     }
+
+    ///Queue: FIFO principle, remove item called dequeue - implement using LinkedList inbuild Class
+    ///Stack: LIFO principle, pop reove happens from top of stack - implement using Stack inbuild Class
+    ///Queue is of three types – 1. Circular Queue 2. Priority queue 3. double-ended queue.
 }

@@ -274,7 +274,7 @@ namespace Datastructures
 
             // create a count array and initialize all values as 0
             int[] count = new int[NO_OF_CHARS];
-            Array.Fill(count, 0);
+            Array.Fill(count, 0);           
 
             // For each character in input strings, increment count in the corresponding count array
             for (int i = 0; i < str.Length; i++)

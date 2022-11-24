@@ -23,29 +23,29 @@ namespace Datastructures
             public Node head, lhead; //lhead: linked list head
 
             //insert data at the front of the list
-            internal void InsertFront(NodesAndLinkedLists singlyList, int new_data)
+            internal void InsertFront(int new_data)
             {
                 Node new_node = new Node(new_data);
-                new_node.next = singlyList.head;
-                singlyList.head = new_node;
+                new_node.next = head;
+                head = new_node;
             }
 
             //insert last
-            internal void InsertLast(NodesAndLinkedLists singlyList, int new_data)
+            internal void InsertLast(int new_data)
             {
                 Node new_node = new Node(new_data);
-                if (singlyList.head == null)
+                if (head == null)
                 {
-                    singlyList.head = new_node;
+                    head = new_node;
                     return;
                 }
-                Node lastNode = GetLastNode(singlyList);
+                Node lastNode = GetLastNode();
                 lastNode.next = new_node;
             }
 
-            internal Node GetLastNode(NodesAndLinkedLists singlyList)
+            internal Node GetLastNode()
             {
-                Node temp = singlyList.head;
+                Node temp = head;
                 while (temp.next != null)
                 {
                     temp = temp.next;
@@ -53,13 +53,13 @@ namespace Datastructures
                 return temp;
             }
             //delete node by key
-            internal void DeleteNodebyKey(NodesAndLinkedLists singlyList, int key)
+            internal void DeleteNodebyKey(int key)
             {
-                Node temp = singlyList.head;
+                Node temp = head;
                 Node prev = null;
                 if (temp != null && temp.data == key)
                 {
-                    singlyList.head = temp.next;
+                    head = temp.next;
                     return;
                 }
                 while (temp != null && temp.data != key)
@@ -210,7 +210,7 @@ namespace Datastructures
 
                 /* Get the middle element and make it root */
                 int mid = (start + end) / 2;
-                Node node = new Node(arr[mid]); //initialize the node
+                Node node = new Node(arr[mid]); //initialize the node ,point to the middle element
 
                 /* Recursively construct the left subtree and make it left child of root */
                 node.prev = _sortedArrayToBST(arr, start, mid - 1); //prev::rep left node             

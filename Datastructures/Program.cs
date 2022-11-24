@@ -41,8 +41,8 @@ namespace Datastructures
             // Console.WriteLine( "compressed: "+_compressSting("aaabbbrrrruuuuu") );
             // Console.WriteLine("Can form a palidrome?: " + _canFormPalindrome("cooc") );
             // Console.WriteLine("palidrome: " + _getPalindrome("mdaam"));
-            //Console.WriteLine("UrLified string: " + URLify_String("http://ninjax company ltd.com"));
-            lstNode._GetKthElementofLinkedList(3); //put n position
+            // Console.WriteLine("UrLified string: " + URLify_String("http://ninjax company ltd.com"));
+            // lstNode._GetKthElementofLinkedList(3); //put n position
 
             //rotate matrix
             //matrix to compare to target rotated matrix
@@ -151,19 +151,31 @@ namespace Datastructures
             //_printAnySortedArray(sortedArray);
 
             ///binary search test
-            //Console.Write("Binary Search a Quick Sorted Array, ");
+            ///array to search MUST always be sorted
+            //var sortedarr = new int[] { 1, 20, 49, 57, 73, 99, 133 };
+            // Console.Write("Binary Search a Quick Sorted Array, ");
             //var bSearch = BinarySearch(arr, 85);
-            //Console.WriteLine("Binary Search Results, is at index: " + bSearch);
+            ///or use inbuild binarySearch function
+            //var bSearch = Array.BinarySearch(sortedarr, 20);
+            // Console.WriteLine("Binary Search Results, is at index: " + bSearch);
+
+
+            //int arrLen = sortedarr.Length;
+            //int high = arrLen - 1;
+            //var RBsearch = RecursiveBinarySearch(sortedarr, 20, 0, high);
+            //Console.WriteLine("Recursive Binary Search: " + RBsearch);
 
             ///reverse string without libraries
             //Console.WriteLine("Reverse my String is: "+_ReverseStrWoLib("mbuvi"));
 
             ///remove dups from array
             //int[] nums = { 1, 1, 1, 2, 2, 3};
-           // var rDps = removeDuplicatesFromArray(nums);
-           // var rDps = _RemoveDupsII(nums);
-           // Console.WriteLine("Length of new array after removing dups: " + rDps);
-          
+            // var rDps = removeDuplicatesFromArray(nums);
+            // var rDps = _RemoveDupsII(nums);
+            // Console.WriteLine("Length of new array after removing dups: " + rDps);
+
+            //we can use inbuild function Array.Sort(arr) to quickly sort array in asc order
+
 
             //below code should come at the bottom, make cmd not disappear
             Console.ReadLine();
@@ -625,12 +637,11 @@ namespace Datastructures
 
         public static void _Stack()
         {
-
             // create a stack using inbuilt Stack class
             Stack _stack = new Stack();
-            // add elements in the Stack usin Push method           
+            // add elements in the Stack using Push method           
             _stack.Push("Shawn");
-            _stack.Push("Mercy");
+            _stack.Push("Woman");
             _stack.Push("Nina");
             _stack.Push("Clarke");
 
@@ -639,9 +650,16 @@ namespace Datastructures
             {
                 Console.WriteLine("element: " + elem);
             }
+            Console.WriteLine("\n");
 
-            _stack.Pop(); //remove element at the top of stack
+            var indexTop = _stack.Cast<string>().First();
+            var indexBottom = _stack.Cast<string>().Last();
 
+            Console.WriteLine("first element: " + indexBottom);
+            Console.WriteLine("last element: " + indexTop);
+            Console.WriteLine("\n");
+
+             _stack.Pop(); //remove element at the top of stack
             // print elements after Pop()
             foreach (var elem in _stack)
             {
@@ -882,7 +900,7 @@ namespace Datastructures
         //    //...Unseal class to enable inheritance
         //}  
 
-        //Binary Serach Algorith: MinMaxDivision
+        //Binary Serach Algorithm: MinMaxDivision
         ///MinMaxDivision(Divide array A into K blocks and minimize the largest sum of any block.)
         ///You are given integers K, M and a non-empty zero-indexed array A consisting of N
         ///integers.Every element of the array is not greater than M.       
@@ -1110,12 +1128,12 @@ namespace Datastructures
                 int pi = arr_partitioner(arr, startingindex, endingindex);
 
                 // Separately sort elements before partition and after partition
-                quickSort(arr, startingindex, pi - 1);
-                quickSort(arr, pi + 1, endingindex);
+                quickSort(arr, startingindex, pi - 1); //before partition
+                quickSort(arr, pi + 1, endingindex);//after partition
             }
         }
 
-        // print sorted array
+        // print sorted array helper function
         static void _printAnySortedArray(int[] arr)
         {
             for (int i = 0; i < arr.Length; i++)
@@ -1192,7 +1210,7 @@ namespace Datastructures
 
             var lenOfArr = arr.Length;
 
-            //initialize a dictionary to hold on the key pair values
+            //initialize a dictionary to hold the key pair values
             var dic = new Dictionary<int, int>();
 
             for (int i = 0; i < lenOfArr; i++)
@@ -1411,6 +1429,30 @@ namespace Datastructures
             _printAnySortedArray(nums);
 
             return newLen;
+        }
+
+
+        /// implement binary search using recursion:: array MUST be SORTED first
+        public static int RecursiveBinarySearch(int[]nums, int target, int low, int high)
+        {
+            if (low > high) return -1; //error
+
+            //find mid element
+            int mid = (low + high)/2;
+
+            if (nums[mid] < target)
+            {
+                return RecursiveBinarySearch(nums, target, mid+1, high); //right half
+                //master:: if element in the mid index < target, then recursive binary search
+                //parameter order ( array, target, low( mid+1), high )
+            }
+            if (nums[mid] > target)
+            {
+                return RecursiveBinarySearch(nums, target, low, mid - 1); //left half
+                //if element in the mid index  > target, then call recursive binary search
+                //parameter oreder: ( array, target, low, high (mid-1) ) 
+            }
+            else return mid;
         }
 
 
