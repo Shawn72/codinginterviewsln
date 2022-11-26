@@ -382,7 +382,6 @@ namespace Datastructures
             // Fill rest of the string from end
             for (int j = i - 1; j >= 0; j--)
             {
-
                 // replace space with %20 
                 if (new_str[j] == ' ')
                 {
@@ -441,7 +440,6 @@ namespace Datastructures
         //HackerRank qn
         /*
             * Complete the 'arrayManipulation' function below.
-            *
             * The function is expected to return a LONG_INTEGER.
             * The function accepts following parameters:
             *  1. INTEGER n
@@ -546,13 +544,11 @@ namespace Datastructures
 
         /*
             * Complete the 'arrayManipulation' function below.
-            *
             * The function is expected to return a LONG_INTEGER.
             * The function accepts following parameters:
             *  1. INTEGER n
             *  2. 2D_INTEGER_ARRAY queries
         */
-
         public long arrayManipulation(int n, List<List<int>> queries)
         {
             //create int [][]2Darray to use,,..covert input parameter queries
@@ -578,7 +574,6 @@ namespace Datastructures
                 max = Math.Max(max, sum);
             }
             return max;
-
         }
 
         //implementation of HashSets, Hashmaps to determine uniquneness of array elements

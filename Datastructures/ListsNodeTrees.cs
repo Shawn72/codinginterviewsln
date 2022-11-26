@@ -116,7 +116,7 @@ namespace Datastructures
                 head = new_node;
             }
 
-            /* print linked list */
+            /* print linked list helper */
             public void _printList()
             {
                 Node temp = head;
@@ -264,7 +264,7 @@ namespace Datastructures
             {
                 if (end < start) return null;
                 int mid = (start + end) / 2;
-                Node node = new Node(arr[mid]);
+                Node node = new Node(arr[mid]); //root node element
                 node.prev = _MinimalHeightBST(arr, start, mid - 1);
                 node.next = _MinimalHeightBST(arr, mid + 1, end);
                 return node;
@@ -443,10 +443,88 @@ namespace Datastructures
                 llist._printKthFromLast(n);
             }
 
+            ///Circular Linked Lists: A linked list is called circular 
+            ///if it is not NULL-terminated and all nodes are connected 
+            ///in the form of a cycle.
+            ///
+
+            ///leetcode solution
+            ///
+            public bool HasCycle(Node head)
+            {
+                if (head == null) return true;//an empty list is assumed circular always
+
+                //initialize the current node, and next node
+                Node curr = head;
+                Node nxtNode = head.next;
+
+                //implement a while  loop                
+                while (curr != nxtNode)
+                {
+                    //check, handle if not a cycle
+                    if (nxtNode == null || nxtNode.next == null)
+                    {
+                        //reached the end and no coming back to start hence not a cycle
+                        return false;
+                    }
+                    curr = curr.next;
+                    nxtNode = nxtNode.next.next;
+                }
+                return curr == nxtNode; //is a cycle       
+            }
+
+            //check if a linked list is circular
+            /*This function returns true if given linked list is circular, else false. */
+            public bool linkedListIsCircular(Node head)
+            {
+                //master the steps
+                // 1. An empty linked list is circular - assume that always
+                if (head == null) return true;
+
+                // 2.  Next of head
+                Node node = head.next; //current node
+
+                // 3.  This loop would stop in both cases
+                // (1) If Circular (2) Not circular
+                while (node != null && node != head)
+                    node = node.next;
+
+                // 4.If loop stopped because of circular condition:
+                // current node == head, we r back at start , hence it's circular
+                return node == head;
+            }
+
+            //making a linked list circular
+            public void MakeListCircular()
+            {                
+                //insert items in the list nodes
+                Node head = new Node(10); 
+                head.next = new Node(24); 
+                head.next.next = new Node(32); 
+                head.next.next.next = new Node(47);
+
+                Console.WriteLine("Is the linked list circular?: ");
+
+                Console.Write(HasCycle(head) ? "Yes\n" :  "No\n");
+
+                // Make the linked list circular: assign final next to head node
+                head.next.next.next.next = head;
+
+                Console.WriteLine("Is the linked list circular now?: ");
+
+                Console.Write(HasCycle(head) ? "Yes\n" :  "No\n");
+               
+            }
+
+
+
+            //insert into a sorted circular linked list
+
+
 
         }
 
-       
+
 
         public static void _LinkedListOps()
         {

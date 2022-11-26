@@ -173,8 +173,15 @@ namespace Datastructures
             // var rDps = removeDuplicatesFromArray(nums);
             // var rDps = _RemoveDupsII(nums);
             // Console.WriteLine("Length of new array after removing dups: " + rDps);
-
             //we can use inbuild function Array.Sort(arr) to quickly sort array in asc order
+
+            ///check if linked list is circular
+            //lstNode.MakeListCircular();
+
+            ///insertion sort
+            int[] arr = { 3, 7, 10, 4, 6, 12 };
+            var inSort = InsertionSort(arr);
+            _printAnySortedArray(inSort);
 
 
             //below code should come at the bottom, make cmd not disappear
@@ -1361,7 +1368,33 @@ namespace Datastructures
             }
             return sb.ToString();
         }
-        
+
+        ///leetcode solution: reverse string given character array:: use swap implementation
+        /// Write a function that reverses a string.
+        /// The input string is given as an array of characters s.
+        /// You must do this by modifying the input array in-place with O(1) extra memory.
+       public void ReverseString(char[] s ) {
+            
+            //initialize start and end indeces
+            int startIndex = 0;
+            int endIndex = s.Length - 1;
+
+            while(startIndex <= endIndex){
+                
+                //create temp variable                
+                char temp = s[startIndex];
+
+                s[startIndex] = s[endIndex]; //idea is to just swap the characters until the loop terminates
+               
+                s[endIndex] = temp;
+
+                //increment start index by 1 each time
+                startIndex++;
+                //decreament end index by 1 each time
+                endIndex--;
+            }
+       }
+
         ///We can use this property of the sorted array containing duplicates
         ///to solve this question using the following steps —
         //1. Check if the current and the next element are equal.
@@ -1371,7 +1404,7 @@ namespace Datastructures
         //element next to the current element.
         ///Time Complexity : We are scanning the array once, hence the time complexity will be O(n).
         ///Space Complexity:  Since we are forbidden to use the external data structure, the space complexity will be O(1).
-       
+
         public static int removeDuplicatesFromArray(int[] nums)
         {
             //initialize length of the new updated array after removing dups
@@ -1382,9 +1415,9 @@ namespace Datastructures
             {
                 //i: index of the current element, i+1: index of next element
                 // If the current element is equal to the next element AND i < last index (n-1), we skip
-                if (i < nums.Length - 1 && nums[i] == nums[i + 1])
+                if ( nums[i] == nums[i + 1] && i < nums.Length - 1 )
                 {
-                    continue; //for skipping
+                    continue; //skip it
                 }
 
                 // We will update the new array in place
@@ -1442,19 +1475,52 @@ namespace Datastructures
 
             if (nums[mid] < target)
             {
-                return RecursiveBinarySearch(nums, target, mid+1, high); //right half
+                return RecursiveBinarySearch(nums, target, mid+1, high); //search right half where target is located
                 //master:: if element in the mid index < target, then recursive binary search
                 //parameter order ( array, target, low( mid+1), high )
             }
             if (nums[mid] > target)
             {
-                return RecursiveBinarySearch(nums, target, low, mid - 1); //left half
+                return RecursiveBinarySearch(nums, target, low, mid - 1); //left half where target is located
                 //if element in the mid index  > target, then call recursive binary search
-                //parameter oreder: ( array, target, low, high (mid-1) ) 
+                //parameter order: ( array, target, low, high (mid-1) ) 
             }
             else return mid;
         }
 
+        ///Insertion Sort: insertion sort is an in-place sorting algorithm.
+        ///This algorithm is one of the simplest algorithm with simple implementation
+        ///Basically, Insertion sort is efficient for small data values
+        ///Insertion sort is adaptive in nature, 
+        ///i.e.it is appropriate for data sets which are already partially sorted
+       ///Time complexity:  O(n2)
+       ///space complexity : O(1)
+        static int[] InsertionSort(int[] nums)
+        {
+            int tempKey; //create tempkey var
+
+            int n = nums.Length; //array length           
+
+            for (int i = 0; i < n-1; i++) //start from index 0 to n-1, last index
+            {
+                tempKey = nums[i];
+
+                int j = i - 1; //current index
+
+                // Move elements of arr[0..i-1], that are greater than key,
+                // to one position ahead of their current position
+
+                while (j >= 0 && nums[j] > tempKey)
+                {
+                    nums[j + 1] = nums[j]; //make next element our current element
+                    j--;  //decrement current index, go backward since key is less than current, nums[j]
+                }
+                nums[j + 1] = tempKey; //assign next index element to the key
+            }
+
+            //return array
+            return nums;
+        }
 
 
 
