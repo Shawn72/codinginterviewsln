@@ -192,9 +192,13 @@ namespace Datastructures
             //Console.WriteLine("gap length: " + MaximumBinaryGap(22));
 
             ///maximum difference
-            int[] nums = { 2, 7, 9, 5, 1, 3, 5 };
-            Array.Sort(nums);
-            Console.WriteLine("maximum difference: " + GetMaximumDifference(nums));
+            //int[] nums = { 2, 7, 9, 5, 1, 3, 5 };
+            // Array.Sort(nums);
+            // Console.WriteLine("maximum difference: " + GetMaximumDifference(nums));
+
+            ///maximum sorted diff of adjacent elements
+            int[] arr = { 2, 4, 8, 11 };
+            Console.WriteLine("max diff: " + MaximumSortedAdjacentDiff(arr));
 
             //below code should come at the bottom, make cmd not disappear
             Console.ReadLine();
@@ -1570,7 +1574,9 @@ namespace Datastructures
         /// at both ends in the binary representation of N.For example, 
         /// number 9 has binary representation 1001 and contains a binary gap of length 2.
         /// The number 529 has binary representation 1000010001 and contains two binary gaps:
-        /// of lenths 4 and 3, hence max binary gap wil be 4.
+        /// one of length 4 and one of length 3. The number 20 has binary representation 10100 
+        /// and contains one binary gap of length 1. The number 15 has binary representation 1111
+        /// and has no binary gaps.  
         /// below leetcode solution finds the maximum binary gaps
 
         public static int MaximumBinaryGap(int n)
@@ -1641,6 +1647,84 @@ namespace Datastructures
 
             // return difference
             return dif;
+        }
+
+        public static int MaximumSortedAdjacentDiff(int[] nums)
+        {
+            int n = nums.Length;
+
+            if (n < 2) { return 0; }
+
+            // Find maximum and minimum elements in the array nums[]
+            int maxVal = nums[0];
+            int minVal = nums[0];
+            for (int i = 1; i < n; i++) //don't confuse this, i MUST = 1 , when starting this loop
+            {
+                maxVal = Math.Max(maxVal, nums[i]);
+                minVal = Math.Min(minVal, nums[i]);
+            }
+
+            // Arrays to store maximum and minimum values in n-1 buckets of differences.
+            int[] maxBucket = new int[n - 1];
+            int[] minBucket = new int[n - 1];
+
+            maxBucket = maxBucket.Select(i => int.MinValue).ToArray();
+            minBucket = minBucket.Select(i => int.MaxValue).ToArray();
+
+            // Expected gap for every bucket.
+            float expectedGap = (float)(maxVal - minVal) / (n - 1);
+
+            // Traversing through array elements and
+            // filling in appropriate bucket if bucket is empty. Else updating bucket values.
+            for (int i = 0; i < n; i++)
+            {
+                if (nums[i] == maxVal || nums[i] == minVal)
+                {
+                    continue;
+                }
+
+                // Find index of bucket.
+                int index = (int)(Math.Round((nums[i] - minVal) / expectedGap));
+
+                // Fill/Update maximum value of bucket
+                if (maxBucket[index] == int.MinValue)
+                {
+                    maxBucket[index] = nums[i];
+                }
+                else
+                {
+                    maxBucket[index] = Math.Max(maxBucket[index], nums[i]);
+                }
+
+                // Fill/Update minimum value of bucket
+                if (minBucket[index] == int.MaxValue)
+                {
+                    minBucket[index] = nums[i];
+                }
+                else
+                {
+                    minBucket[index] = Math.Min(minBucket[index], nums[i]);
+                }
+            }
+
+            // Finding maximum difference between maximum value of previous bucket
+            // minus minimum of current bucket.
+            int prev_val = minVal;
+            int max_gap = 0;
+
+            for (int i = 0; i < n - 1; i++)
+            {
+                if (minBucket[i] == int.MaxValue)
+                {
+                    continue;
+                }
+                max_gap = Math.Max(max_gap, minBucket[i] - prev_val);
+                prev_val = maxBucket[i];
+            }
+            max_gap = Math.Max(max_gap, maxVal -  prev_val);
+
+            return max_gap;
+
         }
 
 

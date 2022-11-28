@@ -1,0 +1,14 @@
+D:\Iskander\Iron_Dome\very@Personal\CodingSolutions\C#\Datastructures\bin\Debug\netcoreapp3.1\Datastructures.exe
+D:\Iskander\Iron_Dome\very@Personal\CodingSolutions\C#\Datastructures\bin\Debug\netcoreapp3.1\Datastructures.deps.json
+D:\Iskander\Iron_Dome\very@Personal\CodingSolutions\C#\Datastructures\bin\Debug\netcoreapp3.1\Datastructures.runtimeconfig.json
+D:\Iskander\Iron_Dome\very@Personal\CodingSolutions\C#\Datastructures\bin\Debug\netcoreapp3.1\Datastructures.runtimeconfig.dev.json
+D:\Iskander\Iron_Dome\very@Personal\CodingSolutions\C#\Datastructures\bin\Debug\netcoreapp3.1\Datastructures.dll
+D:\Iskander\Iron_Dome\very@Personal\CodingSolutions\C#\Datastructures\bin\Debug\netcoreapp3.1\Datastructures.pdb
+D:\Iskander\Iron_Dome\very@Personal\CodingSolutions\C#\Datastructures\obj\Debug\netcoreapp3.1\Datastructures.csproj.AssemblyReference.cache
+D:\Iskander\Iron_Dome\very@Personal\CodingSolutions\C#\Datastructures\obj\Debug\netcoreapp3.1\Datastructures.GeneratedMSBuildEditorConfig.editorconfig
+D:\Iskander\Iron_Dome\very@Personal\CodingSolutions\C#\Datastructures\obj\Debug\netcoreapp3.1\Datastructures.AssemblyInfoInputs.cache
+D:\Iskander\Iron_Dome\very@Personal\CodingSolutions\C#\Datastructures\obj\Debug\netcoreapp3.1\Datastructures.AssemblyInfo.cs
+D:\Iskander\Iron_Dome\very@Personal\CodingSolutions\C#\Datastructures\obj\Debug\netcoreapp3.1\Datastructures.csproj.CoreCompileInputs.cache
+D:\Iskander\Iron_Dome\very@Personal\CodingSolutions\C#\Datastructures\obj\Debug\netcoreapp3.1\Datastructures.dll
+D:\Iskander\Iron_Dome\very@Personal\CodingSolutions\C#\Datastructures\obj\Debug\netcoreapp3.1\Datastructures.pdb
+D:\Iskander\Iron_Dome\very@Personal\CodingSolutions\C#\Datastructures\obj\Debug\netcoreapp3.1\Datastructures.genruntimeconfig.cache
