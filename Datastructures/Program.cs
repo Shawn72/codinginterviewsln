@@ -179,10 +179,22 @@ namespace Datastructures
             //lstNode.MakeListCircular();
 
             ///insertion sort
-            int[] arr = { 3, 7, 10, 4, 6, 12 };
-            var inSort = InsertionSort(arr);
-            _printAnySortedArray(inSort);
+            // int[] arr = { 3, 7, 10, 4, 6, 12 };
+            // var inSort = InsertionSort(arr);
+            // _printAnySortedArray(inSort);
 
+            ///TwoSum soln
+            //int[] nums = { 1, 2, 4, 5, 4, 6 };
+            //var SumofTwo = TwoNums(nums, 10);
+            //_printAnySortedArray(SumofTwo);
+
+            ///maximum binary gap
+            //Console.WriteLine("gap length: " + MaximumBinaryGap(22));
+
+            ///maximum difference
+            int[] nums = { 2, 7, 9, 5, 1, 3, 5 };
+            Array.Sort(nums);
+            Console.WriteLine("maximum difference: " + GetMaximumDifference(nums));
 
             //below code should come at the bottom, make cmd not disappear
             Console.ReadLine();
@@ -1274,18 +1286,19 @@ namespace Datastructures
         static void Heapify(int[] arr, int arr_size, int index)
         {
             //Max Heap Implementation 
+            //steps to master
 
             var largestIndex = index; //index of the maximum elementt of the array arr[]
             var leftChild = 2 * index + 1;
             var rightChild = 2 * index + 2;
 
-            //check if leftchild is > the current root element, if true, swap their positions
+            //check if leftchild is > the largest element, if true, swap their positions
             if (leftChild < arr_size && arr[leftChild] > arr[largestIndex])
             {
                 largestIndex = leftChild;
             }
 
-            //check if rightchild is > the current root element, if true, swap their positions
+            //check if rightchild is > the largest element, if true, swap their positions
             if (rightChild < arr_size && arr[rightChild] > arr[largestIndex])
             {
                 largestIndex = rightChild;
@@ -1296,6 +1309,7 @@ namespace Datastructures
                 //call swapElements for swapping
                 swapElements(arr, index, largestIndex);
 
+                //parameters: array, arraysize, index
                 Heapify(arr, arr_size, largestIndex);//recursively call Heapify until we build max heap
             }
         }
@@ -1304,12 +1318,13 @@ namespace Datastructures
         //using max heap
         public static int[] HeapSortArray(int[] arr, int arr_size)
         {
+            //arr_size = arr.Length;
             if (arr_size <= 1)
                 return arr;
 
             for (int i = arr_size / 2 - 1; i >= 0; i--) //half the size of array
             {
-                // build max heap array
+                // build max heap array:: right half
                 Heapify(arr, arr_size, i); //i: index of current root element
             }
 
@@ -1318,7 +1333,7 @@ namespace Datastructures
                 // call swap
                 swapElements(arr, 0, i); //swap first index (0) with the last index (i)
 
-                Heapify(arr, i, 0);//build max heap array
+                Heapify(arr, i, 0);//build max heap array again:: left half
             }
 
             //return sorted array
@@ -1390,7 +1405,7 @@ namespace Datastructures
 
                 //increment start index by 1 each time
                 startIndex++;
-                //decreament end index by 1 each time
+                //decrement end index by 1 each time
                 endIndex--;
             }
        }
@@ -1422,9 +1437,9 @@ namespace Datastructures
 
                 // We will update the new array in place
                 nums[newLen] = nums[i];
-                newLen++;
+                newLen++; //increment newLen, rem it starts at 0
             }
-            return newLen;
+            return newLen; //return new length
         }
 
         ///In this problem Remove Duplicates from Sorted Array II 
@@ -1449,10 +1464,10 @@ namespace Datastructures
                     x++; //increment the flag
                     nums[newLen++] = nums[i]; //next will be current
                 }
-                else if (nums[i] != nums[i + 1])
+                else if (nums[i] != nums[i + 1]) //if current is not equal to next
                 {
                     x = 1; //set flag to 1
-                    nums[newLen++] = nums[i];
+                    nums[newLen++] = nums[i]; //assign next to current
                 }
             }
 
@@ -1522,10 +1537,116 @@ namespace Datastructures
             return nums;
         }
 
+       
+        /// two sums: return indices of two numbers from array which when added equals the target
+        public static int[] TwoNums(int[] nums, int target)
+        {
+            //get length of arr
+            int n = nums.Length;
+            int[] retArr = new int[2]; //must be of size 2, we need only 2 values
+            for(int i = 0; i < n-1; i++) //checks current element
+            {
+                //check if is dup, jump
+                if(nums[i] == nums[i + 1])
+                {
+                    continue; //skip, go to next
+                }
+
+                for(int j = i + 1; j < n; j++) //checks next element
+                {
+                    if(nums[i] + nums[j] == target)
+                    {
+                        retArr[0] = i;
+                        retArr[1] = j;
+                        return retArr;
+                    }
+                }               
+            }
+            return retArr;
+        }
+
+        /// A binary gap within a positive integer N is any maximal 
+        /// sequence of consecutive zeros that is surrounded by ones 
+        /// at both ends in the binary representation of N.For example, 
+        /// number 9 has binary representation 1001 and contains a binary gap of length 2.
+        /// The number 529 has binary representation 1000010001 and contains two binary gaps:
+        /// of lenths 4 and 3, hence max binary gap wil be 4.
+        /// below leetcode solution finds the maximum binary gaps
+
+        public static int MaximumBinaryGap(int n)
+        {
+            //first convert the number into long int :: Int64
+            long toI64 = Convert.ToInt64(n);
+
+            //convert to binary string
+            string binaryStr = Convert.ToString(toI64, 2);
+
+            //convert to chars array
+            char [] binaryChars = binaryStr.ToCharArray();
+
+            //initial initializations
+            int MaxLengthCounter = 0; //keeps record of max 0 counts
+            int count = 0; //zero counter
+            bool resetCounter = false; //reset and start counting again
+
+            foreach (char c in binaryChars)
+            {
+                if (c == '1')
+                {
+                    if (MaxLengthCounter < count)
+                    { 
+                        MaxLengthCounter = count; 
+                    }
+                    count = 0;
+                    resetCounter = true;
+                }
+                else
+                {
+                    if (resetCounter) 
+                    {
+                        count++;
+                    }
+                }
+            }
+            //return record of maximum zeros counter kept
+            return MaxLengthCounter;
+        }
+        
+        //maximum difference: diff between smaller element and largest elemnt of the array
+        static int GetMaximumDifference(int[] nums)
+        {
+
+            int dif = int.MinValue; //initialize smallest possible difference
+
+            int n = nums.Length;
+
+            if (n == 0) { return dif; }
+
+            int max_elem_record = nums[n - 1]; //keep maximum element, assume array is sorted in asc order
+
+            // traverse the array from the right and keep track of the maximum element
+            for (int i = n - 1; i >= 0; i--)
+            {
+                // update `max_elem_record` if the current element is greater than the maximum element
+                if (nums[i] >= max_elem_record)
+                {
+                    max_elem_record = nums[i];
+                }                
+                else
+                {
+                    // if the current element is less than the maximum element, then update the difference 
+                    dif = Math.Max(dif, max_elem_record - nums[i]);
+                }
+            }
+
+            // return difference
+            return dif;
+        }
 
 
 
-        // why Microsoft? - base answers work culture:
+
+        // why Microsoft? - base answers on work culture:
         // 1 ). Growth Mindset- align my dreams / vision to fit in Microsoft's culture,
         // coz I'd like to grow careerwise ( Career Growth ) - boost my skills and experience through working
         // with world class team of developers, learn from each other, help make me better than how I am now.       
