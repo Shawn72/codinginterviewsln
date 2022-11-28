@@ -446,10 +446,8 @@ namespace Datastructures
             ///Circular Linked Lists: A linked list is called circular 
             ///if it is not NULL-terminated and all nodes are connected 
             ///in the form of a cycle.
-            ///
 
             ///leetcode solution
-            ///
             public bool HasCycle(Node head)
             {
                 if (head == null) return true;//an empty list is assumed circular always
@@ -458,7 +456,7 @@ namespace Datastructures
                 Node curr = head;
                 Node nxtNode = head.next;
 
-                //implement a while  loop                
+                //implement a while  loop::: iteration            
                 while (curr != nxtNode)
                 {
                     //check, handle if not a cycle

@@ -115,7 +115,7 @@ namespace Datastructures
             //CallSealedClass();
 
             ///unique chars in a string test
-            //Console.WriteLine("Is Unique: " +arrys.UniqueChar("mbuUvi") );
+            //Console.WriteLine("Is Unique: " +UniqueChar("mbuUvi") );
 
             ///minimal largest sum test
             //int[] arr = { 2, 1, 5, 1, 2, 2, 2 };
@@ -1227,6 +1227,49 @@ namespace Datastructures
             }
 
             return count;
+        }
+
+        //implementation of HashSets, Hashmaps to determine uniqueness of array elements
+        //check if a str if it contains unique chars
+        public bool UniqueChar(string str)
+        {
+            //mind about Lower or Upper cases, U is not u, returns True
+            //assume is ASCII - 128 bit character max , 7bit = 1 char
+            //assume char set is fixed to 128
+            //ASCII - 128
+            //Extended ASCII - 256 
+            //unicode: wide range of lengths, 8bit, 16bit, 32bits = 1 char
+            //ascii requires less space, unicode req more space :: tradeoff made
+
+            //time complexity: O(n), n = length of str
+            //space complexity: O(1)
+
+            if (str.Length > 128) return false;// greater than ascii max char set;
+
+            //create a boolean array set of 128 length
+
+            bool[] chrset = new bool[128];
+
+            //loop through all the characters in that str
+
+            for (int i = 0; i < str.Length; i++)
+            {
+
+                //convert str to char array
+                char[] k = str.ToCharArray();
+
+                //get value of char at index i
+                int valueAti = k[i]; //get ASCII code value for that character
+
+                //check, if the char was already found return false, not unique
+                if (chrset[valueAti])
+                {
+                    return false;
+                }
+                chrset[valueAti] = true;
+            }
+            //always return true
+            return true;
         }
 
         ///hashmaps, hashsets, dictionaries
