@@ -197,8 +197,12 @@ namespace Datastructures
             // Console.WriteLine("maximum difference: " + GetMaximumDifference(nums));
 
             ///maximum sorted diff of adjacent elements
-            int[] arr = { 2, 4, 8, 11 };
-            Console.WriteLine("max diff: " + MaximumSortedAdjacentDiff(arr));
+            //int[] arr = { 2, 4, 8, 11 };
+            //Console.WriteLine("max diff: " + MaximumSortedAdjacentDiff(arr));
+
+            ///palindrome check
+           // StrPalindromeChecker("pool");
+            IsStrPalindrom("boob");
 
             //below code should come at the bottom, make cmd not disappear
             Console.ReadLine();
@@ -1351,13 +1355,17 @@ namespace Datastructures
         ///If target exists, then return its index. Otherwise, return -1.
         ///You must write an algorithm with O(log n) runtime complexity.
         
+        //Iterative method
         //returns index of the target search parameter
+        //space and time complexity:  O(1)
+        //very efficient
         static int BinarySearch(int[] arr, int search) {
 
             int lowIndex = 0;
             int highIndex = arr.Length - 1;
             int midIndex;
 
+            //use iteration
             while(lowIndex <= highIndex)
             {
                 midIndex = (lowIndex + highIndex) / 2;
@@ -1373,6 +1381,32 @@ namespace Datastructures
                 else return midIndex;
             }
             return -1; //for error
+        }
+
+        /// implement binary search using recursion:: array MUST be SORTED first
+        /// Space and Time complexity: O(log n) - act as trade off
+        /// easy to implement
+        public static int RecursiveBinarySearch(int[] nums, int target, int low, int high)
+        {
+            if (low > high) return -1; //error
+
+            //find mid element
+            int mid = (low + high) / 2;
+
+            if (nums[mid] < target)
+            {
+                //use recursion
+                return RecursiveBinarySearch(nums, target, mid + 1, high); //search right half where target is located
+                //master:: if element in the mid index < target, then recursive binary search
+                //parameter order ( array, target, low( mid+1), high )
+            }
+            if (nums[mid] > target)
+            {
+                return RecursiveBinarySearch(nums, target, low, mid - 1); //left half where target is located
+                //if element in the mid index  > target, then call recursive binary search
+                //parameter order: ( array, target, low, high (mid-1) ) 
+            }
+            else return mid;
         }
 
         ///Reverse a string using any Library
@@ -1484,28 +1518,7 @@ namespace Datastructures
         }
 
 
-        /// implement binary search using recursion:: array MUST be SORTED first
-        public static int RecursiveBinarySearch(int[]nums, int target, int low, int high)
-        {
-            if (low > high) return -1; //error
-
-            //find mid element
-            int mid = (low + high)/2;
-
-            if (nums[mid] < target)
-            {
-                return RecursiveBinarySearch(nums, target, mid+1, high); //search right half where target is located
-                //master:: if element in the mid index < target, then recursive binary search
-                //parameter order ( array, target, low( mid+1), high )
-            }
-            if (nums[mid] > target)
-            {
-                return RecursiveBinarySearch(nums, target, low, mid - 1); //left half where target is located
-                //if element in the mid index  > target, then call recursive binary search
-                //parameter order: ( array, target, low, high (mid-1) ) 
-            }
-            else return mid;
-        }
+        
 
         ///Insertion Sort: insertion sort is an in-place sorting algorithm.
         ///This algorithm is one of the simplest algorithm with simple implementation
@@ -1725,6 +1738,58 @@ namespace Datastructures
 
             return max_gap;
 
+        }
+
+        /// string palindrome check using inbuild library      
+        static bool StrPalindromeChecker(string str)
+        {
+            string stringOg, revrSed;
+            stringOg = str;
+            //get character arrays
+            char[] ch = stringOg.ToCharArray();
+
+            //then reverse character arrays
+            Array.Reverse(ch);
+
+            revrSed = new string(ch);
+
+            bool b = stringOg.Equals(revrSed, StringComparison.OrdinalIgnoreCase);
+            if (b == true)
+            {
+                Console.WriteLine("" + stringOg + " is a Palindrome!");
+                return true;              
+            }
+            else
+            {
+                Console.WriteLine(" " + stringOg + " is not a Palindrome!");
+                return false;               
+            }
+        }
+
+        ///string palindrome check without library
+        static bool IsStrPalindrom(string str)
+        {          
+            string reverseStr = string.Empty; //initialize reverse string to empty on start
+
+            //get string length
+            int n = str.Length;
+
+            //reverse the string
+            for (int i = n - 1; i >= 0; i--)
+            {
+                reverseStr += str[i];
+            }
+
+            if (str == reverseStr)
+            {
+                Console.WriteLine($"{str} is Palindrome.");
+                return true;               
+            }
+            else
+            {
+                Console.WriteLine($"{str} is not Palindrome");
+                return false;
+            }
         }
 
 
