@@ -166,7 +166,8 @@ namespace Datastructures
             //Console.WriteLine("Recursive Binary Search: " + RBsearch);
 
             ///reverse string without libraries
-            //Console.WriteLine("Reverse my String is: "+_ReverseStrWoLib("mbuvi"));
+            // Console.WriteLine("Reverse my String is: "+_ReverseStrWoLib("mbuvi"));
+            // Console.WriteLine("string reversed: " + _ReverseStrNoLibII("mbuvi"));
 
             ///remove dups from array
             //int[] nums = { 1, 1, 1, 2, 2, 3};
@@ -212,11 +213,16 @@ namespace Datastructures
             //dllNodes._printDoublyLinkedList(listIs);
 
             ///create binary search tree
-            int[] arr = { 2, 3, 5, 6, 8, 10 };
-            // BinarySearchTree(arr); //we can use recusrion
-            //or use below
-            var myNode = lstNode.SortedArrayToBST(arr);
-            lstNode.preOrder(myNode); //print binary tree
+            //int[] arr = { 2, 3, 5, 6, 8, 10 };
+            //// BinarySearchTree(arr); //we can use recusrion
+            ////or use below
+            //var myNode = lstNode.SortedArrayToBST(arr);
+            //lstNode.preOrder(myNode); //print binary tree
+
+            ///maximum pair tests
+            //int[] arr = { -2, -8, -3, 8, 10,-15, 9 };
+            int[] m = { -10, -3, 5, 6, -2 };
+            MaxProductPair(m);
 
             //below code should come at the bottom, make cmd not disappear
             Console.ReadLine();
@@ -1335,14 +1341,16 @@ namespace Datastructures
 
 
         //Heap Sort
-        // 1). The heapify phase: In this phase, we transform the input array into a max heap – a binary tree
+        // 1). The heapify phase: In this phase, we transform the input array
+        // into a max heap – a binary tree
         // in which the value of each node is greater than or equal to the value of its children nodes.
         // 2). The sort phase: In this phase, the max heap is repeatedly removed until only one element remains.
         //This is done by swapping the root node with the last element in the heap, and then ensuring that
         //the new root node satisfies the max heap property.
         //This process is repeated until only one element remains in the heap.
        
-        /// The heap sort algorithm encounters its best-case time complexity when it encounters identical elements.
+        /// The heap sort algorithm encounters its best-case time complexity 
+        /// when it encounters identical elements.
         /// Therefore. when we have N number of elements:
         /// Removing every node from the heap takes constant time O(1).
         /// Since all elements are equal, we don’t need to keep building the max heap, 
@@ -1355,18 +1363,18 @@ namespace Datastructures
             //Max Heap Implementation 
             //steps to master
 
-            var largestIndex = index; //index of the maximum elementt of the array arr[]
-            var leftChild = 2 * index + 1;
-            var rightChild = 2 * index + 2;
+            var largestIndex = index; //index of the maximum element of the array arr[]
+            var leftChild = 2 * index + 1; //create left child
+            var rightChild = 2 * index + 2; //create right child
 
             //check if leftchild is > the largest element, if true, swap their positions
-            if (leftChild < arr_size && arr[leftChild] > arr[largestIndex])
+            if ( arr[leftChild] > arr[largestIndex] && leftChild < arr_size )
             {
                 largestIndex = leftChild;
             }
 
             //check if rightchild is > the largest element, if true, swap their positions
-            if (rightChild < arr_size && arr[rightChild] > arr[largestIndex])
+            if ( arr[rightChild] > arr[largestIndex] && rightChild < arr_size )
             {
                 largestIndex = rightChild;
             }            
@@ -1468,8 +1476,25 @@ namespace Datastructures
             else return mid;
         }
 
+        //Time Complexity:  O(n),..n => length of the string 
+        //Space Complexity:  O(1):: no extra space
+        public static string _ReverseStrNoLibII(string str)
+        {
+            string reverseStr = string.Empty; //initialize reverse string to empty on start
+
+            //get string length
+            int n = str.Length;
+
+            //reverse the string, from the back, end position
+            for (int i = n - 1; i >= 0; i--)
+            {
+                reverseStr += str[i]; //repeated n number of times
+            }
+            return reverseStr;
+        }
+
         ///Reverse a string using any Library
-        public static string _ReverseStrWoLib( string str )
+        public static string _ReverseStrWithLib( string str )
         {
             int len = str.Length;
             char [] chars = str.ToCharArray(); //convert string to char array
@@ -1485,7 +1510,7 @@ namespace Datastructures
         /// Write a function that reverses a string.
         /// The input string is given as an array of characters s.
         /// You must do this by modifying the input array in-place with O(1) extra memory.
-       public void ReverseString(char[] s ) {
+       public void ReverseCharStrs(char[] s ) {
             
             //initialize start and end indeces
             int startIndex = 0;
@@ -1628,7 +1653,7 @@ namespace Datastructures
                     continue; //skip, go to next
                 }
 
-                for(int j = i + 1; j < n; j++) //checks next element
+                for(int j = i + 1; j < n; j++) //checks next element::inner loop
                 {
                     if(nums[i] + nums[j] == target)
                     {
@@ -1833,7 +1858,7 @@ namespace Datastructures
             //get string length
             int n = str.Length;
 
-            //reverse the string
+            //reverse the string, from the back, end position
             for (int i = n - 1; i >= 0; i--)
             {
                 reverseStr += str[i];
@@ -1841,12 +1866,12 @@ namespace Datastructures
 
             if (str == reverseStr)
             {
-                Console.WriteLine($"{str} is Palindrome.");
+                Console.WriteLine($"{str} is Palindrome!");
                 return true;               
             }
             else
             {
-                Console.WriteLine($"{str} is not Palindrome");
+                Console.WriteLine($"{str} is not Palindrome!!");
                 return false;
             }
         }
@@ -1878,6 +1903,55 @@ namespace Datastructures
                 return false;                
             }
                 
+        }
+        //maximum product pair
+
+        ///Given an integer array, find a pair with the maximum product in it.
+        ///Each input can have multiple solutions.The output should match with either one of them.
+        ///Input : [-10, -3, 5, 6, -2]
+        ///Output: (-10, -3) or(-3, -10) or(5, 6) or(6, 5)
+        ///Input : [-4, 3, 2, 7, -5]
+        ///Output: (3, 7) or(7, 3)
+        ///If no pair exists, the solution should return null.
+        ///Input : [1]
+        ///Output: null
+        /// Time Complexity: O(nlog n)
+        /// Auxiliary Space: O(1)
+
+        static void MaxProductPair(int[] arr)
+        {
+            int n = arr.Length;
+            // Sort the array first, if it's not sorted, assume the array is not sorted
+            Array.Sort(arr);
+            Console.WriteLine("sorted array: ");
+            _printAnySortedArray(arr);
+
+            if (n < 2)
+            {
+                Console.Write("no pair");
+                return;
+            }
+
+            int num1, num2;
+            //Math.Abs ==> to get non-negative numbers
+            // Calculate product of two smallest numbers
+            int sumSmall = Math.Abs(arr[0] * arr[1]);
+
+            // Calculate product of two largest numbers
+            int sumLarge= Math.Abs(arr[n - 1] * arr[n - 2]);
+
+            // Print the pairs whose product is greater
+            if (sumSmall > sumLarge)
+            {
+                num1 = arr[0];
+                num2 = arr[1];
+            }
+            else
+            {
+                num1 = arr[n - 2];
+                num2 = arr[n - 1];
+            }
+            Console.Write("Max product pair: " + "[" + num1 + "," + num2 + "]");
         }
 
 

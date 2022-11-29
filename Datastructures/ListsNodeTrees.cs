@@ -21,6 +21,7 @@ namespace Datastructures
             }
         }  
 
+        //implementations of linked lists and queues
         public class NodesAndLinkedLists
         {
             public Node head, lhead; //lhead: linked list head
@@ -88,13 +89,11 @@ namespace Datastructures
                 Node next_next;
 
                 /* do nothing if the list is empty */
-                if (head == null)
-                    return;
+                if (head == null) return;
 
                 /* Traverse list till the last node */
                 while (current.next != null)
                 {
-
                     /*compare current node with the next node */
                     if (current.data == current.next.data)
                     {
@@ -126,17 +125,17 @@ namespace Datastructures
                 Node temp = head;
                 while (temp != null)
                 {
-                    Console.Write(temp.data + " ");
-                    temp = temp.next;
+                    Console.Write(temp.data + "->");
+                    temp = temp.next; //point temp to the next data
                 }
                 Console.WriteLine();
             }
 
-            // remove duplicates from an unsorted linked list
+            // remove duplicates from an unsorted linked list::use HashMaps, hashsets
             public void removeDuplicateFromList(Node head)
             {
                 // Hash to store already seen values
-                HashSet<int> hs = new HashSet<int>();
+                var hs = new HashSet<int>();
 
                 // Pick elements one by one
                 Node current = head;
@@ -156,7 +155,7 @@ namespace Datastructures
                         hs.Add(curval);
                         prev = current;
                     }
-                    //base condition
+                    //base condition: when current becomes null,,...or when next == null
                     current = current.next;
                 }
             }

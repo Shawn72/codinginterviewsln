@@ -8,7 +8,7 @@ namespace Datastructures
     Space Compelxity: O(V).There can be atmost V elements in the queue. So the space needed is O(V).
      */
 
-    // directed graph using adjacency listrepresentation
+    // directed graph using adjacency list representation
     public class Graph
     {
         private int V; // Number of vertices
