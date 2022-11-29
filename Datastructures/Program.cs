@@ -14,6 +14,7 @@ namespace Datastructures
         public static Matrix mtrx = new Matrix();
         public static BitsManipulation bt = new BitsManipulation();
         public static NodesAndLinkedLists lstNode = new NodesAndLinkedLists();
+        public static DoubleLinkedList dllNodes = new DoubleLinkedList();
         static void Main(string[] args)
         {
             //  string s1 = "hello" + "i" + "am";
@@ -85,8 +86,8 @@ namespace Datastructures
             //TestArrayManipulation ();
 
             ///push all 0s to end test
-            // int[] testArr = { 5, 6, 0, 4, 6, 0, 9, 0, 8, 10, 0, 0 };
-            // PushAllZerosToEnd(testArr);
+            //int[] testArr = { 5, 6, 0, 4, 6, 0, 9, 0, 8, 10, 0, 0 };
+            //PushAllZerosToEnd(testArr);
 
 
             ///add without operator test
@@ -201,8 +202,15 @@ namespace Datastructures
             //Console.WriteLine("max diff: " + MaximumSortedAdjacentDiff(arr));
 
             ///palindrome check
-           // StrPalindromeChecker("pool");
-            IsStrPalindrom("boob");
+            // StrPalindromeChecker("pool");
+            //IsStrPalindrom("boob");
+
+            ///integer palindrome check
+            //IsIntegerPalindrome(121);
+
+            ///doubly linked list
+            var listIs = dllNodes.CreateDoulblyLinkedList();
+            dllNodes._printDoublyLinkedList(listIs);
 
             //below code should come at the bottom, make cmd not disappear
             Console.ReadLine();
@@ -218,7 +226,7 @@ namespace Datastructures
         static void PushAllZerosToEnd(int [] arr)
         {
             int n = arr.Length; // array length
-            int j = 0; // our pivot element
+            int j = 0; // our pivot element, current element index
             for (int i = 0; i < n; i++) //traverse the array
             {
                 if (arr[i] != 0) //if current root element index is not equal to 0
@@ -230,7 +238,7 @@ namespace Datastructures
                     //call swap
                     swapElements(arr, i, j);
 
-                    //increament current index
+                    //increment current index
                     j++;
                 }
             }
@@ -1357,10 +1365,10 @@ namespace Datastructures
 
             if (largestIndex != index)
             { 
-                //call swapElements for swapping
+                // 1. call swapElements for swapping
                 swapElements(arr, index, largestIndex);
 
-                //parameters: array, arraysize, index
+                // 2. parameters: array, arraysize, index
                 Heapify(arr, arr_size, largestIndex);//recursively call Heapify until we build max heap
             }
         }
@@ -1833,6 +1841,35 @@ namespace Datastructures
                 Console.WriteLine($"{str} is not Palindrome");
                 return false;
             }
+        }
+
+        static bool IsIntegerPalindrome(int num)
+        {
+            int reminder, sum = 0, temp;
+           
+            temp = num; //init temp to the given number
+
+            while (num > 0) //iterate
+            {
+                reminder = num % 10; //divide by 10 and get and record reminder
+
+                //get sum var
+                sum = (sum * 10) + reminder;
+
+                num = num / 10;
+            }
+
+            if (temp == sum)
+            {
+                Console.Write("Number is Palindrome!");
+                return true;
+            }
+            else
+            {
+                Console.Write("Number is not Palindrome!");
+                return false;                
+            }
+                
         }
 
 

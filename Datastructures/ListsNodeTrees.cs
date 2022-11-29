@@ -11,6 +11,9 @@ namespace Datastructures
         {
             public int data;
             public Node next, prev; //can rep left, right
+
+            //create an empty list as below::
+            //use of constructor call to minimize mem allocation, use few lines of code
             public Node(int d) //takes in integer data
             {
                 data = d;
@@ -46,7 +49,7 @@ namespace Datastructures
             internal Node GetLastNode()
             {
                 Node temp = head;
-                while (temp.next != null)
+                while (temp.next != null) //terminating base: when temp.next == null;
                 {
                     temp = temp.next;
                 }
@@ -152,6 +155,7 @@ namespace Datastructures
                         hs.Add(curval);
                         prev = current;
                     }
+                    //base condition
                     current = current.next;
                 }
             }
@@ -161,7 +165,7 @@ namespace Datastructures
             {
                 while (head != null)
                 {
-                    Console.Write(head.data + " ");
+                    Console.Write(head.data + " --> ");
                     head = head.next;
                 }
             }
@@ -510,23 +514,16 @@ namespace Datastructures
 
                 Console.WriteLine("Is the linked list circular now?: ");
 
-                Console.Write(HasCycle(head) ? "Yes\n" :  "No\n");
-               
+                Console.Write(HasCycle(head) ? "Yes\n" :  "No\n");               
             }
-
-
 
             //insert into a sorted circular linked list
 
 
-
         }
-
-
 
         public static void _LinkedListOps()
         {
-
             //Time Complexity: O(n) where n is the number of nodes in the given linked list.
 
             NodesAndLinkedLists _list = new NodesAndLinkedLists();
@@ -547,7 +544,6 @@ namespace Datastructures
 
         static void _LinkedListWHashmap()
         {
-
             //Time Complexity: O(n) on average (assuming that hash table access time is O(1) on average).
 
             NodesAndLinkedLists _list = new NodesAndLinkedLists();
@@ -564,6 +560,125 @@ namespace Datastructures
             Console.WriteLine("List after removing duplicates \n");
             _list._printNode(_start);
         }
+
+        ///doubly linked list implementation
+        
+        //node structure:: without using constructor call
+        public class DLLNode
+        {
+            public int data;
+            public DLLNode next;
+            public DLLNode prev;
+        }
+
+        //implementation of dll list
+        public class DoubleLinkedList
+        {
+            public DLLNode head, tail; //inititalize head and tail           
+
+            //constructor to create an empty LinkedList
+            public DoubleLinkedList()
+            {
+                head = null;
+            }
+
+            //create dll list
+            public DoubleLinkedList CreateDoulblyLinkedList()
+            {
+                //create and initialize an empty LinkedList
+                DoubleLinkedList _dlist = new DoubleLinkedList();
+
+                //Add first node.
+                DLLNode nodeOne = new DLLNode();
+                nodeOne.data = 15;
+                nodeOne.next = null;
+                nodeOne.prev = null;
+                //linking with head node
+                _dlist.head = nodeOne;
+
+                //Add second node.
+                DLLNode nodeTwo = new DLLNode();
+                nodeTwo.data = 20;
+                nodeTwo.next = null;
+                //linking with first node
+                nodeTwo.prev = nodeOne; //make prev of node 2 point to node 1
+                nodeOne.next = nodeTwo; //next of node 1 point to node 2
+
+                //Add third node.
+                DLLNode nodeThree = new DLLNode();
+                nodeThree.data = 25;
+                nodeThree.next = null;
+                //linking with second node
+                nodeThree.prev = nodeTwo; //make prev of node 3 point to node 2
+                nodeTwo.next = nodeThree; //next of node 2 point to node 3
+
+                // return the list created
+                return _dlist;
+            }
+
+            //for printing the list, takes in doubly linked list created as the parameter
+            public void _printDoublyLinkedList(DoubleLinkedList dList)
+            {               
+                var list = dList.head;
+
+                if (list != null)
+                {
+                    Console.Write("The list contains: ");
+                    while (list != null)
+                    {
+                        Console.Write(list.data + "-->");
+                        list = list.next;
+                    }
+                    Console.WriteLine();
+                }
+                else
+                {
+                    Console.WriteLine("The list is empty!");
+                }
+            }
+        }
+
+        //using constructor call method to insert
+        public void dll_insertAtHead(int value)
+        {
+            Node head = null; // declaring an empty doubly linked list
+
+            Node node = new Node(value);//insert value
+
+            node.next = head;
+
+            if (head != null) 
+            {
+                head.prev = node;
+            }
+            head = node;
+        }
+
+        public void dll_insertAtTail(int value)
+        {
+            Node head = null; // declaring an empty doubly linked list
+
+            if (head == null)
+            {
+                dll_insertAtHead(value);
+                return;
+            }
+
+            Node node = new Node(value);
+            Node temp = head;
+            while (temp.next != null)
+            {
+                temp = temp.next;
+            }
+            temp.next = node;
+            node.prev = temp;
+        }
+
+
+        ///drawbacks of Singly LL. A node deletion in Singly LL cannot be removed 
+        ///unless we know the pointer of its predecessor, 
+        ///whereas, in doubly LL, we can delete a node even if 
+        ///we do not have the address of predecessor. 
 
 
     }
