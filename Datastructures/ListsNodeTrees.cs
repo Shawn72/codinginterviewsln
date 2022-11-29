@@ -13,7 +13,7 @@ namespace Datastructures
             public Node next, prev; //can rep left, right
 
             //create an empty list as below::
-            //use of constructor call to minimize mem allocation, use few lines of code
+            //use of constructor call to minimize mem allocations, use few lines of code
             public Node(int d) //takes in integer data
             {
                 data = d;
@@ -42,6 +42,7 @@ namespace Datastructures
                     head = new_node;
                     return;
                 }
+                //get last node first,..then insert
                 Node lastNode = GetLastNode();
                 lastNode.next = new_node;
             }
@@ -203,7 +204,7 @@ namespace Datastructures
                 Console.WriteLine(temp.data);
             }
 
-            /* construct a Balanced Binary Search Tree from a sorted array */
+            /* construct a Balanced Binary Search Tree from a sorted array:: using recursion */
             public virtual Node _sortedArrayToBST(int[] arr, int start, int end)
             {
                 //pass array, start index, end index
@@ -214,6 +215,7 @@ namespace Datastructures
 
                 /* Get the middle element and make it root */
                 int mid = (start + end) / 2;
+
                 Node node = new Node(arr[mid]); //initialize the node ,point to the middle element
 
                 /* Recursively construct the left subtree and make it left child of root */
@@ -229,7 +231,7 @@ namespace Datastructures
             public virtual void preOrder(Node node)
             {
                 if (node == null) return;
-                Console.Write(node.data + " ");
+                Console.Write(node.data + "->");
                 preOrder(node.prev);
                 preOrder(node.next);
             }
@@ -239,20 +241,15 @@ namespace Datastructures
             {
                 int n = nums.Length;
 
-                int start = 0;
-                int end = n - 1;
+                int start = 0, end = n - 1;
 
                 /* Base Case */
                 if (start > end) return null;
 
                 /* Get the middle element and make it root */
                 int mid = (start + end) / 2;
-                Node node = new Node(nums[mid]);
 
-                int[] leftArr = new int[mid];
-                int[] rightArr = new int[n - mid];
-                Array.Copy(nums, start, leftArr, 0, mid);
-                rightArr = nums.Skip(leftArr.Length).ToArray();
+                Node node = new Node(nums[mid]);
 
                 /* Recursively construct the left subtree and make it left child of root */
                 node.prev = _sortedArrayToBST(nums, start, mid - 1); //prev::rep left node
@@ -319,7 +316,7 @@ namespace Datastructures
             {
                 while (node != null)
                 {
-                    Console.Write(node.data + " ");
+                    Console.Write(node.data + "->");
                     node = node.next;
                 }
             }
@@ -447,6 +444,12 @@ namespace Datastructures
                 llist._printKthFromLast(n);
             }
 
+            public void MakeCircularListUsingPushNode(Node head)
+            {
+                Node mhead = head;
+                head.next = mhead;//make it circular               
+            }
+
             ///Circular Linked Lists: A linked list is called circular 
             ///if it is not NULL-terminated and all nodes are connected 
             ///in the form of a cycle.
@@ -516,6 +519,7 @@ namespace Datastructures
 
                 Console.Write(HasCycle(head) ? "Yes\n" :  "No\n");               
             }
+           
 
             //insert into a sorted circular linked list
 
@@ -532,12 +536,14 @@ namespace Datastructures
             _list._pushtoNode(26);
             _list._pushtoNode(50);
             _list._pushtoNode(40);
-            _list._pushtoNode(40);
+            _list._pushtoNode(40);            
 
             Console.WriteLine("List before removing duplicates");
             _list._printList();
+
             Console.WriteLine(" \n");
             _list._removeDuplicates();
+
             Console.WriteLine("List after removing duplicates");
             _list._printList();
         }
@@ -679,6 +685,9 @@ namespace Datastructures
         ///unless we know the pointer of its predecessor, 
         ///whereas, in doubly LL, we can delete a node even if 
         ///we do not have the address of predecessor. 
+        ///complexities for linked list ops
+        ///Time complexity: O(n) , n::number of nodes
+        ///Space Complexity: O(1)
 
 
     }

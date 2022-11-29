@@ -66,8 +66,7 @@ namespace Datastructures
             // _rotateImgDriver(imgmat);
 
             //graphs
-            // _GraphCanBeConnected();
-            //  BinarySearchTree();
+            // _GraphCanBeConnected();            
             //  LinkedListToBST();
             // _checkBSTHeightBalance();
             // MaximumTreeDepth();
@@ -209,8 +208,15 @@ namespace Datastructures
             //IsIntegerPalindrome(121);
 
             ///doubly linked list
-            var listIs = dllNodes.CreateDoulblyLinkedList();
-            dllNodes._printDoublyLinkedList(listIs);
+            //var listIs = dllNodes.CreateDoulblyLinkedList();
+            //dllNodes._printDoublyLinkedList(listIs);
+
+            ///create binary search tree
+            int[] arr = { 2, 3, 5, 6, 8, 10 };
+            // BinarySearchTree(arr); //we can use recusrion
+            //or use below
+            var myNode = lstNode.SortedArrayToBST(arr);
+            lstNode.preOrder(myNode); //print binary tree
 
             //below code should come at the bottom, make cmd not disappear
             Console.ReadLine();
@@ -506,22 +512,24 @@ namespace Datastructures
             nList.preOrderLnk(root);
         }
 
-        static void BinarySearchTree() {
+        static void BinarySearchTree(int[] arr) {
+
             //head::also known as root
             NodesAndLinkedLists tree = new NodesAndLinkedLists();
-            int[] arr = new int[] { -10, -3, 0, 5, 9 };
+
+            //int[] arr = new int[] { -10, -3, 0, 5, 9 };
             int n = arr.Length;
 
-            //leetcode
+            //leetcode solutions
             // tree.head = tree.SortedArrayToBST(arr);
 
-            // tree.head = tree._sortedArrayToBST(arr, 0, n - 1);           
+             tree.head = tree._sortedArrayToBST(arr, 0, n - 1);           
 
-            tree.head = tree.createMinimalBST(arr);
+           // tree.head = tree.createMinimalBST(arr);
 
-            Console.WriteLine("Preorder traversal of constructed BST");           
+            Console.WriteLine("Preorder traversal of constructed BST");          
 
-           tree.preOrder(tree.head);
+            tree.preOrder(tree.head);
         }
 
         static void _GraphCanBeConnected() {
