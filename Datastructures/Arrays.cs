@@ -235,14 +235,17 @@ namespace Datastructures
             d) Pick the next character and repeat steps b) c) and d) if the end of the string is NOT reached.
         
          */
-        public string _compressSting(string input)
+        public string _compressString(string input)
         {
-            if (input.Length < 3) return input;
-
             int n = input.Length; int i = 0; int o = 0;
+
+            if (n < 3) return input;
+
             char[] output = new char[n + 1];
+
             output[o++] = input[0];
             output[o++] = '1';
+
             for (i = 1; i < n && o < n; i++)
             {
                 if (input[i] == input[i - 1] && output[o - 1] != '9')

@@ -39,7 +39,7 @@ namespace Datastructures
             ////////Lists
             //_LinkedListOps();
             // _LinkedListWHashmap();
-            // Console.WriteLine( "compressed: "+_compressSting("aaabbbrrrruuuuu") );
+            // Console.WriteLine( "compressed: "+_compressString("aaabbbrrrruuuuu") );
             // Console.WriteLine("Can form a palidrome?: " + _canFormPalindrome("cooc") );
             // Console.WriteLine("palidrome: " + _getPalindrome("mdaam"));
             // Console.WriteLine("UrLified string: " + URLify_String("http://ninjax company ltd.com"));
@@ -152,17 +152,16 @@ namespace Datastructures
 
             ///binary search test
             ///array to search MUST always be sorted
-            //var sortedarr = new int[] { 1, 20, 49, 57, 73, 99, 133 };
+            //var sortedarr = new int[] { 1, 20, 49, 57, 73, 99, 133, 150 };
             // Console.Write("Binary Search a Quick Sorted Array, ");
             //var bSearch = BinarySearch(arr, 85);
             ///or use inbuild binarySearch function
             //var bSearch = Array.BinarySearch(sortedarr, 20);
             // Console.WriteLine("Binary Search Results, is at index: " + bSearch);
 
-
             //int arrLen = sortedarr.Length;
             //int high = arrLen - 1;
-            //var RBsearch = RecursiveBinarySearch(sortedarr, 20, 0, high);
+            //var RBsearch = RecursiveBinarySearch(sortedarr, 57, 0, high);
             //Console.WriteLine("Recursive Binary Search: " + RBsearch);
 
             ///reverse string without libraries
@@ -221,15 +220,17 @@ namespace Datastructures
 
             ///maximum pair tests
             //int[] arr = { -2, -8, -3, 8, 10,-15, 9 };
-            int[] m = { -10, -3, 5, 6, -2 };
-            MaxProductPair(m);
+            int[] m = { 3, 4, 5, 2 };
+            //MaxProductPair(m);
+            Console.WriteLine("Max Product: " + maxProduct(m));
 
             //below code should come at the bottom, make cmd not disappear
             Console.ReadLine();
         }
 
 
-        // use Partitioning the array: why i used it, is simple ,dont require too much writing, fast to implement
+        // use Partitioning the array: why i used it, is simple ,dont require too much writing,
+        // fast to implement
         // use a 0 as a pivot, see non 0 element and swap it going left
 
         //Complexity Analysis:
@@ -301,12 +302,11 @@ namespace Datastructures
             Console.WriteLine("2D Array: " + nDarray);
         }
 
-        static void CatsArrtoList() {
+        static void ConvertArrayToList() {
             int[,] arr = { { 2, 3, 7 }, { 2, 3, 5 }, { 2, 3, 6 }, { 2, 4, 7 }, { 2, 4, 5 }, { 2, 4, 6 } };
             // Console.WriteLine("List: " + arrys.CastToList(arr));
             Console.WriteLine("List: " + arrys.UsingBlockCopy(arr));
         }
-
 
         static void SwapOddEvenBits() {
             int n = 23;
@@ -319,18 +319,22 @@ namespace Datastructures
 
         }
 
-        static string _convertIntToBinary(int m) {
-         
-            int remainder;
+        static string _convertIntToBinary(int m) {         
+            
             string binary = string.Empty;
+          
+            //int remainder;
 
             //convert integer back to binary string
-            while (m > 0)
-            {
-                remainder = m % 2;
-                m /= 2;
-                binary = remainder.ToString() + binary;
-            }
+            //while (m > 0)
+            //{
+            //    remainder = m % 2;
+            //    m /= 2;
+            //    binary = remainder.ToString() + binary;
+            //}
+
+            //or simply use this
+            binary = Convert.ToString(m, 2); //convert to string with base 2
 
             return binary;
         }
@@ -340,7 +344,7 @@ namespace Datastructures
             Console.WriteLine("bits to flip: " + bt.FlippedCount(a, b));
         }
 
-        static void _NextSmallestorLargest() {
+        static void _NextSmallestOrLargest() {
 
             int n = 5;
             Console.WriteLine("next largest / smallest int: "+bt.getNext(n));
@@ -1146,7 +1150,7 @@ namespace Datastructures
             // take highest index of larger element as pivot
             int pivot = arr[high];
 
-            // Index of smaller element and indicates the right position of pivot found so far
+            // Index of smaller element indicates the right position of pivot found so far
             int i = (low - 1);
 
             //int j: current index
@@ -1348,7 +1352,7 @@ namespace Datastructures
         //This is done by swapping the root node with the last element in the heap, and then ensuring that
         //the new root node satisfies the max heap property.
         //This process is repeated until only one element remains in the heap.
-       
+
         /// The heap sort algorithm encounters its best-case time complexity 
         /// when it encounters identical elements.
         /// Therefore. when we have N number of elements:
@@ -1357,6 +1361,18 @@ namespace Datastructures
         /// hence the algorithm takes N * O(1) time or O(N).
         /// However, since this scenario is rare, we can conclude that the best-case time complexity
         /// of the heap sort algorithm is O(N log N),..which is also the worst case
+
+        /// features of Maximum Binary Heap
+        ///     Every node will have at most two children.
+        ///     Each parent node’s value will be always greater than its children
+        ///     and there is no guarantee in its children’s order.
+        ///     Root node value is always greater than all the nodes.
+        /// 
+        ///features of Minimum Binary Heap
+        ///    Every node will have at most two children.
+        ///    Each parent node’s value will be always less than its children
+        ///    and there is no guarantee in its children’s order.
+        ///    Root node value is always less than all the nodes.
 
         static void Heapify(int[] arr, int arr_size, int index)
         {
@@ -1390,7 +1406,7 @@ namespace Datastructures
         }
 
         //leatcode implementation
-        //using max heap
+        //using max heap        
         public static int[] HeapSortArray(int[] arr, int arr_size)
         {
             //arr_size = arr.Length;
@@ -1458,7 +1474,8 @@ namespace Datastructures
             if (low > high) return -1; //error
 
             //find mid element
-            int mid = (low + high) / 2;
+            int mid = (low + high) / 2; //if low+high = odd number, mid element will have .5,
+                                        //take the floor, dicard .5
 
             if (nums[mid] < target)
             {
@@ -1921,8 +1938,10 @@ namespace Datastructures
         static void MaxProductPair(int[] arr)
         {
             int n = arr.Length;
+
             // Sort the array first, if it's not sorted, assume the array is not sorted
             Array.Sort(arr);
+
             Console.WriteLine("sorted array: ");
             _printAnySortedArray(arr);
 
@@ -1954,7 +1973,28 @@ namespace Datastructures
             Console.Write("Max product pair: " + "[" + num1 + "," + num2 + "]");
         }
 
+        /// Given the array of integers nums, you will choose two different indices i and j 
+        /// of that array. Return the maximum value of (nums[i]-1)*(nums[j]-1).
+        /// Example 1:Input: nums = [3,4,5,2]
+        /// Output: 12 
+        /// Explanation: If you choose the indices i=1 and j=2 (indexed from 0), you will get the maximum value,
+        /// that is, (nums[1]-1)*(nums[2]-1) = (4-1)*(5-1) = 3*4 = 12. 
+        /// 
+        public static int maxProduct(int[] nums)
+        {
+            int maxProduct = int.MinValue; 
 
+            int n = nums.Length;
+
+            Array.Sort(nums); //sort array first in asc order
+
+            //i = 1, j = 2;
+            //step back 1 position for each element chosen
+            //e.g nums[n-1]-1 = --nums[n-1], nums[n-2]-1 = --nums[n-2]
+            maxProduct = --nums[n - 1] * --nums[n - 2] ;
+            
+            return maxProduct;
+        }
 
 
         // why Microsoft? - base answers on work culture:
