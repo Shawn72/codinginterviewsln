@@ -184,9 +184,11 @@ namespace Datastructures
             // _printAnySortedArray(inSort);
 
             ///TwoSum soln
-            //int[] nums = { 1, 2, 4, 5, 4, 6 };
-            //var SumofTwo = TwoNums(nums, 10);
-            //_printAnySortedArray(SumofTwo);
+            int[] nums = { 2, 1, 4, 5, 4, 6 };
+            Array.Sort(nums);
+            var SumofTwo = TwoNums(nums, 39);
+            //var opl = _twoSum(nums, 10);
+            _printAnySortedArray(SumofTwo);
 
             ///maximum binary gap
             //Console.WriteLine("gap length: " + MaximumBinaryGap(22));
@@ -220,9 +222,9 @@ namespace Datastructures
 
             ///maximum pair tests
             //int[] arr = { -2, -8, -3, 8, 10,-15, 9 };
-            int[] m = { 3, 4, 5, 2 };
+            //int[] m = { 3, 4, 5, 2 };
             //MaxProductPair(m);
-            Console.WriteLine("Max Product: " + maxProduct(m));
+            //Console.WriteLine("Max Product: " + maxProduct(m));
 
             //below code should come at the bottom, make cmd not disappear
             Console.ReadLine();
@@ -1661,26 +1663,52 @@ namespace Datastructures
         {
             //get length of arr
             int n = nums.Length;
-            int[] retArr = new int[2]; //must be of size 2, we need only 2 values
-            for(int i = 0; i < n-1; i++) //checks current element
-            {
-                //check if is dup, jump
-                if(nums[i] == nums[i + 1])
-                {
-                    continue; //skip, go to next
-                }
+            int[] retArr = new int[2]; //must be of size 2, we need only 2 values            
 
-                for(int j = i + 1; j < n; j++) //checks next element::inner loop
+            for (int i = 0; i < n-1; i++) //checks current element
+            {               
+
+                for (int j = i + 1; j < n; j++) //checks next element::inner loop
                 {
-                    if(nums[i] + nums[j] == target)
+                    if (nums[i] + nums[j] == target)
                     {
                         retArr[0] = i;
                         retArr[1] = j;
                         return retArr;
                     }
-                }               
+                }
             }
             return retArr;
+        }
+
+        //twoSum soln
+        public static int[] _twoSum(int[] nums, int target)
+        {
+            //implement using a dictionary
+
+            Dictionary<int, int> numToIndex = new Dictionary<int, int>();
+
+            int diff = 0;
+
+            for (int i = 0; i < nums.Length; ++i)
+            {
+                diff = target - nums[i];
+                
+                //check if the number is a duplicate and skip it
+                if (numToIndex.ContainsKey(nums[i]))
+                {
+                    continue; //skip
+                }
+                else
+                {
+                    if (numToIndex.ContainsKey(diff))
+                    {
+                        return new int[] { numToIndex.GetValueOrDefault(diff), i };
+                    }
+                    numToIndex.Add(i, nums[i]);
+                }                
+            }
+            return numToIndex.Values.ToArray();
         }
 
         /// A binary gap within a positive integer N is any maximal 
