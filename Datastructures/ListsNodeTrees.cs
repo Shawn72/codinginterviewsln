@@ -34,6 +34,39 @@ namespace Datastructures
                 head = new_node;
             }
 
+            //util to creat a linked list from array
+            public Node _ConvertArrayToList( int[] arr )
+            {
+                int n = arr.Length;
+
+                Node head = null;
+
+                for (int i = 0; i < n; i++)
+                    head = _InsertNode(head, arr[i]);
+                return head;
+            }
+
+            //insert a node, variation, return the head, or the list
+            static Node _InsertNode(Node head, int item)
+            {
+                //use constructor
+                Node ptr, temp = new Node(item);              
+
+                temp.data = item;
+                temp.next = null;
+
+                if (head == null)
+                    head = temp;
+                else
+                {
+                    ptr = head;
+                    while (ptr.next != null)
+                        ptr = ptr.next;
+                    ptr.next = temp;
+                }
+                return head;
+            }
+
             //insert last
             internal void InsertLast(int new_data)
             {
@@ -47,7 +80,6 @@ namespace Datastructures
                 Node lastNode = GetLastNode();
                 lastNode.next = new_node;
             }
-
             internal Node GetLastNode()
             {
                 Node temp = head;
@@ -269,6 +301,7 @@ namespace Datastructures
                 node.next = _MinimalHeightBST(arr, mid + 1, end);
                 return node;
             }
+           
             //implementation
             public Node createMinimalBST(int[] array)
             {
@@ -439,6 +472,7 @@ namespace Datastructures
                 Console.WriteLine("Elements list:");
                 llist._printList();
                 Console.WriteLine("\n");
+
                 Console.WriteLine("position " + n + " from last: ");
                 llist._printKthFromLast(n);
             }
@@ -449,9 +483,9 @@ namespace Datastructures
                 head.next = mhead;//make it circular               
             }
 
-            ///Circular Linked Lists: A linked list is called circular 
-            ///if it is not NULL-terminated and all nodes are connected 
-            ///in the form of a cycle.
+            /// Circular Linked Lists: A linked list is called circular 
+            /// if it is not NULL-terminated and all nodes are connected 
+            /// in the form of a cycle.
 
             ///leetcode solution
             public bool HasCycle(Node head)
@@ -481,7 +515,7 @@ namespace Datastructures
             /*This function returns true if given linked list is circular, else false. */
             public bool linkedListIsCircular(Node head)
             {
-                //master the steps
+                // master the steps
                 // 1. An empty linked list is circular - assume that always
                 if (head == null) return true;
 
@@ -501,7 +535,7 @@ namespace Datastructures
             //making a linked list circular
             public void MakeListCircular()
             {                
-                //insert items in the list nodes
+                // insert items in the list nodes
                 Node head = new Node(10); 
                 head.next = new Node(24); 
                 head.next.next = new Node(32); 
@@ -518,11 +552,34 @@ namespace Datastructures
 
                 Console.Write(HasCycle(head) ? "Yes\n" :  "No\n");               
             }
-           
 
-            //insert into a sorted circular linked list
+            //insert into a sorted circular linked list::to be implemented later
 
+            /// Time Complexity: O(M+N), At every call of recursion, 
+            /// M: length of listOne, N: length of listTwo
+            /// we are adding one node to the output.
+            /// Space Complexity: O(M+N), Stack space will be used in recursion.
+            
+            //merge two linked list using recursion
+            public Node mergeTwoLists(Node listOne, Node listTwo)
+            {
+                // Check if heads of the lists are null
+                if (listOne == null || listTwo == null)
+                    return listOne == null ? listTwo : listOne;
 
+                //check the two lists root nodes and compare
+                if (listOne.data > listTwo.data)
+                {
+                    //using swap to swap two lists
+                    Node temp = listOne;
+                    listOne = listTwo;
+                    listTwo = temp;
+                }
+
+                //merge list two into list one
+                listOne.next = mergeTwoLists(listOne.next, listTwo);
+                return listOne;                
+            }
         }
 
         public static void _LinkedListOps()
@@ -549,7 +606,8 @@ namespace Datastructures
 
         static void _LinkedListWHashmap()
         {
-            //Time Complexity: O(n) on average (assuming that hash table access time is O(1) on average).
+            // Time Complexity: O(n) on average
+            // assuming that hash table access time is O(1) on average.
 
             NodesAndLinkedLists _list = new NodesAndLinkedLists();
             Node _start = new Node(70);
@@ -561,6 +619,7 @@ namespace Datastructures
             Console.WriteLine("List before removing duplicates \n");
             _list._printNode(_start);
             Console.WriteLine(" \n");
+
             _list.removeDuplicateFromList(_start);
             Console.WriteLine("List after removing duplicates \n");
             _list._printNode(_start);
@@ -678,6 +737,8 @@ namespace Datastructures
             temp.next = node;
             node.prev = temp;
         }
+             
+
 
 
         ///drawbacks of Singly LL. A node deletion in Singly LL cannot be removed 

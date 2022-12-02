@@ -184,11 +184,11 @@ namespace Datastructures
             // _printAnySortedArray(inSort);
 
             ///TwoSum soln
-            int[] nums = { 2, 1, 4, 5, 4, 6 };
-            Array.Sort(nums);
-            var SumofTwo = TwoNums(nums, 39);
-            //var opl = _twoSum(nums, 10);
-            _printAnySortedArray(SumofTwo);
+            //int[] nums = { 2, 1, 4, 5, 4, 6 };
+            //Array.Sort(nums);
+            //var SumofTwo = TwoNums(nums, 39);
+            ////var opl = _twoSum(nums, 10);
+            //_printAnySortedArray(SumofTwo);
 
             ///maximum binary gap
             //Console.WriteLine("gap length: " + MaximumBinaryGap(22));
@@ -225,6 +225,24 @@ namespace Datastructures
             //int[] m = { 3, 4, 5, 2 };
             //MaxProductPair(m);
             //Console.WriteLine("Max Product: " + maxProduct(m));
+
+            ///string permutation
+            //Console.WriteLine("is permutation ?: ");
+            //_checkInclusion("ab", "eidbaooo").ToString();
+            // StrPermutation("ab", "eidbaooo");
+
+            ///array permutation
+            int[] nums = { 1, 2, 3 };
+            var list = Permute(nums);
+            _printIListItems(list);
+            //Console.WriteLine("permuatations: "+Permute(nums) );
+
+            ///merge two linked lists to one
+            //int[] arr1 = { 1, 2, 4 }, arr2 = { 1, 3, 4 };
+            //if they are not sorted, sort them first
+            //Array.Sort(arr1);
+            //Array.Sort(arr2);
+            // MergeMyTwoList(arr1 , arr2);
 
             //below code should come at the bottom, make cmd not disappear
             Console.ReadLine();
@@ -2024,14 +2042,168 @@ namespace Datastructures
             return maxProduct;
         }
 
+        ///string permutation
+        ///Given two strings s1 and s2, return true if s2 contains a permutation of s1, 
+        ///or false otherwise.
+        ///In other words, return true if one of s1's permutations is the substring of s2.
+        ///Example 1:
+        ///Input: s1 = "ab", s2 = "eidbaooo"
+        ///Output: true
+        ///Explanation: s2 contains one permutation of s1("ba").
+        ///Example 2:
+        ///Input: s1 = "ab", s2 = "eidboaoo"
+        ///Output: false
+        ///
+
+        static bool _checkInclusion(string str1, string str2)
+        {
+            int[] record = new int[128]; //
+            int str1Len = str1.Length;
+
+            foreach (char c in str1.ToCharArray())
+            {
+                record[c]++; //put str1 characters in a kind of a map
+            }                       
+
+            char[] str2Chrs = str2.ToCharArray();
+
+            int left = 0, right = 0;
+
+            while (right < str2Chrs.Length)
+            {
+                if (record[str2Chrs[right++]]--  > 0) str1Len--;
+
+                while (str1Len == 0)
+                {
+                    if (right - left == str1Len) return true;
+
+                    if (++record[str2Chrs[left++]] > 0) str1Len++;
+                }
+            }
+            return false;
+        }
+
+        static void StrPermutation(string str, string prefix)
+        {
+            int n = str.Length;
+            if (n == 0)
+            {
+               Console.WriteLine(prefix);
+            }
+            else
+            {
+                for (int i = 0; i < n; i++)
+                {
+                   string rem = str.Substring(0, i) + str.Substring(i + 1);
+                     StrPermutation(rem, prefix + str[i]);
+                 }
+               }
+         }
+
+        ///Given an array nums of distinct integers, return all the possible permutations. 
+        ///You can return the answer in any order.
+
+        public static IList<IList<int>> Permute(int[] nums)
+        {
+           var tempLst = new List<int>(); //initialize empty list for use as map
+           var hashSet = new HashSet<int>(); //initialize hashset and pass it            
+           IList<IList<int>> result = new List<IList<int>>(); //initialize empty nested list for use
+           doAPermutation(nums, result, hashSet, tempLst);
+           return result;
+        }
+
+        //implementation of DFS: depth first search
+        //do array permuatation using back tracking
+        //time complexity: O(n! x n ):: n = size of array
+
+        //static void doAPermutation(int[] nums, IList<IList<int>> result, IList<int> tempLst)
+        static void doAPermutation(int[] nums, IList<IList<int>> result, HashSet<int> _setFound, IList<int> tempLst)
+        {
+            //tempLst variable will act as a map to keep track of already taken elements
+            //we can also use dictionary option, or the hashsets
+            if (tempLst.Count == nums.Length)
+            {
+                //no permutations that can be done, eg case for an array with only 1 element
+                result.Add(tempLst.ToList());
+                return;
+            }
+            else
+            {
+                for (int i = 0; i < nums.Length; i++)
+                {
+                    var currentItem = nums[i];
+
+                    if (_setFound.Contains(currentItem))
+                        continue;//if the element is already in the map, skip it
+
+                    tempLst.Add(currentItem);// add element to the trmp list
+
+                    _setFound.Add(currentItem); // //else add element to the hashset if is not there                    
+
+                    doAPermutation(nums, result, _setFound, tempLst); //do permutation recursive call
+
+                    //clean up after recursion ::: remove item
+                    tempLst.RemoveAt(tempLst.Count - 1); // remove 2 - RemoveAt, not Remove
+                    _setFound.Remove(currentItem); // remove 2           //remove the last item from the tempLst map
+
+                }
+            }
+        }        
+
+        //print list items
+        static void _printIListItems(IList<IList<int>> items)
+        {
+            Console.WriteLine("array permutations list: ");      
+            foreach (IList<int> i in items)
+            {
+                Console.Write("[");
+                string output = "";
+                foreach (int j in i)
+                {
+                    if (output != "") 
+                        output += ",";                  
+
+                    output += Convert.ToString(j);
+                }
+                Console.Write(output);
+                Console.WriteLine("]");
+            }
+        }
+
+        public static Node _CreateLinkedListUtil(int[] nums)
+        {            
+            return lstNode._ConvertArrayToList(nums);
+        }
+
+        // merging two lists leetcode solution
+        // merge two linked list given arrays
+        static void MergeMyTwoList(int[] nums1, int[] nums2)
+        {
+            //create the 2 lists
+            Node list1 = _CreateLinkedListUtil(nums1);
+            Node list2 = _CreateLinkedListUtil(nums2);
+
+            Console.WriteLine("list 1:");
+            lstNode._printNode(list1);
+            Console.WriteLine("\n");
+            Console.WriteLine("list 2:");
+            lstNode._printNode(list2);
+
+            Console.WriteLine("merged list: \n");
+
+            //then merge them and print them
+            Node mergedHead = lstNode.mergeTwoLists(list1, list2);
+            lstNode._printNode(mergedHead);
+        }
+
 
         // why Microsoft? - base answers on work culture:
         // 1 ). Growth Mindset- align my dreams / vision to fit in Microsoft's culture,
         // coz I'd like to grow careerwise ( Career Growth ) - boost my skills and experience through working
         // with world class team of developers, learn from each other, help make me better than how I am now.       
         // personal growth help take care of myself and others dependent on me.
-        // 2 ). Diverse & Inclusive. I am open to learning and adopting to changes accordingly, take feedback from others and work
-        // on them to become better, add quality in my work. 
+        // 2 ). Diverse & Inclusive. I am open to learning and adopting to changes accordingly,
+        // take feedback from others and work on them to become better, add quality in my work. 
 
         ///dynamic memory allocation in C/C++: done using malloc(), calloc(), free(), realloc()
         /// "malloc()": dynamically allocate a single large block of memory with the specified size.
