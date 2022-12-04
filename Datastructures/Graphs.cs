@@ -15,7 +15,7 @@ namespace Datastructures
         private LinkedList<int>[] adj; //Adjacency List: linked list
 
         // graph constructor
-       public Graph(int v)
+       public Graph(int v) //for constructing a graph
         {
             V = v;
             adj = new LinkedList<int>[v];
@@ -30,29 +30,33 @@ namespace Datastructures
             adj[v].AddLast(w);
         }
 
+        ///Route Between Nodes: Given a directed graph,
+        ///design an algorithm to find out whether there is a
+        ///route between two nodes.
+
         // prints BFS traversal from a given source s:: Breadth First Search
         public bool _isReachable(int s, int d)
-        {
-            // LinkedList<int> temp = new LinkedList<int>();
+        {   
 
             // Mark all the vertices as not visited(By default set as false)
             bool[] visited = new bool[V];
 
             // create a queue for BFS
-            LinkedList<int> queue = new LinkedList<int>();
+           var queue = new LinkedList<int>();
 
             // Mark the current node as visited and enqueue it
             visited[s] = true;
             queue.AddLast(s);
 
             // 'i' will be used to get all adjacent vertices of a vertex
-            IEnumerator i;
+            IEnumerator i; int n;
+
             while (queue.Count != 0)
             {
                 // Dequeue a vertex from queue and print it
                 s = queue.First.Value;
                 queue.RemoveFirst();
-                int n;
+               
                 i = adj[s].GetEnumerator();
 
                 // Get all adjacent vertices of the dequeued vertex s
@@ -81,4 +85,7 @@ namespace Datastructures
     ///Queue: FIFO principle, remove item called dequeue - implement using LinkedList inbuild Class
     ///Stack: LIFO principle, pop reove happens from top of stack - implement using Stack inbuild Class
     ///Queue is of three types – 1. Circular Queue 2. Priority queue 3. double-ended queue.
+    ///    
+
+
 }

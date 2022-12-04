@@ -5,6 +5,8 @@ VisualStudioVersion = 17.1.32421.90
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Datastructures", "Datastructures\Datastructures.csproj", "{447C3853-B6A9-4C6E-A66B-8F1B2B0826A4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Net6Datastructures", "Net6Datastructures\Net6Datastructures.csproj", "{61B72710-1525-4D46-B9B5-297F0724AF58}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{447C3853-B6A9-4C6E-A66B-8F1B2B0826A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{447C3853-B6A9-4C6E-A66B-8F1B2B0826A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{447C3853-B6A9-4C6E-A66B-8F1B2B0826A4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{61B72710-1525-4D46-B9B5-297F0724AF58}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{61B72710-1525-4D46-B9B5-297F0724AF58}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{61B72710-1525-4D46-B9B5-297F0724AF58}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{61B72710-1525-4D46-B9B5-297F0724AF58}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -10,7 +10,10 @@ namespace Datastructures
         public class Node
         {
             public int data;
-            public Node next, prev; //can rep left, right
+            public Node next, prev; //can rep left(pev), right(next) subtrees
+
+            // Lower values indicate  higher priority::: for implementing priority queues
+            public int priority;
 
             //create an empty list as below::
             //use of constructor call to minimize mem allocations, use few lines of code
@@ -24,7 +27,7 @@ namespace Datastructures
         //implementations of linked lists and queues
         public class NodesAndLinkedLists
         {
-            public Node head, lhead; //lhead: linked list head
+            public Node head; //lhead: linked list head
 
             //insert data at the front of the list
             internal void InsertFront(int new_data)
@@ -170,8 +173,8 @@ namespace Datastructures
                 var hs = new HashSet<int>();
 
                 // Pick elements one by one
-                Node current = head;
-                Node prev = null;
+                Node current = head, prev = null;
+
                 while (current != null)
                 {
                     int curval = current.data;
@@ -258,18 +261,76 @@ namespace Datastructures
                 return node;
             }
 
-            /*  print preorder traversal of BST */
-            public virtual void preOrder(Node node)
+            /*  1. print preorder traversal of BST 
+             *      Algorithm Preorder(tree) Traversal
+                   a. Visit the root.
+                   b.Traverse the left subtree, i.e., call Preorder(left->subtree)
+                   c.Traverse the right subtree, i.e., call Preorder(right->subtree)              
+             */
+            public void preOrder(Node node)
             {
                 if (node == null) return;
+
+                /* first print data of node */
                 Console.Write(node.data + "->");
+
+                /* then recur on left subtree */
                 preOrder(node.prev);
+
+                /* now recur on right subtree */
                 preOrder(node.next);
+            }
+
+            /* 
+             * 2. Algorithm Inorder(tree) Traversal
+                a. Traverse the left subtree, i.e., call Inorder(left->subtree)
+                b. Visit the root.
+                c. Traverse the right subtree, i.e., call Inorder(right->subtree)                  
+             */
+            public void inOrder(Node node)
+            {
+                if (node == null)  return;
+
+                /* first recur on left child */
+                inOrder(node.prev);
+
+                /* then print the data of node :: visit node*/
+                Console.Write(node.data + "->");
+
+                /* now recur on right child */
+                inOrder(node.next);
+            }
+
+            /*
+               3. Algorithm Postorder(tree) Traversal
+                 a. Traverse the left subtree, i.e., call Postorder(left->subtree)
+                 b. Traverse the right subtree, i.e., call Postorder(right->subtree)
+                 c. Visit the root      
+
+                Given a binary tree, print  its nodes according to the
+               "bottom-up" postorder traversal.
+            */
+
+            public void postOrder(Node node)
+            {
+                if (node == null) return;
+
+                // first recur on left subtree
+                postOrder(node.prev);
+
+                // then recur on right subtree
+                postOrder(node.next);
+
+                // now deal with the node
+                Console.Write(node.data + "->");
             }
 
             //leetCode solution
             public virtual Node SortedArrayToBST(int[] nums)
             {
+                //sort in asc order first
+                Array.Sort(nums);
+
                 int n = nums.Length;
 
                 int start = 0, end = n - 1;
@@ -328,19 +389,18 @@ namespace Datastructures
 
                 Node new_node = new Node(Convert.ToInt32(new_data));
 
-                /* since we are adding at the beginning,
-                prev is always NULL */
+                /* since we are adding at the beginning, prev is always NULL */
                 new_node.prev = null;
 
                 /* link the old list off the new node */
-                new_node.next = lhead;
+                new_node.next = head;
 
                 /* change prev of head node to new node */
-                if (lhead != null)
-                    lhead.prev = new_node;
+                if (head != null)
+                    head.prev = new_node;
 
                 /* move the head to point to the new node */
-                lhead = new_node;
+                head = new_node;
             }
 
             /* print nodes in a given linked list */
@@ -353,11 +413,20 @@ namespace Datastructures
                 }
             }
 
+            //print element at root node
+            public void _printRootNode(Node node)
+            {
+                if (node != null)
+                {
+                    Console.Write("root element: "+node.data);                   
+                }
+            }
+
             /* count the number of nodes in Linked List and then call sortedListToBSTR() to construct BST */
             public Node sortedListToBST()
             {
                 /*Count the number of nodes in Linked List */
-                int n = countLnkNodes(lhead);
+                int n = countLnkNodes(head);
 
                 /* Construct BST */
                 return sortedListToBSTRec(n);
@@ -378,13 +447,13 @@ namespace Datastructures
 
                 /* head_ref now refers to middle node,
                 make middle node as root of BST*/
-                Node root = new Node(lhead.data);
+                Node root = new Node(head.data);
 
                 // Set pointer to left subtree
                 root.prev = left;
 
                 /* Change head pointer of Linked List for parent recursive calls */
-                lhead = lhead.next;
+                head = head.next;
 
                 /* Recursively construct the right subtree and link it with root. The number of
                 nodes in right subtree is total nodes - nodes in left subtree - 1 (for root) */
@@ -392,17 +461,7 @@ namespace Datastructures
                 root.next = sortedListToBSTRec(n - n / 2 - 1);
 
                 return root;
-            }
-
-            /* print preorder traversal of BST */
-            public void preOrderLnk(Node node)
-            {
-                if (node == null)
-                    return;
-                Console.Write(node.data + " ");
-                preOrderLnk(node.prev);
-                preOrderLnk(node.next);
-            }
+            }           
 
             /* Returns true if binary tree with root as root is height-balanced */
             public virtual bool isBalanced(Node node)
@@ -419,8 +478,7 @@ namespace Datastructures
                 rh = height(node.next);
 
                 //prev: left, next: right
-                if (Math.Abs(lh - rh) <= 1 && isBalanced(node.prev)
-                    && isBalanced(node.next))
+                if (Math.Abs(lh - rh) <= 1 && isBalanced(node.prev) && isBalanced(node.next))
                 {
                     return true;
                 }
@@ -580,6 +638,69 @@ namespace Datastructures
                 listOne.next = mergeTwoLists(listOne.next, listTwo);
                 return listOne;                
             }
+
+
+            ///implement priority queues using linked list
+            // Function to Create A New Priority Queue Node
+            public static Node newPQueueNode(int d, int p)
+            {
+                Node temp = new Node(d);
+                temp.data = d;
+                temp.priority = p;
+                temp.next = null;
+                return temp;
+            }
+
+            // Return the value at head
+            public static int peek(Node head)
+            {
+                return head.data;
+            }
+
+            // Removes the element with the highest priority from the list
+            public static Node pop(Node head)
+            {
+                Node temp = head;
+                head = head.next;
+                return head;
+            }
+
+            // Function to push according to priority
+            static Node push(Node head, int d, int p)
+            {
+                Node start = (head);
+
+                // Create new Node
+                Node temp = newPQueueNode(d, p);
+
+                // Special Case: The head of list
+                // has lesser priority than new node. So insert new node before head node and change head node.
+                if (head.priority < p)
+                {
+                    // Insert New Node before head
+                    temp.next = head;
+                    head = temp;
+                }
+                else
+                {
+                    // Traverse the list and find a  position to insert new node
+                    while (start.next != null &&  start.next.priority > p)
+                    {
+                        start = start.next;
+                    }
+
+                    // Either at the ends of the list or at required position
+                    temp.next = start.next;
+                    start.next = temp;
+                }
+                return head;
+            }
+
+            // Function to check is list is empty
+            public static int isEmpty(Node head)
+            {
+                return ((head) == null) ? 1 : 0;
+            }
         }
 
         public static void _LinkedListOps()
@@ -631,14 +752,13 @@ namespace Datastructures
         public class DLLNode
         {
             public int data;
-            public DLLNode next;
-            public DLLNode prev;
+            public DLLNode next, prev;
         }
 
         //implementation of dll list
         public class DoubleLinkedList
         {
-            public DLLNode head, tail; //inititalize head and tail           
+            public DLLNode head; //inititalize head = root node           
 
             //constructor to create an empty LinkedList
             public DoubleLinkedList()

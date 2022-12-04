@@ -8,8 +8,11 @@
 *.sln.docstates
 
 # Build results
-Datastructures/obj/
-Datastructures/bin/
+Datastructures/obj
+Datastructures/bin
+Net6Datastructures/obj
+Net6Datastructures/bin
+
 Debug/
 Release/
 [Dd]ebug/

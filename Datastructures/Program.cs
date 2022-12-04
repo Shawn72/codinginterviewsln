@@ -8,22 +8,22 @@ using static Datastructures.ListsNodeTrees;
 
 namespace Datastructures
 {
-    class Program
+    public class Program
     {
         public static Arrays arrys = new Arrays();
         public static Matrix mtrx = new Matrix();
         public static BitsManipulation bt = new BitsManipulation();
         public static NodesAndLinkedLists lstNode = new NodesAndLinkedLists();
         public static DoubleLinkedList dllNodes = new DoubleLinkedList();
+        public static Queues ques = new Queues();
         static void Main(string[] args)
         {
             //  string s1 = "hello" + "i" + "am";
             //  Console.WriteLine(s1);
-
             //  string k = " mbuvi      shawn ";
             //  Console.WriteLine("Reversed: "+ _ReverseWord(k));
             //  _Stack();
-            //_LinkedList();
+            // _LinkedList();
 
 
             // int[] arr = { 1, -4, -3, 0, 9, -8, -2 };
@@ -35,8 +35,7 @@ namespace Datastructures
             //call reverse list -int/string
             //  _reverseList();
             // _reverseStringList();
-
-            ////////Lists
+            // 
             //_LinkedListOps();
             // _LinkedListWHashmap();
             // Console.WriteLine( "compressed: "+_compressString("aaabbbrrrruuuuu") );
@@ -232,9 +231,9 @@ namespace Datastructures
             // StrPermutation("ab", "eidbaooo");
 
             ///array permutation
-            int[] nums = { 1, 2, 3 };
-            var list = Permute(nums);
-            _printIListItems(list);
+            //int[] nums = { 1, 2, 3 };
+            //var list = Permute(nums);
+            //_printIListItems(list);
             //Console.WriteLine("permuatations: "+Permute(nums) );
 
             ///merge two linked lists to one
@@ -243,6 +242,24 @@ namespace Datastructures
             //Array.Sort(arr1);
             //Array.Sort(arr2);
             // MergeMyTwoList(arr1 , arr2);
+
+            ///priority queues
+            //int[] nums = { 45, 31, 14, 13, 20, 7, 11, 12, 7 };
+            //ques.PriorityQueueOps(nums);
+
+            ///Linked Lists traversals
+            int[] arr = { 5, 8, 9 ,7, 3, 4, 6};
+            Node head = lstNode.SortedArrayToBST(arr);
+            lstNode._printRootNode(head);
+            Console.WriteLine("\n");
+            Console.WriteLine("after pre-order traversal: ");           
+            lstNode.preOrder(head);
+            Console.WriteLine("\n");
+            Console.WriteLine("after in-order traversal: ");           
+            lstNode.inOrder(head);
+            Console.WriteLine("\n");
+            Console.WriteLine("after post-order traversal: ");
+            lstNode.postOrder(head);
 
             //below code should come at the bottom, make cmd not disappear
             Console.ReadLine();
@@ -472,7 +489,7 @@ namespace Datastructures
             nList.pushLnkNode(7);
 
             Console.WriteLine("Linked List ");
-            nList._printLnkList(nList.lhead);
+            nList._printLnkList(nList.head);
 
             /* Convert List to BST */
             //convert LinkedList to BST first
@@ -499,7 +516,7 @@ namespace Datastructures
             nList.pushLnkNode(7);
 
             Console.WriteLine("Linked List ");
-            nList._printLnkList(nList.lhead);
+            nList._printLnkList(nList.head);
 
             /* Convert List to BST */
             //convert LinkedList to BST first
@@ -507,7 +524,7 @@ namespace Datastructures
 
             Console.WriteLine("");
             Console.WriteLine("Balanced Search Tree ");
-            nList.preOrderLnk(root);
+            nList.preOrder(root);
 
             //then check if the BST is balances or not
             if (nList.isBalanced(root))
@@ -533,13 +550,13 @@ namespace Datastructures
             nList.pushLnkNode(1);
 
             Console.WriteLine("Linked List ");
-            nList._printLnkList(nList.lhead);
+            nList._printLnkList(nList.head);
 
             /* Convert List to BST */
             Node root = nList.sortedListToBST();
             Console.WriteLine("");
             Console.WriteLine("Pre-Order Traversal of constructed BST ");
-            nList.preOrderLnk(root);
+            nList.preOrder(root);
         }
 
         static void BinarySearchTree(int[] arr) {
@@ -710,6 +727,7 @@ namespace Datastructures
 
         public static void _Stack()
         {
+            //LIFO: last in first out
             // create a stack using inbuilt Stack class
             Stack _stack = new Stack();
             // add elements in the Stack using Push method           
@@ -746,10 +764,13 @@ namespace Datastructures
             LinkedList<string> _list = new LinkedList<string>();
 
             // add elements in the LinkedList using AddLast() method
-            _list.AddLast("Shawn");
-            _list.AddLast("Mercy");
-            _list.AddLast("Clarke");
-            _list.AddLast("Mutheu");
+            _list.AddLast("Shawn"); // 0
+            _list.AddLast("Woman"); // 1
+            _list.AddLast("Clarke"); // 2
+            _list.AddLast("Mutheu"); // 3
+
+            //_list.Remove("Woman"); //remove from list using key
+            //_list.Remove(_list.ElementAt(2)); //remove element at given index
 
             Console.WriteLine("My family: ");
 
@@ -1185,11 +1206,11 @@ namespace Datastructures
                     swapElements(arr, i, j);//swap element at index i with element at index j
                 }
             }
-            swapElements(arr, i + 1, high);
-            return (i + 1);
+            swapElements(arr, i + 1, high); //do another swap
+            return i + 1;
         }
 
-        /* The main function that implements QuickSort
+        /* implements QuickSort
            arr[] --> Array to be sorted,
            low --> Starting index,
            high --> Ending index    */
@@ -1207,7 +1228,7 @@ namespace Datastructures
         }
 
         // print sorted array helper function
-        static void _printAnySortedArray(int[] arr)
+        public static void _printAnySortedArray(int[] arr)
         {
             for (int i = 0; i < arr.Length; i++)
                 Console.Write(arr[i] + " ");
@@ -1300,7 +1321,6 @@ namespace Datastructures
 
             for (int i = 0; i < str.Length; i++)
             {
-
                 //convert str to char array
                 char[] k = str.ToCharArray();
 
@@ -1333,13 +1353,13 @@ namespace Datastructures
             {
                 var ValueAtindexI = arr[i];
 
-                if (dic.ContainsKey(ValueAtindexI) ==false) //if the key is not in the dictionary, just add it
+                if (!dic.ContainsKey(ValueAtindexI)) //if the key is not in the dictionary, just add it
                 {
                     dic.Add(i, ValueAtindexI); //use indexes as the keys to hold the values
                 }
             }
 
-            //initialize hashset for checking duplicates
+            //initialize hashset for checking duplicates in the dictionary
             var hashSet = new HashSet<int>();
 
             foreach (var pair in dic)
@@ -1522,6 +1542,7 @@ namespace Datastructures
             //get string length
             int n = str.Length;
 
+            //use iteration
             //reverse the string, from the back, end position
             for (int i = n - 1; i >= 0; i--)
             {
@@ -2195,6 +2216,7 @@ namespace Datastructures
             Node mergedHead = lstNode.mergeTwoLists(list1, list2);
             lstNode._printNode(mergedHead);
         }
+        
 
 
         // why Microsoft? - base answers on work culture:
