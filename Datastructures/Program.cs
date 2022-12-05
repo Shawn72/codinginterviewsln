@@ -2135,7 +2135,7 @@ namespace Datastructures
             //doAPermutation(nums, result, hashSet, tempLst);
 
             //test recursion and swap
-            recurPermutaionWSwap(nums, 0, result); //start index = 0
+            recurPermutationWSwap(nums, 0, result); //start index = 0
 
            return result;
         }
@@ -2183,9 +2183,9 @@ namespace Datastructures
         //implementation of DFS: depth first search using Swap method, swap index and point to the next
         //do array permuatation using swapping
         //time complexity: O(n! x n ):: n = size of array, loop done
-        //space complexity: O(n), no data structure used, hence no extra space
+        //space complexity: O(n), no data structure,or map used, hence no extra space
 
-        static void recurPermutaionWSwap(int[] nums, int index, IList<IList<int>> result) 
+        static void recurPermutationWSwap(int[] nums, int index, IList<IList<int>> result) 
         {
             //index => points to the index we are working on currently
 
@@ -2193,23 +2193,23 @@ namespace Datastructures
 
             if (index == nums.Length)
             {
-                //copy the data structure to the answer
+                //copy the data structure to the results
                 for(int i = 0; i < nums.Length; i++)
                 {
                     tempLst.Add(nums[i]);
                 }
-                result.Add(tempLst.ToList()); //copy to results and return
+                result.Add(tempLst.ToList()); //copy to results and just return
                 return;
             }
 
-            //else
+            //else, do permutations
             for(int i = index; i < nums.Length; i++)
             {
                 //do a swap, use utility swapElements function
                 swapElements(nums, i, index);
 
                 //then do recursion here
-                recurPermutaionWSwap(nums, index+1, result);
+                recurPermutationWSwap(nums, index+1, result);
 
                 //then swap again
                 swapElements(nums, i, index);
