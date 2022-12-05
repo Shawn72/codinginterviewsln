@@ -231,9 +231,9 @@ namespace Datastructures
             // StrPermutation("ab", "eidbaooo");
 
             ///array permutation
-            int[] nums = { 1, 2, 3 };
-            var list = Permute(nums);
-            _printIListItems(list);
+            //int[] nums = { 1, 2, 3 };
+            //var list = Permute(nums);
+            //_printIListItems(list);
 
             ///merge two linked lists to one
             //int[] arr1 = { 1, 2, 4 }, arr2 = { 1, 3, 4 };
@@ -259,6 +259,22 @@ namespace Datastructures
             //Console.WriteLine("\n");
             //Console.WriteLine("after post-order traversal: ");
             //lstNode.postOrder(head);
+                        
+
+            ///convert to binary
+            int i = 7, j = 2;
+            Console.WriteLine("Binary Rep for "+i+" is: "+_convertToBinary(i));
+            Console.WriteLine("-------------");
+            Console.WriteLine("Binary Rep for " + j + " is: " + _convertToBinary(j));
+            string bin = _convertToBinary(i^j);
+            Console.WriteLine("XOR string of : "+i+" OR "+j +" is: " + bin);
+            Console.WriteLine("Binary to Integer for "+bin+" is: " +_convertBinaryToInt(bin) );
+
+            ///swap no temp
+            int[] nums = { 2, 3, 5 };
+            var afterswap = swapNoTemp(nums, 0, 2);
+            Console.WriteLine("after swap with no temp:");
+            _printAnySortedArray(afterswap);
 
             //below code should come at the bottom, make cmd not disappear
             Console.ReadLine();
@@ -1178,6 +1194,73 @@ namespace Datastructures
             int temp = arr[i];  //temp storage first
             arr[i] = arr[j];  //swap
             arr[j] = temp; //assign temp val to index j
+        }
+
+        //swap without using temp var
+        // - Using Bitwise Exclusive OR (XOR)
+        // time complexity: O(1)
+        // space complexity: O(1)
+
+        static int[] swapNoTemp(int[] arr, int i, int j)
+        {             
+            /* In-Depth
+             * 
+             * eg. int[] arr = { 2, 3, 5 }, swap 0 with 2
+             * i = 0, j = 2
+             *  arr[i]  = arr[0] ^ arr[2] => 2 ^ 5 = 7
+             *  arr[0] = 7
+             * 
+             * 00000010 --> 2
+             * 00000101 --> 5
+             * --------
+             * 00000111 =   7 
+             * 
+             * then int[] arr = { 7, 3, 5 }
+             */
+
+            arr[i] = arr[i] ^ arr[j]; //arr[0] = 7
+             
+            /*
+            *  then int[] arr = { 7, 3, 5 }
+            *  arr[j] = arr[i] ^ arr[j] => 7 ^ 5 = 2
+            *  arr[2] = 2
+            *  
+            * 00000111 --> 7
+            * 00000101 --> 5
+            * --------
+            * 00000010 =   2 
+            */
+            arr[j] = arr[i] ^ arr[j]; //arr[2] = 2
+
+            /*
+           *  then int[] arr = { 7, 3, 2 }
+           *  arr[i] = arr[i] ^ arr[j] => 7 ^ 2 = 5
+           *  arr[0] = 5
+           *  
+           * 00000111 --> 7
+           * 00000010 =   2 
+           * --------
+           * 00000101 --> 5
+           * 
+           *then arr[] = { 5, 3, 2 }
+           */
+            arr[i] = arr[i] ^ arr[j];
+
+            return arr; //to test if swaping ocurred: works perfect            
+        }
+
+        //binary convertor helper function
+        static string _convertToBinary(int m)
+        {
+            //padLeft(8, '0') => adds 0 s until total string length == 8 chars
+            return Convert.ToString(m, 2).PadLeft(8, '0');
+        }
+
+        // binary to integer helper
+        static int _convertBinaryToInt(string binaStr)
+        {
+            // converting to integer
+           return Convert.ToInt32(binaStr, 2); //from base 2
         }
 
         /* This function takes last element as pivot, places
@@ -2191,7 +2274,7 @@ namespace Datastructures
 
             var tempLst = new List<int>(); //initialize empty list for use as map
 
-            if (index == nums.Length)
+            if (index == nums.Length) //this is the base case, stopping condition
             {
                 //copy the data structure to the results
                 for(int i = 0; i < nums.Length; i++)
@@ -2211,7 +2294,7 @@ namespace Datastructures
                 //then do recursion here
                 recurPermutationWSwap(nums, index+1, result);
 
-                //then swap again
+                //then swap again for backtracking, going up-tree
                 swapElements(nums, i, index);
             }
         }
