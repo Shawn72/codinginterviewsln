@@ -231,10 +231,9 @@ namespace Datastructures
             // StrPermutation("ab", "eidbaooo");
 
             ///array permutation
-            //int[] nums = { 1, 2, 3 };
-            //var list = Permute(nums);
-            //_printIListItems(list);
-            //Console.WriteLine("permuatations: "+Permute(nums) );
+            int[] nums = { 1, 2, 3 };
+            var list = Permute(nums);
+            _printIListItems(list);
 
             ///merge two linked lists to one
             //int[] arr1 = { 1, 2, 4 }, arr2 = { 1, 3, 4 };
@@ -248,18 +247,18 @@ namespace Datastructures
             //ques.PriorityQueueOps(nums);
 
             ///Linked Lists traversals
-            int[] arr = { 5, 8, 9 ,7, 3, 4, 6};
-            Node head = lstNode.SortedArrayToBST(arr);
-            lstNode._printRootNode(head);
-            Console.WriteLine("\n");
-            Console.WriteLine("after pre-order traversal: ");           
-            lstNode.preOrder(head);
-            Console.WriteLine("\n");
-            Console.WriteLine("after in-order traversal: ");           
-            lstNode.inOrder(head);
-            Console.WriteLine("\n");
-            Console.WriteLine("after post-order traversal: ");
-            lstNode.postOrder(head);
+            //int[] arr = { 5, 8, 9 ,7, 3, 4, 6};
+            //Node head = lstNode.SortedArrayToBST(arr);
+            //lstNode._printRootNode(head);
+            //Console.WriteLine("\n");
+            //Console.WriteLine("after pre-order traversal: ");           
+            //lstNode.preOrder(head);
+            //Console.WriteLine("\n");
+            //Console.WriteLine("after in-order traversal: ");           
+            //lstNode.inOrder(head);
+            //Console.WriteLine("\n");
+            //Console.WriteLine("after post-order traversal: ");
+            //lstNode.postOrder(head);
 
             //below code should come at the bottom, make cmd not disappear
             Console.ReadLine();
@@ -2078,7 +2077,7 @@ namespace Datastructures
 
         static bool _checkInclusion(string str1, string str2)
         {
-            int[] record = new int[128]; //
+            int[] record = new int[128];
             int str1Len = str1.Length;
 
             foreach (char c in str1.ToCharArray())
@@ -2127,15 +2126,24 @@ namespace Datastructures
         public static IList<IList<int>> Permute(int[] nums)
         {
            var tempLst = new List<int>(); //initialize empty list for use as map
-           var hashSet = new HashSet<int>(); //initialize hashset and pass it            
+
+           var hashSet = new HashSet<int>(); //initialize hashset and pass it
+                                             //
            IList<IList<int>> result = new List<IList<int>>(); //initialize empty nested list for use
-           doAPermutation(nums, result, hashSet, tempLst);
+
+            //test permutation, no swap
+            //doAPermutation(nums, result, hashSet, tempLst);
+
+            //test recursion and swap
+            recurPermutaionWSwap(nums, 0, result); //start index = 0
+
            return result;
         }
 
-        //implementation of DFS: depth first search
+        //implementation of DFS: depth first search using Recursion method
         //do array permuatation using back tracking
         //time complexity: O(n! x n ):: n = size of array
+        //space complexity: O(n) + O(n), which means extra space is used
 
         //static void doAPermutation(int[] nums, IList<IList<int>> result, IList<int> tempLst)
         static void doAPermutation(int[] nums, IList<IList<int>> result, HashSet<int> _setFound, IList<int> tempLst)
@@ -2157,19 +2165,56 @@ namespace Datastructures
                     if (_setFound.Contains(currentItem))
                         continue;//if the element is already in the map, skip it
 
-                    tempLst.Add(currentItem);// add element to the trmp list
+                    tempLst.Add(currentItem);// add element to the trmp list:: act as my data structure
 
                     _setFound.Add(currentItem); // //else add element to the hashset if is not there                    
 
                     doAPermutation(nums, result, _setFound, tempLst); //do permutation recursive call
 
-                    //clean up after recursion ::: remove item
+                    //clean up after recursion ::: remove item,-> reset
                     tempLst.RemoveAt(tempLst.Count - 1); // remove 2 - RemoveAt, not Remove
                     _setFound.Remove(currentItem); // remove 2           //remove the last item from the tempLst map
 
                 }
             }
-        }        
+        }
+
+
+        //implementation of DFS: depth first search using Swap method, swap index and point to the next
+        //do array permuatation using swapping
+        //time complexity: O(n! x n ):: n = size of array, loop done
+        //space complexity: O(n), no data structure used, hence no extra space
+
+        static void recurPermutaionWSwap(int[] nums, int index, IList<IList<int>> result) 
+        {
+            //index => points to the index we are working on currently
+
+            var tempLst = new List<int>(); //initialize empty list for use as map
+
+            if (index == nums.Length)
+            {
+                //copy the data structure to the answer
+                for(int i = 0; i < nums.Length; i++)
+                {
+                    tempLst.Add(nums[i]);
+                }
+                result.Add(tempLst.ToList()); //copy to results and return
+                return;
+            }
+
+            //else
+            for(int i = index; i < nums.Length; i++)
+            {
+                //do a swap, use utility swapElements function
+                swapElements(nums, i, index);
+
+                //then do recursion here
+                recurPermutaionWSwap(nums, index+1, result);
+
+                //then swap again
+                swapElements(nums, i, index);
+            }
+        }
 
         //print list items
         static void _printIListItems(IList<IList<int>> items)
@@ -2217,6 +2262,8 @@ namespace Datastructures
             lstNode._printNode(mergedHead);
         }
         
+        //constructor overloading:  c# allows this, can have more than one class constructor
+        //taking different parameters
 
 
         // why Microsoft? - base answers on work culture:

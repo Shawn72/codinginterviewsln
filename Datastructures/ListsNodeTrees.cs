@@ -37,7 +37,7 @@ namespace Datastructures
                 head = new_node;
             }
 
-            //util to creat a linked list from array
+            //util to create a linked list from array
             public Node _ConvertArrayToList( int[] arr )
             {
                 int n = arr.Length;
