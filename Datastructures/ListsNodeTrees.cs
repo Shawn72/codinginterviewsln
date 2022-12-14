@@ -62,6 +62,7 @@ namespace Datastructures
                     head = temp;
                 else
                 {
+                    //swap the items
                     ptr = head;
                     while (ptr.next != null)
                         ptr = ptr.next;
@@ -305,8 +306,7 @@ namespace Datastructures
                3. Algorithm Postorder(tree) Traversal
                  a. Traverse the left subtree, i.e., call Postorder(left->subtree)
                  b. Traverse the right subtree, i.e., call Postorder(right->subtree)
-                 c. Visit the root      
-
+                 c. Visit the root   
                 Given a binary tree, print  its nodes according to the
                "bottom-up" postorder traversal.
             */
@@ -440,13 +440,12 @@ namespace Datastructures
                     return null;
 
                 // binary tree node (Node)
-                // LinkedNode (LnkMode)
 
                 /* Recursively construct the left subtree */
                 Node left = sortedListToBSTRec(n / 2);
 
                 /* head_ref now refers to middle node,
-                make middle node as root of BST*/
+                make middle node the root of BST*/
                 Node root = new Node(head.data);
 
                 // Set pointer to left subtree
@@ -516,6 +515,39 @@ namespace Datastructures
                    return  Math.Max(leftDepth, rightDepth) + 1;
                 }
             }
+
+           
+            /*
+             * check if binary tree is balanced: using In-Order Traversal
+             * 
+              Time Complexity: O(N), Where N is the number of nodes in the tree: each node is visited once
+              Auxiliary Space: O(H), Here H is the height of the tree and
+              the extra space is used due to the function call stack.
+            */
+
+            public bool isABST(Node root)
+            {
+                // traverse the tree in in-order fashion and keep track of prev node
+                if (root != null)
+                {
+                    if (!isABST(root.prev))
+                        return false;
+
+                    // Allows only distinct valued nodes
+                    if (root.prev != null && root.data <= root.prev.data)
+                        return false;
+
+                    root.prev = root;
+
+                    return isABST(root.next);
+                }
+                return true;
+            }
+            public bool isBST(Node root)
+            {
+                return isABST(root);
+            }
+
 
             //get value of Kth element implementation
             public void _GetKthElementofLinkedList(int n)

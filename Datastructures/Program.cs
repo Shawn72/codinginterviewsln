@@ -67,7 +67,11 @@ namespace Datastructures
             //graphs
             // _GraphCanBeConnected();            
             //  LinkedListToBST();
-            // _checkBSTHeightBalance();
+
+
+            ///check if BST is balanced
+             _checkBSTHeightBalance();
+
             // MaximumTreeDepth();
             //  minArrayOp();
             // _minOpstomakeArrayEqual();
@@ -262,19 +266,25 @@ namespace Datastructures
                         
 
             ///convert to binary
-            int i = 7, j = 2;
-            Console.WriteLine("Binary Rep for "+i+" is: "+_convertToBinary(i));
-            Console.WriteLine("-------------");
-            Console.WriteLine("Binary Rep for " + j + " is: " + _convertToBinary(j));
-            string bin = _convertToBinary(i^j);
-            Console.WriteLine("XOR string of : "+i+" OR "+j +" is: " + bin);
-            Console.WriteLine("Binary to Integer for "+bin+" is: " +_convertBinaryToInt(bin) );
+            //int i = 7, j = 2;
+            //Console.WriteLine("Binary Rep for "+i+" is: "+_convertToBinary(i));
+            //Console.WriteLine("-------------");
+            //Console.WriteLine("Binary Rep for " + j + " is: " + _convertToBinary(j));
+            //string bin = _convertToBinary(i^j);
+            //Console.WriteLine("XOR string of : "+i+" OR "+j +" is: " + bin);
+            //Console.WriteLine("Binary to Integer for "+bin+" is: " +_convertBinaryToInt(bin) );
 
             ///swap no temp
-            int[] nums = { 2, 3, 5 };
-            var afterswap = swapNoTemp(nums, 0, 2);
-            Console.WriteLine("after swap with no temp:");
-            _printAnySortedArray(afterswap);
+            //int[] nums = { 0, 3, 5 };
+            //var afterswap = swapNoTemp(nums, 0, 2);
+            //Console.WriteLine("after swap with no temp:");
+            //_printAnySortedArray(afterswap);
+
+
+            ///swap with arithmetic ops
+            //var arrr = swapWArithmOps(nums, 0, 2);
+            //Console.WriteLine("after swap with no temp, 0 elem :");
+            //_printAnySortedArray(arrr);
 
             //below code should come at the bottom, make cmd not disappear
             Console.ReadLine();
@@ -522,13 +532,13 @@ namespace Datastructures
             7->6->5->4->3->2->1 */
           //  3,9,20,null,null,15,7
 
-            nList.pushLnkNode(3);
-            nList.pushLnkNode(9);
-            nList.pushLnkNode(20);
-            nList.pushLnkNode(null);
-            nList.pushLnkNode(null);
-            nList.pushLnkNode(15);
             nList.pushLnkNode(7);
+            nList.pushLnkNode(6);
+            nList.pushLnkNode(5);
+            //nList.pushLnkNode(null);
+            //nList.pushLnkNode(null);
+            nList.pushLnkNode(4);
+            nList.pushLnkNode(2); //for tree to be balanced, this node shld be less value than the rest
 
             Console.WriteLine("Linked List ");
             nList._printLnkList(nList.head);
@@ -538,11 +548,12 @@ namespace Datastructures
             Node root = nList.sortedListToBST();
 
             Console.WriteLine("");
-            Console.WriteLine("Balanced Search Tree ");
-            nList.preOrder(root);
+            Console.WriteLine("Balanced Search Tree In-Order Traversal ");
+            nList.inOrder(root);
+            Console.WriteLine("");
 
             //then check if the BST is balances or not
-            if (nList.isBalanced(root))
+            if (nList.isBST(root))
             {
                 Console.WriteLine("Tree is balanced");
             }
@@ -1202,13 +1213,14 @@ namespace Datastructures
         // space complexity: O(1)
 
         static int[] swapNoTemp(int[] arr, int i, int j)
-        {             
+        {
             /* In-Depth
              * 
              * eg. int[] arr = { 2, 3, 5 }, swap 0 with 2
              * i = 0, j = 2
-             *  arr[i]  = arr[0] ^ arr[2] => 2 ^ 5 = 7
+             *  arr[i]  = arr[0] ^ arr[2] => 2 ^ 5 = 7 
              *  arr[0] = 7
+             * 2 XOR 5 = 7
              * 
              * 00000010 --> 2
              * 00000101 --> 5
@@ -1230,6 +1242,7 @@ namespace Datastructures
             * --------
             * 00000010 =   2 
             */
+
             arr[j] = arr[i] ^ arr[j]; //arr[2] = 2
 
             /*
@@ -1244,9 +1257,23 @@ namespace Datastructures
            * 
            *then arr[] = { 5, 3, 2 }
            */
+
             arr[i] = arr[i] ^ arr[j];
 
             return arr; //to test if swaping ocurred: works perfect            
+        }
+
+
+        //this is effective when any of the element given is = 0.
+        static int[] swapWArithmOps(int[] nums, int i, int j)
+        {
+            nums[i] = nums[i] + nums[j];
+           
+            nums[j] = nums[i] - nums[j];
+           
+            nums[i] = nums[i] - nums[j];
+
+            return nums;
         }
 
         //binary convertor helper function
@@ -1295,12 +1322,13 @@ namespace Datastructures
         /* implements QuickSort
            arr[] --> Array to be sorted,
            low --> Starting index,
-           high --> Ending index    */
+           high --> Ending index   
+        */
         static void quickSort(int[] arr, int startingindex, int endingindex)
         {
             if (startingindex < endingindex)
             {
-                // pi is partitioning index, arr[p] , is now at right place
+                // pi is partitioning index, arr[p] 
                 int pi = arr_partitioner(arr, startingindex, endingindex);
 
                 // Separately sort elements before partition and after partition
@@ -1353,7 +1381,6 @@ namespace Datastructures
          * (not counting the storage required for input arguments).
          * Elements of input arrays can be modified.
          */
-
         public static int GreedyNonOverlappingSolution(int[] A, int[] B)
         {
             int N = A.Length;
@@ -1404,10 +1431,10 @@ namespace Datastructures
             for (int i = 0; i < str.Length; i++)
             {
                 //convert str to char array
-                char[] k = str.ToCharArray();
+                //char[] k = str.ToCharArray();
 
                 //get value of char at index i
-                int valueAti = k[i]; //get ASCII code value for that character
+                int valueAti = str[i]; //get ASCII code value for that character
 
                 //check, if the char was already found return false, not unique
                 if (chrset[valueAti])
