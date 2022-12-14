@@ -70,7 +70,7 @@ namespace Datastructures
 
 
             ///check if BST is balanced
-             _checkBSTHeightBalance();
+            // _checkBSTHeightBalance();
 
             // MaximumTreeDepth();
             //  minArrayOp();
@@ -263,7 +263,7 @@ namespace Datastructures
             //Console.WriteLine("\n");
             //Console.WriteLine("after post-order traversal: ");
             //lstNode.postOrder(head);
-                        
+
 
             ///convert to binary
             //int i = 7, j = 2;
@@ -285,6 +285,10 @@ namespace Datastructures
             //var arrr = swapWArithmOps(nums, 0, 2);
             //Console.WriteLine("after swap with no temp, 0 elem :");
             //_printAnySortedArray(arrr);
+
+            ///find key in a rotated array
+            int[] arr = { 4, 5, 6, 7, 8, 9, 1, 2, 3 };
+            findKeyInArray(arr, 3);
 
             //below code should come at the bottom, make cmd not disappear
             Console.ReadLine();
@@ -2371,10 +2375,82 @@ namespace Datastructures
             Node mergedHead = lstNode.mergeTwoLists(list1, list2);
             lstNode._printNode(mergedHead);
         }
-        
+
+        /*
+         Given a sorted and rotated array arr[] of size N and a key, 
+        the task is to find the key in the array.
+        Note: Find the element in O(logN) time and assume that all the elements are distinct.
+
+        Time Complexity: O(log N). Binary Search requires log n comparisons to find the element. 
+        So time complexity is O(log n).
+        Auxiliary Space: O(1). As no extra space is required.
+
+         */
+
+        /* Function to get pivot. For array  3, 4, 5, 6, 1, 2 it returns  3 (index of 6) */
+        static int findPivotElement(int[] arr, int low, int high)
+        {
+            // base cases
+            if (high < low)
+                return -1;
+            if (high == low)
+                return low;
+
+            /*  find mid position */
+            int mid = (low + high) / 2;
+
+            if (mid < high && arr[mid] > arr[mid + 1])
+                return mid;
+
+            if (mid > low && arr[mid] < arr[mid - 1])
+                return (mid - 1);
+
+            if (arr[low] >= arr[mid]) //left half
+                return findPivotElement(arr, low, mid - 1);
+
+            return findPivotElement(arr, mid + 1, high); //right half
+        }
+
+        // Searches an element key in a pivoted sorted arr[] of size n,
+        //uses two passes of binary search
+        static int pivotedBinarySearch(int[] arr, int n, int key)
+        {
+            //n:  size of the array
+            int pivot = findPivotElement(arr, 0, n - 1);
+
+            // If we didn't find a pivot, then array is not rotated at all
+            if (pivot == -1)
+                return RecursiveBinarySearch(arr, key,  0, n - 1 );
+
+            // If we found a pivot, then first compare with pivot and then
+            // search in two subarrays around pivot
+            if (arr[pivot] == key)
+                return pivot;
+
+            if (arr[0] <= key)
+                return RecursiveBinarySearch(arr, key, 0, pivot - 1);
+
+            return RecursiveBinarySearch(arr, key, pivot + 1, n - 1);
+        }
+
+        //using direct binary search do it in one pass of binary search
+        static void findKeyInArray(int[] nums, int mKey)
+        {          
+            Array.Sort(nums); //sort first
+
+            int n = nums.Length;
+
+            int i = RecursiveBinarySearch(nums, mKey, 0, n - 1);
+
+            if (i != -1)
+                Console.WriteLine("Index found is : " + i);
+            else
+                Console.WriteLine("Key not found!");
+        }
+
+
         //constructor overloading:  c# allows this, can have more than one class constructor
         //taking different parameters
-
 
         // why Microsoft? - base answers on work culture:
         // 1 ). Growth Mindset- align my dreams / vision to fit in Microsoft's culture,

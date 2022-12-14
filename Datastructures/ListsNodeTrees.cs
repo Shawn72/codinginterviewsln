@@ -135,7 +135,7 @@ namespace Datastructures
                     {
                         next_next = current.next.next;
                         current.next = null;
-                        current.next = next_next;
+                        current.next = next_next; //deletion
                     }
                     else // advance if no deletion
                         current = current.next;
@@ -147,6 +147,8 @@ namespace Datastructures
             {
                 /* Allocate the Node and Put in the data to the node*/
                 Node new_node = new Node(new_data);
+
+               // new_node.prev = null;
 
                 /* Make next of new Node as head */
                 new_node.next = head;
@@ -583,8 +585,8 @@ namespace Datastructures
                 if (head == null) return true;//an empty list is assumed circular always
 
                 //initialize the current node, and next node
-                Node curr = head;
-                Node nxtNode = head.next;
+                Node curr = head; //slow node
+                Node nxtNode = head.next; //fast node
 
                 //implement a while  loop::: iteration            
                 while (curr != nxtNode)
