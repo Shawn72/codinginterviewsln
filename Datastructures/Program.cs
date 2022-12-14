@@ -287,8 +287,12 @@ namespace Datastructures
             //_printAnySortedArray(arrr);
 
             ///find key in a rotated array
-            int[] arr = { 4, 5, 6, 7, 8, 9, 1, 2, 3 };
-            findKeyInArray(arr, 3);
+            // int[] arr = { 4, 5, 6, 7, 8, 9, 1, 2, 3 };
+            // findKeyInArray(arr, 3);
+
+            ///add two linked lists
+            int[] arr1 = { 1, 2, 4 }, arr2 = { 1, 3, 4 };
+            _addTwoLinkedList(arr1, arr2);
 
             //below code should come at the bottom, make cmd not disappear
             Console.ReadLine();
@@ -2412,7 +2416,7 @@ namespace Datastructures
         }
 
         // Searches an element key in a pivoted sorted arr[] of size n,
-        //uses two passes of binary search
+        // uses two passes of binary search
         static int pivotedBinarySearch(int[] arr, int n, int key)
         {
             //n:  size of the array
@@ -2448,8 +2452,16 @@ namespace Datastructures
                 Console.WriteLine("Key not found!");
         }
 
+        static void _addTwoLinkedList(int[] arr1, int[] arr2)
+        {          
+            //create the 2 lists
+            Node list1 = _CreateLinkedListUtil(arr1);
+            Node list2 = _CreateLinkedListUtil(arr2);
+            lstNode.addTwoLists(list1, list2);
+        }
 
-        //constructor overloading:  c# allows this, can have more than one class constructor
+
+        //constructor overloading: c# allows this, can have more than one class constructor
         //taking different parameters
 
         // why Microsoft? - base answers on work culture:

@@ -550,6 +550,75 @@ namespace Datastructures
                 return isABST(root);
             }
 
+            /*
+                Add two numbers represented by Linked Lists by reversing lists
+
+                Time Complexity: O(max(M, N)), where M and N are numbers of nodes
+                in first and second lists respectively.
+                The lists need to be traversed only once.
+                Space Complexity: O(1)
+             */
+            // function to reverse the linked list and return the head of the reversed list
+            Node reverseLinkedList(Node list)
+            {
+                Node prev = null, next = null, curr = list;
+                while (curr != null)
+                {
+                    next = curr.next;
+                    curr.next = prev;
+                    prev = curr;
+                    curr = next;
+                }
+                return prev;
+            }
+
+            // calculate and print the sum of two numbers represented by linked lists
+            public void addTwoLists(Node list1, Node list2)
+            {
+                list1 = reverseLinkedList(list1);
+                list2 = reverseLinkedList(list2);
+                Console.WriteLine("Reversed List 1: ");
+                _printLnkList(list1);
+                Console.WriteLine("");
+
+                Console.WriteLine("Reversed List 2: ");
+                _printLnkList(list2);
+                Console.WriteLine("");
+
+                int carry = 0;
+
+                Node sum = null;
+                // if any one of these is left we are stil left with addition
+                while (list1 != null || list2 != null || carry == 1)
+                {
+                    int newVal = carry;
+
+                    if (list1 != null)
+                        newVal += list1.data;
+
+                    if (list2 != null)
+                        newVal += list2.data;
+
+                    carry = newVal / 10; // to be used in the next node calculation
+
+                    newVal = newVal % 10;
+
+                    Node newNode = new Node(newVal);
+
+                    newNode.next = sum;
+                    // appending in the beginning of the final ans list,
+                    // this way we do not have to reverse in the end
+                    sum = newNode;
+
+                    if (list1 != null) // initialising nodes for next iteration
+                        list1 = list1.next;
+
+                    if (list2 != null)
+                        list2 = list2.next;
+                }
+                Console.WriteLine("Linked List Sum: ");
+                _printLnkList(sum);
+            }
 
             //get value of Kth element implementation
             public void _GetKthElementofLinkedList(int n)
@@ -781,7 +850,7 @@ namespace Datastructures
         }
 
         ///doubly linked list implementation
-        
+
         //node structure:: without using constructor call
         public class DLLNode
         {
