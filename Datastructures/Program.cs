@@ -70,7 +70,7 @@ namespace Datastructures
 
 
             ///check if BST is balanced
-            // _checkBSTHeightBalance();
+            //_checkBSTHeightBalance();
 
             // MaximumTreeDepth();
             //  minArrayOp();
@@ -291,8 +291,18 @@ namespace Datastructures
             // findKeyInArray(arr, 3);
 
             ///add two linked lists
-            int[] arr1 = { 1, 2, 4 }, arr2 = { 1, 3, 4 };
-            _addTwoLinkedList(arr1, arr2);
+            //int[] arr1 = { 1, 2, 4 }, arr2 = { 1, 3, 4 };
+            //_addTwoLinkedList(arr1, arr2);
+
+            ///Run Length Encoding
+            //string str = "mmmbuuuviiii";
+            //Console.WriteLine("Encoded String: ");
+            //RunLengthEncode(str);
+
+            ///Sliding Window Problem
+            int[] arr = { 8, 5, 10, 7, 9, 4, 15, 12, 90, 13 };
+            int K = 3, N = arr.Length;   //subarrays of length 3          
+            printKMax(arr, N, K);
 
             //below code should come at the bottom, make cmd not disappear
             Console.ReadLine();
@@ -561,7 +571,7 @@ namespace Datastructures
             Console.WriteLine("");
 
             //then check if the BST is balances or not
-            if (nList.isBST(root))
+            if (nList.isABST(root))
             {
                 Console.WriteLine("Tree is balanced");
             }
@@ -2459,6 +2469,98 @@ namespace Datastructures
             Node list2 = _CreateLinkedListUtil(arr2);
             lstNode.addTwoLists(list1, list2);
         }
+
+        /*
+         Given an input string, write a function that returns the Run Length Encoded
+         string for the input string.
+         For example, if the input string is “wwwwaaadexxxxxx”, 
+         then the function should return “w4a3d1e1x6”
+        
+        STEPS
+           1. Pick the first character from the source string. 
+           2. Append the picked character to the destination string. 
+           3. Count the number of subsequent occurrences of the picked character 
+              and append the count to the destination string. 
+           4.Pick the next character and repeat steps 2, 3 and 4 if the end of the string is NOT reached.
+
+        Time Complexity: O(n)
+        Auxiliary Space: O(1)
+         */
+
+        static void RunLengthEncode(string str)
+        {
+            int n = str.Length;
+            
+            for (int i = 0; i < n; i++)
+            {
+                // Count occurrences of current character
+                int count = 1;
+
+                while (i < n - 1 && str[i] == str[i + 1]) //while current char is not equal to next char
+                {
+                    count++; //increment count
+                    i++; //go to next char
+                }
+
+                // Print character and its count                
+                Console.Write(str[i]);
+                Console.Write(count);
+            }
+        }
+
+        /*
+         Sliding Window problem:
+        Given an array and an integer K, find the maximum for each and every contiguous subarray of size K.
+
+        Examples : 
+        Input: arr[] = {1, 2, 3, 1, 4, 5, 2, 3, 6}, K = 3 
+        Output: 3 3 4 5 5 5 6
+        Explanation: Maximum of 1, 2, 3 is 3
+                    Maximum of 2, 3, 1 is 3
+                    Maximum of 3, 1, 4 is 4
+                    Maximum of 1, 4, 5 is 5
+                    Maximum of 4, 5, 2 is 5 
+                    Maximum of 5, 2, 3 is 5
+                    Maximum of 2, 3, 6 is 6
+
+        Input: arr[] = {8, 5, 10, 7, 9, 4, 15, 12, 90, 13}, K = 4 
+        Output: 10 10 10 15 15 90 90
+        Explanation: Maximum of first 4 elements is 10, similarly for next 4 
+        elements (i.e from index 1 to 4) is 10, So the sequence 
+        generated is 10 10 10 15 15 90 90
+
+        Time Complexity: O(N * K):
+            The outer loop runs N-K+1 times and the inner loop runs K times
+            for every iteration of the outer loop. 
+            So time complexity is O((n-k+1)*k) which can also be written as O(N * K)
+        Auxiliary Space: O(1)
+
+        Trade Off:  I chose this approach coz it's simple to implement and understand , few lines of code used,
+        though not the most efficient, I'd do better in future by coming up with more efficient algo
+
+         */
+
+        // To find the maximum for  each and every contiguous subarrayof size k.
+        static void printKMax(int[] arr, int N, int K)
+        {
+            //N: size of whole array
+            //K: size of contiguous subarray
+
+            int j, max; //j: next elem index
+
+            for (int i = 0; i <= N - K; i++) //outer loop for the large array
+            {
+                max = arr[i];
+
+                for (j = 1; j < K; j++) //inner loop for subarray
+                {
+                    if (arr[i + j] > max)
+                        max = arr[i + j];
+                }
+                Console.Write(max + " ");
+            }
+        }
+
 
 
         //constructor overloading: c# allows this, can have more than one class constructor

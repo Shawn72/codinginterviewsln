@@ -142,7 +142,7 @@ namespace Datastructures
                 }
             }
 
-            /* insert a new Node at front of the list. */
+            /* insert a new Node at front of the list. same as insert front */
             public void _pushtoNode(int new_data)
             {
                 /* Allocate the Node and Put in the data to the node*/
@@ -210,7 +210,7 @@ namespace Datastructures
 
             // find kth element
             /* get the nth node from the last of a linked list */
-            //Time Complexity: O(n) where n is the length of linked list. 
+            //Time Complexity: O(n) where n is the length/number of nodes of linked list. 
             public void _printKthFromLast(int n)
             {
                 // find n-th position from last             
@@ -230,9 +230,7 @@ namespace Datastructures
                 {
                     Console.WriteLine("position " + n + " not available in the list");
                     return;
-                }
-
-                temp = head;
+                }               
 
                 // b) get the (len-n+1)th node from the beginning 
                 for (int i = 1; i < len - n + 1; i++)
@@ -462,9 +460,14 @@ namespace Datastructures
                 root.next = sortedListToBSTRec(n - n / 2 - 1);
 
                 return root;
-            }           
+            }
 
-            /* Returns true if binary tree with root as root is height-balanced */
+            /*
+             * using DFS -  Depth first search
+             * Time Complexity: O(n^2) in case of full binary tree.
+             * Auxiliary Space: O(n) space for call stack since it's using recursion
+             * Returns true if binary tree with root as root is height-balanced
+            */
             public virtual bool isBalanced(Node node)
             {
                 int lh; // for height of left subtree
@@ -476,6 +479,7 @@ namespace Datastructures
 
                 /* Get the height of left and right sub trees */
                 lh = height(node.prev);
+
                 rh = height(node.next);
 
                 //prev: left, next: right
@@ -489,9 +493,11 @@ namespace Datastructures
             }
 
           
-            /* The function Compute the "height" of a tree. Height is the
+            /* 
+                The function Compute the "height" of a tree. Height is the
                 number of nodes along the longest path from the root node
-                down to the farthest leaf node.*/
+                down to the farthest leaf node.
+            */
             public virtual int height(Node node)
             {
                 /* base case tree is empty */
@@ -518,13 +524,17 @@ namespace Datastructures
                 }
             }
 
-           
+
             /*
-             * check if binary tree is balanced: using In-Order Traversal
-             * 
+              Check if binary tree is balanced: using In-Order Traversal
+             
               Time Complexity: O(N), Where N is the number of nodes in the tree: each node is visited once
               Auxiliary Space: O(H), Here H is the height of the tree and
               the extra space is used due to the function call stack.
+
+               A balanced binary tree, also referred to as a height-balanced binary tree,
+               is defined as a binary tree in which the height of the left and right subtree
+               of any node differ by not more than 1.
             */
 
             public bool isABST(Node root)
@@ -532,22 +542,18 @@ namespace Datastructures
                 // traverse the tree in in-order fashion and keep track of prev node
                 if (root != null)
                 {
-                    if (!isABST(root.prev))
+                    if (!isABST(root.prev)) //recur left child
                         return false;
 
-                    // Allows only distinct valued nodes
+                    // Allow only distinct valued nodes
                     if (root.prev != null && root.data <= root.prev.data)
                         return false;
 
                     root.prev = root;
 
-                    return isABST(root.next);
+                    return isABST(root.next); //recur right child
                 }
                 return true;
-            }
-            public bool isBST(Node root)
-            {
-                return isABST(root);
             }
 
             /*
@@ -557,17 +563,23 @@ namespace Datastructures
                 in first and second lists respectively.
                 The lists need to be traversed only once.
                 Space Complexity: O(1)
+
+             STEPS
+                1. Reverse the two number lists.
+                2. Simulate addition on nodes one by one. 
+                   Append each node before the already calculated sum nodes.
+                3. In the end we will get the final answer and we can return the head node.
              */
             // function to reverse the linked list and return the head of the reversed list
             Node reverseLinkedList(Node list)
             {
-                Node prev = null, next = null, curr = list;
-                while (curr != null)
+                Node prev = null, next = null, root = list;
+                while (root != null)
                 {
-                    next = curr.next;
-                    curr.next = prev;
-                    prev = curr;
-                    curr = next;
+                    next = root.next;
+                    root.next = prev;
+                    prev = root;
+                    root = next;
                 }
                 return prev;
             }
@@ -585,14 +597,16 @@ namespace Datastructures
                 _printLnkList(list2);
                 Console.WriteLine("");
 
-                int carry = 0;
+                int carry = 0; //to handle if elems added is more than 10
 
-                Node sum = null;
-                // if any one of these is left we are stil left with addition
+                Node sum = null; //to store sum list
+
+                // if any one of these is left we are still left with addition
                 while (list1 != null || list2 != null || carry == 1)
                 {
                     int newVal = carry;
 
+                    //Iteration 1
                     if (list1 != null)
                         newVal += list1.data;
 
@@ -601,8 +615,9 @@ namespace Datastructures
 
                     carry = newVal / 10; // to be used in the next node calculation
 
-                    newVal = newVal % 10;
+                    newVal = newVal % 10; //modulus of 10
 
+                    //init new node with new value calculated
                     Node newNode = new Node(newVal);
 
                     newNode.next = sum;
@@ -610,6 +625,7 @@ namespace Datastructures
                     // this way we do not have to reverse in the end
                     sum = newNode;
 
+                    //Next iteration
                     if (list1 != null) // initialising nodes for next iteration
                         list1 = list1.next;
 
