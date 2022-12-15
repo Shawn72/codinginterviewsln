@@ -16,6 +16,7 @@ namespace Datastructures
         public static NodesAndLinkedLists lstNode = new NodesAndLinkedLists();
         public static DoubleLinkedList dllNodes = new DoubleLinkedList();
         public static Queues ques = new Queues();
+        public static Trie myTrie = new Trie();
         static void Main(string[] args)
         {
             //  string s1 = "hello" + "i" + "am";
@@ -300,9 +301,25 @@ namespace Datastructures
             //RunLengthEncode(str);
 
             ///Sliding Window Problem
-            int[] arr = { 8, 5, 10, 7, 9, 4, 15, 12, 90, 13 };
-            int K = 3, N = arr.Length;   //subarrays of length 3          
-            printKMax(arr, N, K);
+            //int[] arr = { 8, 5, 10, 7, 9, 4, 15, 12, 90, 13 };
+            //int K = 3, N = arr.Length;   //subarrays of length 3          
+            //printKMax(arr, N, K);
+
+            ///max subarray sum
+            //int[] arr = { -3, -4, 5, -1, 2, -4, 6, -1 };
+            //Console.WriteLine("Max Sum: "+ maximumSubarraySum(arr) );
+
+            ///Tries test            
+            myTrie.InsertToTrie("mbuvi");
+            var searchTrie1 = myTrie.SearchWord("mbuvi");   // return True
+            Console.WriteLine("Word Found ?: "+searchTrie1);
+
+            var searchTrie2 = myTrie.SearchWord("mbunga");     // return False
+            Console.WriteLine("Word Found ?: " + searchTrie2);
+
+            var prefixFound = myTrie.WordStartsWith("mbu"); // return True
+            Console.WriteLine("Prefix Found ?: " + prefixFound);
+
 
             //below code should come at the bottom, make cmd not disappear
             Console.ReadLine();
@@ -2561,47 +2578,175 @@ namespace Datastructures
             }
         }
 
+        /*  Maximum Sub Array sum 
+          Subarrays are arrays inside another array which only contains contiguous elements.
+          Given an array of integers, the task is to find the maximum 
+          subarray sum possible of all the non-empty subarrays.
+         */
+        static int maximumSubarraySum(int[] arr)
+        {
+            int n = arr.Length;
+            int maxSum = int.MinValue;
+            int currSum = 0;
+
+            for (int i = 0; i <= n - 1; i++) //loop through all elements of array
+            {
+                currSum += arr[i];
+
+                if (currSum > maxSum)
+                {
+                    maxSum = currSum;
+                }
+
+                if (currSum < 0)
+                {
+                    currSum = 0;
+                }
+            }
+            return maxSum;
+        }
+
+        /* 
+        Trie Implementation:: for lower case English words
+        A trie (pronounced as "try") or prefix tree is a tree data structure used to efficiently
+        store and retrieve keys in a dataset of strings. 
+        There are various applications of this data structure,
+        such as autocomplete and spellchecker.
+         
+        Implement the Trie class:
+        Trie() Initializes the trie object.
+        void insert(String word) Inserts the string word into the trie.
+        boolean search(String word) Returns true if the string word is in the trie
+        (i.e., was inserted before), and false otherwise.
+        boolean startsWith(String prefix) Returns true if there is a previously 
+        inserted string word that has the prefix prefix, and false otherwise.
+
+        Example 1:
+
+        Input
+        ["Trie", "insert", "search", "search", "startsWith", "insert", "search"]
+        [[], ["apple"], ["apple"], ["app"], ["app"], ["app"], ["app"]]
+        Output
+        [null, null, true, false, true, null, true]
+
+        Explanation
+        Trie trie = new Trie();
+        trie.insert("apple");
+        trie.search("apple");   // return True
+        trie.search("app");     // return False
+        trie.startsWith("app"); // return True
+        trie.insert("app");
+        trie.search("app");     // return True         
+         
+        */
+
+        //TrieNode construction class
+        public class TrieNode
+        {
+            public TrieNode[] trieChildren;// children array of type TrieNode
+            public bool IsWord;
+
+            //TrieNode constructor
+            public TrieNode()
+            {
+                trieChildren = new TrieNode[26]; //init to alphabet letter count, max word length
+                IsWord = false;
+            }
+        }
+        //TrieNode implementation class
+        public class Trie
+        {
+            TrieNode _root;
+            public Trie()
+            {
+                _root = new TrieNode();
+            }
+
+            //O(n) Time and Space, n: length of the word
+            //insert word in the trie
+            public void InsertToTrie(string word)
+            {
+                var head = _root;
+                foreach (var ch in word)
+                {
+                    var index = ch - 'a';
+                    if (head.trieChildren[index] == null)
+                        head.trieChildren[index] = new TrieNode();
+                    head = head.trieChildren[index];
+                }
+                head.IsWord = true;
+            }
+
+            //search for word in the trie
+            public bool SearchWord(string word)
+            {
+                return SearchTheTrie(word, false);
+            }
+            //search for prefix
+            public bool WordStartsWith(string prefix)
+            {
+                return SearchTheTrie(prefix);
+            }
+
+            //O(n) Time and Constant Space, n : length of the word
+            bool SearchTheTrie(string word, bool isPartial = true)
+            {
+                var trieObj = _root;
+                foreach (var ch in word)
+                {
+                    var index = ch - 'a'; //lowercase letters
+                    if (trieObj.trieChildren[index] == null)
+                        return false;
+                    trieObj = trieObj.trieChildren[index];
+                }
+                return isPartial ? true : trieObj.IsWord;
+            }
+
+        }
 
 
-        //constructor overloading: c# allows this, can have more than one class constructor
-        //taking different parameters
-
-        // why Microsoft? - base answers on work culture:
-        // 1 ). Growth Mindset- align my dreams / vision to fit in Microsoft's culture,
-        // coz I'd like to grow careerwise ( Career Growth ) - boost my skills and experience through working
-        // with world class team of developers, learn from each other, help make me better than how I am now.       
-        // personal growth help take care of myself and others dependent on me.
-        // 2 ). Diverse & Inclusive. I am open to learning and adopting to changes accordingly,
-        // take feedback from others and work on them to become better, add quality in my work. 
-
-        ///dynamic memory allocation in C/C++: done using malloc(), calloc(), free(), realloc()
-        /// "malloc()": dynamically allocate a single large block of memory with the specified size.
-        ///eg. p = (cast-type*)malloc(bytesize):: p = (int*) malloc(100 * sizeof(int));
-        ///If space is insufficient, allocation fails and returns a NULL pointer.
-        ///
-        ///"calloc()" - “contiguous allocation” method in C is used to dynamically allocate the
-        ///specified number of blocks of memory of specified type. 
-        ///it is very much similar to malloc() but has two different points and these are:
-        ///a. It initializes each block with a default value ‘0’.
-        ///b. It has two parameters or arguments as compare to malloc().
-        ///eg. ptr = (cast-type*)calloc(n, element-size);
-        ///:: ptr = (float*) calloc(25, sizeof(float));
-        ///This statement allocates contiguous space in memory for 25 elements each with the size of the float.
-
-        ///“free()” method in C is used to dynamically de-allocate the memory. 
-        ///The memory allocated using functions malloc() and calloc() 
-        ///is not de-allocated on their own. Hence the free() method is used, 
-        ///whenever the dynamic memory allocation takes place. 
-        ///It helps to reduce wastage of memory by freeing it.
-        ///eg: free(ptr)::ptr allocated before, above
-        ///
-        ///“realloc()” or “re-allocation” method in C is used to dynamically
-        ///change the memory allocation of a previously allocated memory. 
-        ///In other words, if the memory previously allocated with the help of 
-        ///malloc or calloc is insufficient, realloc can be used to dynamically re-allocate memory. 
-        ///eg ptr = realloc(ptr, newSize);
 
 
 
-    }
+            //constructor overloading: c# allows this, can have more than one class constructor
+            //taking different parameters
+
+            // why Microsoft? - base answers on work culture:
+            // 1 ). Growth Mindset- align my dreams / vision to fit in Microsoft's culture,
+            // coz I'd like to grow careerwise ( Career Growth ) - boost my skills and experience through working
+            // with world class team of developers, learn from each other, help make me better than how I am now.       
+            // personal growth help take care of myself and others dependent on me.
+            // 2 ). Diverse & Inclusive. I am open to learning and adopting to changes accordingly,
+            // take feedback from others and work on them to become better, add quality in my work. 
+
+            ///dynamic memory allocation in C/C++: done using malloc(), calloc(), free(), realloc()
+            /// "malloc()": dynamically allocate a single large block of memory with the specified size.
+            ///eg. p = (cast-type*)malloc(bytesize):: p = (int*) malloc(100 * sizeof(int));
+            ///If space is insufficient, allocation fails and returns a NULL pointer.
+            ///
+            ///"calloc()" - “contiguous allocation” method in C is used to dynamically allocate the
+            ///specified number of blocks of memory of specified type. 
+            ///it is very much similar to malloc() but has two different points and these are:
+            ///a. It initializes each block with a default value ‘0’.
+            ///b. It has two parameters or arguments as compare to malloc().
+            ///eg. ptr = (cast-type*)calloc(n, element-size);
+            ///:: ptr = (float*) calloc(25, sizeof(float));
+            ///This statement allocates contiguous space in memory for 25 elements each with the size of the float.
+
+            ///“free()” method in C is used to dynamically de-allocate the memory. 
+            ///The memory allocated using functions malloc() and calloc() 
+            ///is not de-allocated on their own. Hence the free() method is used, 
+            ///whenever the dynamic memory allocation takes place. 
+            ///It helps to reduce wastage of memory by freeing it.
+            ///eg: free(ptr)::ptr allocated before, above
+            ///
+            ///“realloc()” or “re-allocation” method in C is used to dynamically
+            ///change the memory allocation of a previously allocated memory. 
+            ///In other words, if the memory previously allocated with the help of 
+            ///malloc or calloc is insufficient, realloc can be used to dynamically re-allocate memory. 
+            ///eg ptr = realloc(ptr, newSize);
+
+
+
+        }
 }
