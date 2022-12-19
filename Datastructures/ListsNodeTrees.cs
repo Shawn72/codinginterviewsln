@@ -10,7 +10,7 @@ namespace Datastructures
         public class Node
         {
             public int data;
-            public Node next, prev; //can rep left(pev), right(next) subtrees
+            public Node next, prev, randomPointer; //can rep left(pev), right(next) subtrees
 
             // Lower values indicate  higher priority::: for implementing priority queues
             public int priority;
@@ -20,9 +20,9 @@ namespace Datastructures
             public Node(int d) //takes in integer data
             {
                 data = d;
-                prev = next = null;
+                prev = next = randomPointer = null;
             }
-        }  
+        }
 
         //implementations of linked lists and queues
         public class NodesAndLinkedLists
@@ -38,7 +38,7 @@ namespace Datastructures
             }
 
             //util to create a linked list from array
-            public Node _ConvertArrayToList( int[] arr )
+            public Node _ConvertArrayToList(int[] arr)
             {
                 int n = arr.Length;
 
@@ -53,21 +53,18 @@ namespace Datastructures
             static Node _InsertNode(Node head, int item)
             {
                 //use constructor
-                Node ptr, temp = new Node(item);              
+                Node ptr, temp = new Node(item);
 
-                temp.data = item;
-                temp.next = null;
+                temp.data = item; temp.next = null;
 
                 if (head == null)
                     head = temp;
-                else
-                {
-                    //swap the items
-                    ptr = head;
-                    while (ptr.next != null)
-                        ptr = ptr.next;
-                    ptr.next = temp;
-                }
+                //else assign items respectively
+                ptr = head;
+                while (ptr.next != null)
+                    ptr = ptr.next;
+                ptr.next = temp;
+
                 return head;
             }
 
@@ -148,8 +145,6 @@ namespace Datastructures
                 /* Allocate the Node and Put in the data to the node*/
                 Node new_node = new Node(new_data);
 
-               // new_node.prev = null;
-
                 /* Make next of new Node as head */
                 new_node.next = head;
 
@@ -184,15 +179,12 @@ namespace Datastructures
 
                     // If current value is seen before
                     if (hs.Contains(curval))
-                    {
                         prev.next = current.next;
-                    }
-                    else
-                    {
-                        //add the value to the HashSet,...or hashmap
-                        hs.Add(curval);
-                        prev = current;
-                    }
+
+                    //add the value to the HashSet,...or hashmap
+                    hs.Add(curval);
+                    prev = current;
+
                     //base condition: when current becomes null,,...or when next == null
                     current = current.next;
                 }
@@ -230,7 +222,7 @@ namespace Datastructures
                 {
                     Console.WriteLine("position " + n + " not available in the list");
                     return;
-                }               
+                }
 
                 // b) get the (len-n+1)th node from the beginning 
                 for (int i = 1; i < len - n + 1; i++)
@@ -290,7 +282,7 @@ namespace Datastructures
              */
             public void inOrder(Node node)
             {
-                if (node == null)  return;
+                if (node == null) return;
 
                 /* first recur on left child */
                 inOrder(node.prev);
@@ -362,7 +354,7 @@ namespace Datastructures
                 node.next = _MinimalHeightBST(arr, mid + 1, end);
                 return node;
             }
-           
+
             //implementation
             public Node createMinimalBST(int[] array)
             {
@@ -418,7 +410,7 @@ namespace Datastructures
             {
                 if (node != null)
                 {
-                    Console.Write("root element: "+node.data);                   
+                    Console.Write("root element: " + node.data);
                 }
             }
 
@@ -436,8 +428,7 @@ namespace Datastructures
             public Node sortedListToBSTRec(int n)
             {
                 /* Base Case */
-                if (n <= 0)
-                    return null;
+                if (n <= 0) return null;
 
                 // binary tree node (Node)
 
@@ -475,7 +466,7 @@ namespace Datastructures
                 int rh; // for height of right subtree
 
                 /* If tree is empty then return true */
-                if (node == null) return true; 
+                if (node == null) return true;
 
                 /* Get the height of left and right sub trees */
                 lh = height(node.prev);
@@ -492,7 +483,7 @@ namespace Datastructures
                 return false;
             }
 
-          
+
             /* 
                 The function Compute the "height" of a tree. Height is the
                 number of nodes along the longest path from the root node
@@ -501,7 +492,7 @@ namespace Datastructures
             public virtual int height(Node node)
             {
                 /* base case tree is empty */
-                if (node == null)return 0;             
+                if (node == null) return 0;
 
                 /* If tree is not empty then height = 1 + max of left
                 height and right heights */
@@ -520,7 +511,7 @@ namespace Datastructures
                     /* calculate the depth of each subtree */
                     int leftDepth = maximumDepth(node.prev);
                     int rightDepth = maximumDepth(node.next);
-                   return  Math.Max(leftDepth, rightDepth) + 1;
+                    return Math.Max(leftDepth, rightDepth) + 1;
                 }
             }
 
@@ -711,23 +702,23 @@ namespace Datastructures
 
             //making a linked list circular
             public void MakeListCircular()
-            {                
+            {
                 // insert items in the list nodes
-                Node head = new Node(10); 
-                head.next = new Node(24); 
-                head.next.next = new Node(32); 
+                Node head = new Node(10);
+                head.next = new Node(24);
+                head.next.next = new Node(32);
                 head.next.next.next = new Node(47);
 
                 Console.WriteLine("Is the linked list circular?: ");
 
-                Console.Write(HasCycle(head) ? "Yes\n" :  "No\n");
+                Console.Write(HasCycle(head) ? "Yes\n" : "No\n");
 
                 // Make the linked list circular: assign final next to head node
                 head.next.next.next.next = head;
 
                 Console.WriteLine("Is the linked list circular now?: ");
 
-                Console.Write(HasCycle(head) ? "Yes\n" :  "No\n");               
+                Console.Write(HasCycle(head) ? "Yes\n" : "No\n");
             }
 
             //insert into a sorted circular linked list::to be implemented later
@@ -736,7 +727,7 @@ namespace Datastructures
             /// M: length of listOne, N: length of listTwo
             /// we are adding one node to the output.
             /// Space Complexity: O(M+N), Stack space will be used in recursion.
-            
+
             //merge two linked list using recursion
             public Node mergeTwoLists(Node listOne, Node listTwo)
             {
@@ -755,7 +746,7 @@ namespace Datastructures
 
                 //merge list two into list one
                 listOne.next = mergeTwoLists(listOne.next, listTwo);
-                return listOne;                
+                return listOne;
             }
 
 
@@ -803,7 +794,7 @@ namespace Datastructures
                 else
                 {
                     // Traverse the list and find a  position to insert new node
-                    while (start.next != null &&  start.next.priority > p)
+                    while (start.next != null && start.next.priority > p)
                     {
                         start = start.next;
                     }
@@ -818,52 +809,139 @@ namespace Datastructures
             // Function to check is list is empty
             public static int isEmpty(Node head)
             {
-                return ((head) == null) ? 1 : 0;
+                return head == null ? 1 : 0;
             }
-        }
 
-        public static void _LinkedListOps()
-        {
-            //Time Complexity: O(n) where n is the number of nodes in the given linked list.
+            //remove dups from a list
+            public void _LinkedListOps()
+            {
+                //Time Complexity: O(n) where n is the number of nodes in the given linked list.
 
-            NodesAndLinkedLists _list = new NodesAndLinkedLists();
-            _list._pushtoNode(30);
-            _list._pushtoNode(26);
-            _list._pushtoNode(26);
-            _list._pushtoNode(50);
-            _list._pushtoNode(40);
-            _list._pushtoNode(40);            
+                NodesAndLinkedLists _list = new NodesAndLinkedLists();
+                _list._pushtoNode(30);
+                _list._pushtoNode(26);
+                _list._pushtoNode(26);
+                _list._pushtoNode(50);
+                _list._pushtoNode(40);
+                _list._pushtoNode(40);
 
-            Console.WriteLine("List before removing duplicates");
-            _list._printList();
+                Console.WriteLine("List before removing duplicates");
+                _list._printList();
 
-            Console.WriteLine(" \n");
-            _list._removeDuplicates();
+                Console.WriteLine(" \n");
+                _list._removeDuplicates();
 
-            Console.WriteLine("List after removing duplicates");
-            _list._printList();
-        }
+                Console.WriteLine("List after removing duplicates");
+                _list._printList();
+            }
 
-        static void _LinkedListWHashmap()
-        {
+
             // Time Complexity: O(n) on average
             // assuming that hash table access time is O(1) on average.
+            public void _LinkedRemoveDupsUsingHashmap()
+            {
+                NodesAndLinkedLists _list = new NodesAndLinkedLists();
 
-            NodesAndLinkedLists _list = new NodesAndLinkedLists();
-            Node _start = new Node(70);
-            _start.next = new Node(40);
-            _start.next.next = new Node(60);
-            _start.next.next.next = new Node(60);
-            _start.next.next.next.next = new Node(40);
+                //use constructor call to create a linked list
+                Node head;
+                _list._pushtoNode(30);
+                _list._pushtoNode(40);
+                _list._pushtoNode(60);
+                _list._pushtoNode(30);
+                _list._pushtoNode(50);
+                head = _list.head;
 
-            Console.WriteLine("List before removing duplicates \n");
-            _list._printNode(_start);
-            Console.WriteLine(" \n");
+                Console.WriteLine("List before removing duplicates \n");
+                _list._printNode(head);
+                Console.WriteLine(" \n");
 
-            _list.removeDuplicateFromList(_start);
-            Console.WriteLine("List after removing duplicates \n");
-            _list._printNode(_start);
-        }
+                _list.removeDuplicateFromList(head);
+                Console.WriteLine("List after removing duplicates \n");
+                _list._printNode(head);
+            }
+
+            /*
+             A linked list of length n is given such that each node contains an additional random pointer,
+            which could point to any node in the list, or null.
+
+            Construct a deep copy of the list. The deep copy should consist of 
+            exactly n brand new nodes, where each new node has its value set to the 
+            value of its corresponding original node. Both the next and random pointer
+            of the new nodes should point to new nodes in the copied list such that the
+            pointers in the original list and copied list represent the same list state.
+            None of the pointers in the new list should point to nodes in the original list.
+
+             we can solve it using hashing method in Time Complexity:  O(n), Space: O(n)
+             the operation is done in 2 Passess
+             */ 
+
+            public Node CloneTheList() //just master the steps
+            {
+                // Initialize two references, one with original list's head.
+                Node origCurr = head, cloneCurr = null;
+
+                // Dictionary which contains node to node mapping of original and clone linked list.
+                Dictionary<Node, Node> map = new Dictionary<Node, Node>();
+
+                //Pass 1:  Traverse the original list and make a copy of that in the clone linked list.
+                while (origCurr != null)
+                {
+                    cloneCurr = new Node(origCurr.data);
+                    map.Add(origCurr, cloneCurr);
+                    origCurr = origCurr.next;
+                }
+                // Adjust the original list reference again.
+                origCurr = head;
+
+                // Pass 2:Traversal of original list again to adjust the next
+                // and random references of clone list using hash map.
+                while (origCurr != null)
+                {
+                    cloneCurr = map[origCurr];
+                    if (origCurr.next != null)
+                        cloneCurr.next = map[origCurr.next];
+
+                    if (origCurr.randomPointer != null)
+                        cloneCurr.randomPointer = map[origCurr.randomPointer];
+
+                    origCurr = origCurr.next;
+                }
+                // return the head reference of the clone list.
+                return map[head];
+            }
+
+            //test linked list cloning
+            public void LinkedListClone()
+            {
+                // Pushing data in the linked list.
+                NodesAndLinkedLists _list = new NodesAndLinkedLists();
+                Node originalNode, cloneNode;
+                _list._pushtoNode(5);
+                _list._pushtoNode(4);
+                _list._pushtoNode(3);
+                _list._pushtoNode(2);
+                _list._pushtoNode(1);
+                originalNode = _list.head;
+
+                // Setting up random pointer references.
+                _list.head.randomPointer = _list.head.next.next;
+                _list.head.next.randomPointer = _list.head.next.next.next;
+                _list.head.next.next.randomPointer =  _list.head.next.next.next.next;
+                _list.head.next.next.next.randomPointer = _list.head.next.next.next.next.next;
+                _list.head.next.next.next.next.randomPointer = _list.head.next;
+
+                // Making a clone of the original linked list.
+                cloneNode = _list.CloneTheList();
+
+                // Print the original and cloned linked list.
+                Console.WriteLine("the original linked list");
+                _list._printNode(originalNode);
+                Console.WriteLine("\n");
+                Console.WriteLine("the cloned linked list");               
+                _list._printNode(cloneNode);
+                Console.WriteLine("\n");
+            }
+        } 
 
         ///doubly linked list implementation
 

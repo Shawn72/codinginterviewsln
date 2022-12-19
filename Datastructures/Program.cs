@@ -35,10 +35,8 @@ namespace Datastructures
 
             //call reverse list -int/string
             //  _reverseList();
-            // _reverseStringList();
-            // 
-            //_LinkedListOps();
-            // _LinkedListWHashmap();
+            // _reverseStringList();           
+
             // Console.WriteLine( "compressed: "+_compressString("aaabbbrrrruuuuu") );
             // Console.WriteLine("Can form a palidrome?: " + _canFormPalindrome("cooc") );
             // Console.WriteLine("palidrome: " + _getPalindrome("mdaam"));
@@ -190,9 +188,10 @@ namespace Datastructures
             ///TwoSum soln
             //int[] nums = { 2, 1, 4, 5, 4, 6 };
             //Array.Sort(nums);
-            //var SumofTwo = TwoNums(nums, 39);
+            ////var SumofTwo = TwoNums(nums, 10);
+            // var SumofTwo = twoSumUsingDictionary(nums, 10);
             ////var opl = _twoSum(nums, 10);
-            //_printAnySortedArray(SumofTwo);
+            // _printAnySortedArray(SumofTwo);
 
             ///maximum binary gap
             //Console.WriteLine("gap length: " + MaximumBinaryGap(22));
@@ -208,7 +207,7 @@ namespace Datastructures
 
             ///palindrome check
             // StrPalindromeChecker("pool");
-            //IsStrPalindrom("boob");
+            //IsStrPalindrome("boob");
 
             ///integer palindrome check
             //IsIntegerPalindrome(121);
@@ -310,15 +309,23 @@ namespace Datastructures
             //Console.WriteLine("Max Sum: "+ maximumSubarraySum(arr) );
 
             ///Tries test            
-            myTrie.InsertToTrie("mbuvi");
-            var searchTrie1 = myTrie.SearchWord("mbuvi");   // return True
-            Console.WriteLine("Word Found ?: "+searchTrie1);
+            //myTrie.InsertToTrie("mbuvi");
+            //var searchTrie1 = myTrie.SearchWord("mbuvi");   // return True
+            //Console.WriteLine("Word Found ?: "+searchTrie1);
 
-            var searchTrie2 = myTrie.SearchWord("mbunga");     // return False
-            Console.WriteLine("Word Found ?: " + searchTrie2);
+            //var searchTrie2 = myTrie.SearchWord("mbunga");     // return False
+            //Console.WriteLine("Word Found ?: " + searchTrie2);
 
-            var prefixFound = myTrie.WordStartsWith("mbu"); // return True
-            Console.WriteLine("Prefix Found ?: " + prefixFound);
+            //var prefixFound = myTrie.WordStartsWith("mbu"); // return True
+            //Console.WriteLine("Prefix Found ?: " + prefixFound);
+
+
+            ///remove duplicates from linked list
+            //_LinkedListOps();
+            // lstNode._LinkedRemoveDupsUsingHashmap();
+
+            ///linked List clone
+            lstNode.LinkedListClone();
 
 
             //below code should come at the bottom, make cmd not disappear
@@ -1453,22 +1460,22 @@ namespace Datastructures
             //ascii requires less space, unicode req more space :: tradeoff made
 
             //time complexity: O(n), n = length of str
-            //space complexity: O(1)
+            //space complexity: O(n): extra data structure used
 
             if (str.Length > 128) return false;// greater than ascii max char set;
 
             //create a boolean array set of 128 length
 
-            bool[] chrset = new bool[128];
+            bool[] chrset = new bool[128]; //array set
 
             //loop through all the characters in that str
 
-            for (int i = 0; i < str.Length; i++)
+            for (int i = 0; i < str.Length; i++) //O(n): n => length of the array
             {
                 //convert str to char array
                 //char[] k = str.ToCharArray();
 
-                //get value of char at index i
+                //get value of char at index i, retrieve element of array uses O(n) time
                 int valueAti = str[i]; //get ASCII code value for that character
 
                 //check, if the char was already found return false, not unique
@@ -1482,6 +1489,14 @@ namespace Datastructures
             return true;
         }
 
+        /*
+         * The Dictionary<TKey,TValue> has no way to access directly the nth “element” via ElementAt.
+         * If we want to access the nth “element”,
+         * the Dictionary needs to enumerate all of the entries in it. 
+         * Performance is O(n) and the performance penalty increases with the size of the dictionary.
+         * ElementAt() loops through the whole string, unlike the arrays, better use arrays where possible
+         */
+
         ///hashmaps, hashsets, dictionaries
         public static bool UniqueOccurrenceOfElement(int[] arr)
         {
@@ -1493,7 +1508,7 @@ namespace Datastructures
             //initialize a dictionary to hold the key pair values
             var dic = new Dictionary<int, int>();
 
-            for (int i = 0; i < lenOfArr; i++)
+            for (int i = 0; i < lenOfArr; i++) // O(n)
             {
                 var ValueAtindexI = arr[i];
 
@@ -1506,10 +1521,10 @@ namespace Datastructures
             //initialize hashset for checking duplicates in the dictionary
             var hashSet = new HashSet<int>();
 
-            foreach (var pair in dic)
+            foreach (var pair in dic) 
             {
                 //check if the hashset has duplicates
-                if (hashSet.Contains(pair.Value))
+                if (hashSet.Contains(pair.Value)) // O(1):  accessing element in the set
                 {
                     //not unique
                     return false;
@@ -1842,6 +1857,9 @@ namespace Datastructures
 
        
         /// two sums: return indices of two numbers from array which when added equals the target
+        /// using Brute force
+        /// time complexity: O(n^2)
+        /// space: O(1)
         public static int[] TwoNums(int[] nums, int target)
         {
             //get length of arr
@@ -1864,7 +1882,10 @@ namespace Datastructures
             return retArr;
         }
 
-        //twoSum soln
+        /// twoSum soln using Dictionary
+        /// Time Complexity: O(n)
+        /// Space Complexity: O(n)
+
         public static int[] _twoSum(int[] nums, int target)
         {
             //implement using a dictionary
@@ -1893,6 +1914,37 @@ namespace Datastructures
             }
             return numToIndex.Values.ToArray();
         }
+
+        ///two sum using Dictionary:: simplified
+        /// Time Complexity: O(n)
+        /// Space Complexity: O(n)
+        static int[] twoSumUsingDictionary(int[] nums, int target)
+        {
+            Dictionary<int, int> dic = new Dictionary<int, int>();
+
+            int[] ans = new int[2];
+
+            for (int i = 0; i < nums.Length; i++)
+            {               
+
+                if (dic.ContainsKey(target - nums[i]))
+                {
+                    ans[0] = dic.GetValueOrDefault(target - nums[i]);
+                    ans[1] = i;
+                    return ans;
+                }
+                //check if the number is a duplicate and skip it
+                if (dic.ContainsKey(nums[i]))
+                {
+                    continue; //skip
+                }
+                //if not dup, add it to the dictionary
+                dic.Add(nums[i], i);
+            }
+            return ans;
+        }   
+
+       
 
         /// A binary gap within a positive integer N is any maximal 
         /// sequence of consecutive zeros that is surrounded by ones 
@@ -2079,7 +2131,7 @@ namespace Datastructures
         }
 
         ///string palindrome check without library
-        static bool IsStrPalindrom(string str)
+        static bool IsStrPalindrome(string str)
         {          
             string reverseStr = string.Empty; //initialize reverse string to empty on start
 
@@ -2168,7 +2220,7 @@ namespace Datastructures
             int sumSmall = Math.Abs(arr[0] * arr[1]);
 
             // Calculate product of two largest numbers
-            int sumLarge= Math.Abs(arr[n - 1] * arr[n - 2]);
+            int sumLarge = Math.Abs(arr[n - 1] * arr[n - 2]);
 
             // Print the pairs whose product is greater
             if (sumSmall > sumLarge)
